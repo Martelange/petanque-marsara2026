@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tournoi Pétanque — Marsara 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red:    #D42B2B;
+    --navy:   #0D1B3E;
+    --white:  #F7F5F0;
+    --cream:  #EDE9E0;
+    --yellow: #F5C842;
+    --sky:    #7BB8D4;
+    --muted:  #6B6878;
+    --border: rgba(13,27,62,0.13);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--white);
+    color: var(--navy);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── TOP STRIPE ── */
+  .top-stripe { background: var(--red); height: 5px; }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    border-bottom: 1.5px solid var(--border);
+    background: var(--white);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo-group { display: flex; align-items: center; gap: 14px; }
+  .logo-emblem {
+    width: 42px; height: 42px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-emblem svg { width: 22px; height: 22px; }
+  .logo-top { font-family: 'Black Han Sans', sans-serif; font-size: 15px; color: var(--navy); letter-spacing: 2px; line-height: 1.2; }
+  .logo-bot { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); }
+
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--navy); text-decoration: none; opacity: 0.55; transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cta {
+    background: var(--red); color: var(--white); border: none;
+    padding: 10px 22px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    border-radius: 3px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .nav-cta:hover { background: #b52020; }
+
+  /* ── HERO ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 560px;
+  }
+
+  .hero-left {
+    background: var(--navy);
+    padding: 4rem 3.5rem 3rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .hero-left::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg, transparent, transparent 18px,
+      rgba(255,255,255,0.022) 18px, rgba(255,255,255,0.022) 19px
+    );
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--yellow); margin-bottom: 1.25rem; position: relative;
+  }
+
+  h1 {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 72px; color: var(--white);
+    line-height: 0.88; letter-spacing: -1px;
+    margin-bottom: 1rem; position: relative;
+  }
+  h1 .red-word { color: var(--red); }
+  h1 .outline-word { -webkit-text-stroke: 2px var(--white); color: transparent; }
+
+  .hero-desc {
+    font-size: 15px; color: rgba(247,245,240,0.58);
+    line-height: 1.65; max-width: 380px;
+    font-weight: 300; position: relative; margin-bottom: 2rem;
+  }
+
+  .hero-btns { display: flex; gap: 10px; position: relative; flex-wrap: wrap; }
+  .btn-red {
+    background: var(--red); color: var(--white); border: none;
+    padding: 13px 28px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    border-radius: 3px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-red:hover { background: #b52020; }
+  .btn-outline-w {
+    background: transparent; color: var(--white);
+    border: 1.5px solid rgba(247,245,240,0.3);
+    padding: 12px 24px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    border-radius: 3px; cursor: pointer; text-decoration: none;
+    transition: border-color 0.15s;
+  }
+  .btn-outline-w:hover { border-color: rgba(247,245,240,0.7); }
+
+  .hero-footer-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(247,245,240,0.25); position: relative;
+  }
+
+  /* ── HERO RIGHT — Mountain Poster ── */
+  .hero-right { background: var(--sky); position: relative; overflow: hidden; }
+  .hero-right svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--yellow);
+    display: flex; justify-content: center; gap: 5rem;
+    padding: 1.25rem 3rem;
+  }
+  .stat { display: flex; align-items: baseline; gap: 8px; }
+  .stat-num { font-family: 'Black Han Sans', sans-serif; font-size: 36px; color: var(--navy); line-height: 1; }
+  .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(13,27,62,0.5); }
+
+  /* ── SECTIONS ── */
+  .content { max-width: 1060px; margin: 0 auto; padding: 4rem 3rem; }
+  .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
+  h2 { font-family: 'Black Han Sans', sans-serif; font-size: 40px; color: var(--navy); line-height: 1; margin-bottom: 0.5rem; }
+  .section-sub { font-size: 15px; color: var(--muted); margin-bottom: 2.5rem; font-weight: 300; line-height: 1.6; }
+
+  /* ── FORM ── */
+  .form-card {
+    background: var(--cream);
+    border-radius: 4px; padding: 2.5rem;
+    max-width: 560px;
+    border-top: 4px solid var(--navy);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--navy);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(13,27,62,0.5); }
+  input {
+    border: 1.5px solid var(--border); border-radius: 3px;
+    padding: 11px 14px; font-size: 14px; color: var(--navy);
+    font-family: 'Barlow', sans-serif; outline: none;
+    background: var(--white); transition: border-color 0.2s;
+  }
+  input:focus { border-color: var(--navy); }
+  input::placeholder { color: #b0a89a; }
+  .player-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--white); background: var(--navy);
+    display: inline-block; padding: 5px 14px; border-radius: 2px;
+    margin: 1.25rem 0 0.75rem;
+  }
+  .player-tag.red { background: var(--red); }
+  .submit-btn {
+    width: 100%; background: var(--navy); color: var(--white); border: none;
+    padding: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    border-radius: 3px; cursor: pointer; margin-top: 10px;
+    transition: background 0.15s;
+  }
+  .submit-btn:hover { background: #1a2e5e; }
+  .form-msg { margin-top: 12px; font-size: 13px; text-align: center; display: none; font-weight: 600; }
+
+  /* ── TEAM LIST ── */
+  .team-list-wrap { margin-top: 2.5rem; max-width: 560px; }
+  .team-list-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+  }
+  .team-list-title::after { content:''; flex:1; height:1px; background:var(--border); }
+  .team-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .team-item {
+    background: var(--cream); border: 1px solid var(--border); border-radius: 3px;
+    padding: 10px 16px; display: flex; align-items: center; gap: 12px;
+    font-size: 14px;
+  }
+  .team-num {
+    font-family: 'Black Han Sans', sans-serif; font-size: 15px; color: var(--red);
+    min-width: 22px;
+  }
+  .team-name-text { font-weight: 600; color: var(--navy); }
+  .team-players { font-size: 12px; color: var(--muted); margin-left: auto; }
+
+  /* ── RULES ── */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .rule-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .rule-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--navy);
+  }
+  .rule-card.accent::before { background: var(--red); }
+  .rule-card.yellow::before { background: var(--yellow); }
+  .rule-card.sky::before { background: var(--sky); }
+
+  .rule-num {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 48px; color: var(--cream);
+    position: absolute; top: 12px; right: 16px;
+    line-height: 1;
+    user-select: none;
+  }
+  .rule-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+  .rule-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--navy); margin-bottom: 8px;
+  }
+  .rule-body { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 300; }
+  .rule-body strong { color: var(--navy); font-weight: 600; }
+
+  /* highlight box */
+  .rules-highlight {
+    background: var(--navy);
+    border-radius: 4px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .highlight-item { text-align: center; flex: 1; min-width: 100px; }
+  .highlight-num {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 48px; color: var(--yellow); line-height: 1;
+    margin-bottom: 4px;
+  }
+  .highlight-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+    color: rgba(247,245,240,0.55);
+  }
+  .highlight-div { width: 1px; height: 50px; background: rgba(247,245,240,0.15); flex-shrink: 0; }
+
+  /* ── FOOTER ── */
+  .footer-stripe { height: 5px; background: var(--red); margin-top: 3rem; }
+  footer {
+    background: var(--navy);
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo { font-family: 'Black Han Sans', sans-serif; font-size: 17px; color: var(--white); letter-spacing: 2px; }
+  .footer-tagline { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(247,245,240,0.35); }
+
+  .sep { height: 1px; background: var(--border); }
+</style>
+</head>
+<body>
+
+<div class="top-stripe"></div>
+
+<nav>
+  <div class="logo-group">
+    <div class="logo-emblem">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="9" stroke="#F7F5F0" stroke-width="1.5"/>
+        <circle cx="9" cy="9" r="2" fill="#F5C842" opacity="0.85"/>
+        <path d="M12 3 C 16 7, 18 14, 14 20" stroke="#F7F5F0" stroke-width="0.8" opacity="0.35" fill="none"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-top">MARSARA 2026</div>
+      <div class="logo-bot">Tournoi Pétanque · Saint-Martin-de-Belleville</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#inscription">Inscription</a>
+    <a href="#regles">Règles</a>
+  </div>
+  <a href="#inscription" class="nav-cta">S'inscrire</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div>
+      <div class="hero-eyebrow">▲ Saint-Martin-de-Belleville · 1 450 m</div>
+      <h1>
+        GRAND<br>
+        <span class="red-word">TOURNOI</span><br>
+        <span class="outline-word">PÉTANQUE</span>
+      </h1>
+      <p class="hero-desc">La compétition amicale de l'année, la veille du mariage de Mars & Sara. Équipes de 2, poules, podium — et après, on danse.</p>
+      <div class="hero-btns">
+        <a href="#inscription" class="btn-red">Inscrire mon équipe</a>
+        <a href="#regles" class="btn-outline-w">Voir les règles</a>
+      </div>
+    </div>
+    <div class="hero-footer-label">Vendredi soir · Veille de la cérémonie</div>
+  </div>
+
+  <div class="hero-right">
+    <svg viewBox="0 0 600 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <rect width="600" height="560" fill="#7BB8D4"/>
+      <rect width="600" height="280" fill="#9CCCE0" opacity="0.35"/>
+      <!-- Sun -->
+      <circle cx="480" cy="105" r="58" fill="#F5C842" opacity="0.88"/>
+      <circle cx="480" cy="105" r="44" fill="#F7D96A"/>
+      <!-- Sun rays -->
+      <g stroke="#F5C842" stroke-width="1.5" opacity="0.4">
+        <line x1="480" y1="30" x2="480" y2="10"/>
+        <line x1="535" y1="50" x2="548" y2="37"/>
+        <line x1="555" y1="105" x2="578" y2="105"/>
+        <line x1="535" y1="160" x2="548" y2="173"/>
+        <line x1="425" y1="50" x2="412" y2="37"/>
+        <line x1="405" y1="105" x2="382" y2="105"/>
+      </g>
+      <!-- Far mountains (pale blue) -->
+      <polygon points="0,560 0,310 100,205 200,285 320,165 440,255 560,145 600,175 600,560" fill="#C4D9E6"/>
+      <!-- Snow caps far -->
+      <polygon points="320,165 338,136 356,165" fill="white" opacity="0.95"/>
+      <polygon points="560,145 578,116 596,145" fill="white" opacity="0.88"/>
+      <polygon points="100,205 117,180 135,205" fill="white" opacity="0.8"/>
+      <!-- Mid mountains -->
+      <polygon points="0,560 0,385 80,285 200,365 340,245 480,335 600,265 600,560" fill="#1E3060"/>
+      <!-- Snow caps mid -->
+      <polygon points="340,245 357,215 376,245" fill="white" opacity="0.95"/>
+      <polygon points="80,285 97,260 115,285" fill="white" opacity="0.9"/>
+      <polygon points="480,335 496,308 513,335" fill="white" opacity="0.85"/>
+      <!-- Front mountains -->
+      <polygon points="0,560 0,445 160,325 300,425 460,315 600,385 600,560" fill="#0D1B3E"/>
+      <polygon points="460,315 477,286 496,315" fill="white"/>
+      <!-- Pine forest -->
+      <g fill="#06102A">
+        <polygon points="0,560 0,505 22,465 44,505 68,460 92,505 116,462 140,505 164,460 188,505 212,464 236,505 260,458 284,505 308,462 332,505 356,456 380,505 404,464 428,505 452,459 476,505 500,463 524,505 548,459 572,505 600,468 600,560"/>
+      </g>
+      <!-- Red banner bottom -->
+      <rect x="0" y="512" width="600" height="48" fill="#D42B2B"/>
+      <text x="300" y="544" text-anchor="middle" font-family="'Black Han Sans', sans-serif" font-size="18" fill="white" letter-spacing="5">SAINT-MARTIN-DE-BELLEVILLE</text>
+    </svg>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-num" id="stat-teams">0</span>
+    <span class="stat-label">Équipes inscrites</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" id="stat-poules">0</span>
+    <span class="stat-label">Poules</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" id="stat-matches">0</span>
+    <span class="stat-label">Matchs prévus</span>
+  </div>
+</div>
+
+<!-- ══ INSCRIPTION ══ -->
+<div class="content" id="inscription">
+  <div class="section-label">Étape 01</div>
+  <h2>Inscription</h2>
+  <p class="section-sub">Formez votre équipe de 2 et inscrivez-vous avant le jour J. Un seul formulaire par équipe, chacun joue avec son binôme.</p>
+
+  <div class="form-card">
+    <div class="form-group" style="margin-bottom:14px;">
+      <label>🏆 Nom de l'équipe</label>
+      <input type="text" id="team-name" placeholder="ex: Les Aigles des Trois Vallées">
+    </div>
+
+    <div class="player-tag">Joueur 1</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Prénom</label>
+        <input type="text" id="p1-first" placeholder="Prénom">
+      </div>
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" id="p1-last" placeholder="Nom">
+      </div>
+    </div>
+
+    <div class="player-tag red">Joueur 2</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Prénom</label>
+        <input type="text" id="p2-first" placeholder="Prénom">
+      </div>
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" id="p2-last" placeholder="Nom">
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="submitTeam()">Confirmer l'inscription →</button>
+    <div class="form-msg" id="form-msg"></div>
+  </div>
+
+  <!-- Team list -->
+  <div class="team-list-wrap">
+    <div class="team-list-title">Équipes inscrites</div>
+    <ul class="team-list" id="team-list">
+      <li class="team-item" style="color:var(--muted);font-size:13px;justify-content:center;">Aucune équipe inscrite pour l'instant.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ══ RÈGLES ══ -->
+<div class="content" id="regles">
+  <div class="section-label">À savoir avant de jouer</div>
+  <h2>Règles du tournoi</h2>
+  <p class="section-sub">Format rapide, ambiance festive — chaque partie dure environ 20 minutes. Voici tout ce qu'il faut savoir pour jouer.</p>
+
+  <!-- Key numbers -->
+  <div class="rules-highlight">
+    <div class="highlight-item">
+      <div class="highlight-num">2</div>
+      <div class="highlight-label">Joueurs par équipe</div>
+    </div>
+    <div class="highlight-div"></div>
+    <div class="highlight-item">
+      <div class="highlight-num">2</div>
+      <div class="highlight-label">Sets pour gagner</div>
+    </div>
+    <div class="highlight-div"></div>
+    <div class="highlight-item">
+      <div class="highlight-num">7</div>
+      <div class="highlight-label">Points par set</div>
+    </div>
+    <div class="highlight-div"></div>
+    <div class="highlight-item">
+      <div class="highlight-num">~20</div>
+      <div class="highlight-label">Minutes par match</div>
+    </div>
+    <div class="highlight-div"></div>
+    <div class="highlight-item">
+      <div class="highlight-num">3</div>
+      <div class="highlight-label">Boules par joueur</div>
+    </div>
+  </div>
+
+  <!-- Rule cards -->
+  <div class="rules-grid">
+
+    <div class="rule-card">
+      <span class="rule-num">01</span>
+      <span class="rule-icon">🎯</span>
+      <div class="rule-title">Format du match</div>
+      <div class="rule-body">
+        Chaque match se joue en <strong>2 sets gagnants</strong>. Le premier set à <strong>7 points</strong> est remporté. En cas d'égalité 1-1, un <strong>set décisif</strong> à 7 points départage les équipes. Pas de prolongation — le 7ème point est roi.
+      </div>
+    </div>
+
+    <div class="rule-card accent">
+      <span class="rule-num">02</span>
+      <span class="rule-icon">🏔️</span>
+      <div class="rule-title">Composition des équipes</div>
+      <div class="rule-body">
+        Les équipes sont composées de <strong>2 joueurs</strong>, qui restent ensemble pour toute la durée du tournoi. Chaque joueur dispose de <strong>3 boules</strong>. On joue en <strong>doublette</strong> : chacun lance ses 3 boules à chaque mène.
+      </div>
+    </div>
+
+    <div class="rule-card yellow">
+      <span class="rule-num">03</span>
+      <span class="rule-icon">⚙️</span>
+      <div class="rule-title">Déroulement d'une mène</div>
+      <div class="rule-body">
+        Le cochonnet est lancé à <strong>6–9 mètres</strong>. Les équipes se relaient pour lancer leurs boules, en commençant par l'équipe qui n'est pas au point. <strong>Seule l'équipe dont la boule est la plus proche</strong> du cochonnet marque des points à la fin de la mène — autant de points que de boules plus proches que la meilleure boule adverse.
+      </div>
+    </div>
+
+    <div class="rule-card sky">
+      <span class="rule-num">04</span>
+      <span class="rule-icon">📋</span>
+      <div class="rule-title">Phase de poules</div>
+      <div class="rule-body">
+        Toutes les équipes sont réparties en <strong>poules de 5</strong>. Chaque équipe rencontre les 4 autres de sa poule. Une victoire (match gagné 2-0 ou 2-1) rapporte <strong>2 points</strong> au classement. Les meilleurs de chaque poule accèdent aux phases finales.
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <span class="rule-num">05</span>
+      <span class="rule-icon">🕐</span>
+      <div class="rule-title">Gestion du temps</div>
+      <div class="rule-body">
+        Pour respecter le programme de la soirée, <strong>chaque match ne doit pas dépasser 25 minutes</strong>. Si le temps est écoulé avant la fin du 2ème set, le set en cours est terminé et on compte les points. En cas d'égalité 1-1, le set décisif est réduit au <strong>premier à 5 points</strong>.
+      </div>
+    </div>
+
+    <div class="rule-card accent">
+      <span class="rule-num">06</span>
+      <span class="rule-icon">🏆</span>
+      <div class="rule-title">Esprit du tournoi</div>
+      <div class="rule-body">
+        C'est avant tout une <strong>fête</strong> ! Le fair-play est obligatoire, la bonne humeur aussi. En cas de litige, la décision de l'arbitre (Mars ou Sara) est <strong>définitive et irrévocable</strong>. Le verre à la main pendant les tirs est vivement encouragé. 🥂
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Quick recap -->
+  <div style="background:var(--cream);border:1.5px solid var(--border);border-radius:4px;padding:1.5rem 2rem;max-width:560px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;">Récapitulatif express</div>
+    <div style="font-size:14px;color:var(--muted);line-height:2;font-weight:300;">
+      ✔ &nbsp;2 joueurs par équipe — 3 boules chacun<br>
+      ✔ &nbsp;Match en 2 sets gagnants à 7 points<br>
+      ✔ &nbsp;Set décisif à 7 points si 1-1<br>
+      ✔ &nbsp;Poules de 5 équipes — chacun joue contre tous<br>
+      ✔ &nbsp;Victoire = 2 pts au classement de poule<br>
+      ✔ &nbsp;Temps max par match : 25 minutes<br>
+      ✔ &nbsp;Fair-play & bonne humeur obligatoires 🎉
+    </div>
+  </div>
+</div>
+
+<div class="footer-stripe"></div>
+<footer>
+  <div class="footer-logo">MARSARA 2026</div>
+  <div class="footer-tagline">Saint-Martin-de-Belleville · Tournoi Pétanque · Veille du mariage</div>
+</footer>
+
+<script>
+// ══ CONFIG — À remplacer avec vos vraies valeurs ══
+// ══ SEULE CHOSE À CONFIGURER ══
+// Collez ici l'URL de déploiement de votre Apps Script
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzru2qV_SdSjkRBkCpMBEvIBEP4n-bBN2vuQNAivbn1H6NQxCuV01TuaC2WudL3HM7H7Q/exec';
+
+// ══ INSCRIPTION ══
+async function submitTeam() {
+  const fields = {
+    teamName: document.getElementById('team-name').value.trim(),
+    p1First:  document.getElementById('p1-first').value.trim(),
+    p1Last:   document.getElementById('p1-last').value.trim(),
+    p2First:  document.getElementById('p2-first').value.trim(),
+    p2Last:   document.getElementById('p2-last').value.trim(),
+  };
+  const msg = document.getElementById('form-msg');
+
+  if (Object.values(fields).some(v => !v)) {
+    showMsg(msg, 'Merci de remplir tous les champs.', 'error'); return;
+  }
+
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Envoi en cours…'; btn.disabled = true;
+
+  try {
+    const resp = await fetch(WEB_APP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'addTeam', ...fields })
+    });
+    const data = await resp.json();
+    if (data.success) {
+      showMsg(msg, `✓ Équipe "${fields.teamName}" inscrite ! Bonne chance 🎯`, 'success');
+      ['team-name','p1-first','p1-last','p2-first','p2-last'].forEach(id => document.getElementById(id).value = '');
+      loadTeams(); loadStats();
+    } else {
+      showMsg(msg, data.error || 'Erreur lors de l\'inscription.', 'error');
+    }
+  } catch(e) {
+    showMsg(msg, 'Impossible de joindre le serveur. Réessayez.', 'error');
+  }
+  btn.textContent = 'Confirmer l\'inscription →'; btn.disabled = false;
+}
+
+function showMsg(el, text, type) {
+  el.style.display = 'block';
+  el.style.color = type === 'success' ? 'var(--navy)' : '#D42B2B';
+  el.textContent = text;
+}
+
+// ══ LECTURE DES ÉQUIPES (via la Web App Apps Script) ══
+async function loadTeams() {
+  const list = document.getElementById('team-list');
+  try {
+    const resp = await fetch(`${WEB_APP_URL}?action=getTeams`);
+    const data = await resp.json();
+    const teams = data.teams || [];
+    if (!teams.length) {
+      list.innerHTML = '<li class="team-item" style="color:var(--muted);font-size:13px;justify-content:center;">Aucune équipe inscrite pour l\'instant.</li>';
+      return;
+    }
+    list.innerHTML = teams.map((t, i) => `
+      <li class="team-item">
+        <span class="team-num">${i + 1}</span>
+        <span class="team-name-text">${t.name}</span>
+        <span class="team-players">${t.player1} &amp; ${t.player2}</span>
+      </li>
+    `).join('');
+    updateStats(teams.length);
+  } catch(e) {
+    list.innerHTML = '<li class="team-item" style="color:var(--muted);font-size:13px;justify-content:center;">Impossible de charger les équipes.</li>';
+  }
+}
+
+function updateStats(n) {
+  document.getElementById('stat-teams').textContent = n;
+  document.getElementById('stat-poules').textContent = n > 0 ? Math.ceil(n / 5) : 0;
+  document.getElementById('stat-matches').textContent = n > 0 ? Math.ceil(n / 5) * 10 : 0;
+}
+
+function loadStats() { loadTeams(); }
+
+// Init
+loadTeams();
+loadStats();
+</script>
+</body>
+</html>
