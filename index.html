@@ -611,15 +611,14 @@ async function submitTeam() {
       p2First:  fields.p2First,
       p2Last:   fields.p2Last
     });
-    const resp = await fetch(`${WEB_APP_URL}?${params.toString()}`);
-    const data = await resp.json();
-    if (data.success) {
-      showMsg(msg, `✓ Équipe "${fields.teamName}" inscrite ! Bonne chance 🎯`, 'success');
-      ['team-name','p1-first','p1-last','p2-first','p2-last'].forEach(id => document.getElementById(id).value = '');
-      loadTeams();
-    } else {
-      showMsg(msg, data.error || 'Erreur lors de l\'inscription.', 'error');
-    }
+    // mode no-cors : le navigateur envoie la requête mais ne lit pas la réponse
+    // C'est la seule façon fiable d'appeler Apps Script depuis un site externe
+    await fetch(`${WEB_APP_URL}?${params.toString()}`, { mode: 'no-cors' });
+    // On suppose que ça a fonctionné et on affiche le succès
+    showMsg(msg, `✓ Équipe "${fields.teamName}" inscrite ! Bonne chance 🎯`, 'success');
+    ['team-name','p1-first','p1-last','p2-first','p2-last'].forEach(id => document.getElementById(id).value = '');
+    // Recharger la liste après un court délai (le temps que le Sheet soit mis à jour)
+    setTimeout(loadTeams, 2000);
   } catch(e) {
     showMsg(msg, 'Impossible de joindre le serveur. Réessayez.', 'error');
   }
