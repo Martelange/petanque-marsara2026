@@ -603,16 +603,20 @@ async function submitTeam() {
   btn.textContent = 'Envoi en cours…'; btn.disabled = true;
 
   try {
-    const resp = await fetch(WEB_APP_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'addTeam', ...fields })
+    const params = new URLSearchParams({
+      action:   'addTeam',
+      teamName: fields.teamName,
+      p1First:  fields.p1First,
+      p1Last:   fields.p1Last,
+      p2First:  fields.p2First,
+      p2Last:   fields.p2Last
     });
+    const resp = await fetch(`${WEB_APP_URL}?${params.toString()}`);
     const data = await resp.json();
     if (data.success) {
       showMsg(msg, `✓ Équipe "${fields.teamName}" inscrite ! Bonne chance 🎯`, 'success');
       ['team-name','p1-first','p1-last','p2-first','p2-last'].forEach(id => document.getElementById(id).value = '');
-      loadTeams(); loadStats();
+      loadTeams();
     } else {
       showMsg(msg, data.error || 'Erreur lors de l\'inscription.', 'error');
     }
