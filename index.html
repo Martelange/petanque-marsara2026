@@ -300,6 +300,54 @@
   .footer-tagline { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(247,245,240,0.35); }
 
   .sep { height: 1px; background: var(--border); }
+
+  /* ── BRACKET ── */
+  .bracket {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+  .bracket-round { display: flex; flex-direction: column; gap: 0; min-width: 220px; }
+  .round-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 12px; text-align: center;
+  }
+  .round-matches { display: flex; flex-direction: column; gap: 16px; justify-content: space-around; flex: 1; }
+  .bracket-match {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    border-top: 3px solid var(--navy);
+  }
+  .bmatch-team {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 12px; gap: 8px;
+    transition: background 0.15s;
+  }
+  .bmatch-team.winner { background: rgba(13,27,62,0.07); }
+  .bmatch-team.winner .bteam-name { font-weight: 700; color: var(--navy); }
+  .bmatch-team.loser { opacity: 0.4; }
+  .bteam-name { font-size: 13px; font-weight: 500; flex: 1; }
+  .bscore {
+    width: 36px; text-align: center;
+    border: 1.5px solid var(--border); border-radius: 3px;
+    padding: 4px 2px; font-size: 13px; font-weight: 700;
+    color: var(--navy); font-family: 'Barlow', sans-serif;
+    background: var(--cream);
+  }
+  .bscore:focus { border-color: var(--navy); outline: none; }
+  .bscore:disabled { opacity: 0.3; cursor: not-allowed; }
+  .bmatch-sep {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    color: var(--red); text-align: center;
+    background: var(--cream); padding: 3px 12px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
 </style>
 </head>
 <body>
@@ -322,6 +370,7 @@
   </div>
   <div class="nav-links">
     <a href="#inscription">Inscription</a>
+    <a href="#tableau">Tableau</a>
     <a href="#regles">Règles</a>
   </div>
   <a href="#inscription" class="nav-cta">S'inscrire</a>
@@ -395,8 +444,8 @@
     <span class="stat-label">Équipes inscrites</span>
   </div>
   <div class="stat">
-    <span class="stat-num" id="stat-poules">0</span>
-    <span class="stat-label">Poules</span>
+    <span class="stat-num" id="stat-tours">0</span>
+    <span class="stat-label">Tours</span>
   </div>
   <div class="stat">
     <span class="stat-num" id="stat-matches">0</span>
@@ -487,6 +536,11 @@
       <div class="highlight-num">3</div>
       <div class="highlight-label">Boules par joueur</div>
     </div>
+    <div class="highlight-div"></div>
+    <div class="highlight-item">
+      <div class="highlight-num">❌</div>
+      <div class="highlight-label">Élimination directe</div>
+    </div>
   </div>
 
   <!-- Rule cards -->
@@ -521,10 +575,10 @@
 
     <div class="rule-card sky">
       <span class="rule-num">04</span>
-      <span class="rule-icon">📋</span>
-      <div class="rule-title">Phase de poules</div>
+      <span class="rule-icon">🏆</span>
+      <div class="rule-title">Élimination directe</div>
       <div class="rule-body">
-        Toutes les équipes sont réparties en <strong>poules de 5</strong>. Chaque équipe rencontre les 4 autres de sa poule. Une victoire (match gagné 2-0 ou 2-1) rapporte <strong>2 points</strong> au classement. Les meilleurs de chaque poule accèdent aux phases finales.
+        Le tournoi se joue en <strong>élimination directe</strong>. Les équipes sont tirées au sort et s'affrontent en tableau. <strong>L'équipe perdante est immédiatement éliminée</strong>, le gagnant passe au tour suivant. Avec 8 équipes : quarts → demis → finale. Avec 16 équipes : un tour de plus. Pas de repêchage.
       </div>
     </div>
 
@@ -564,11 +618,25 @@
       ✔ &nbsp;2 joueurs par équipe — 3 boules chacun<br>
       ✔ &nbsp;Match en 2 sets gagnants à 7 points<br>
       ✔ &nbsp;Set décisif à 7 points si 1-1<br>
-      ✔ &nbsp;Poules de 5 équipes — chacun joue contre tous<br>
-      ✔ &nbsp;Victoire = 2 pts au classement de poule<br>
+      ✔ &nbsp;Élimination directe — perdant éliminé, gagnant qualifié<br>
+      ✔ &nbsp;Tirage au sort avant le tournoi<br>
       ✔ &nbsp;Temps max par match : 20 minutes (gagnant immédiat, ou mène décisive si égalité)<br>
+      ✔ &nbsp;Scores à saisir sur le site par les équipes après chaque match<br>
       ✔ &nbsp;Fair-play & bonne humeur obligatoires 🎉
     </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ══ TABLEAU ══ -->
+<div class="content" id="tableau">
+  <div class="section-label">Tournoi</div>
+  <h2>Tableau</h2>
+  <p class="section-sub">Tirage au sort effectué par Martin &amp; Sara avant le début de la soirée. Entrez vos scores après chaque match.</p>
+
+  <div id="bracket-container">
+    <p style="color:var(--muted);font-size:14px;">Le tableau sera affiché une fois les inscriptions fermées et le tirage au sort effectué.</p>
   </div>
 </div>
 
@@ -657,8 +725,11 @@ async function loadTeams() {
 
 function updateStats(n) {
   document.getElementById('stat-teams').textContent = n;
-  document.getElementById('stat-poules').textContent = n > 0 ? Math.ceil(n / 5) : 0;
-  document.getElementById('stat-matches').textContent = n > 0 ? Math.ceil(n / 5) * 10 : 0;
+  // Tours pour élimination directe : log2 arrondi au supérieur
+  const tours = n > 1 ? Math.ceil(Math.log2(n)) : 0;
+  document.getElementById('stat-tours').textContent = tours;
+  // Matchs = n-1 en élimination directe (toujours)
+  document.getElementById('stat-matches').textContent = n > 1 ? n - 1 : 0;
 }
 
 function loadStats() { loadTeams(); }
@@ -666,6 +737,65 @@ function loadStats() { loadTeams(); }
 // Init
 loadTeams();
 loadStats();
+loadBracket();
+
+// ══ TABLEAU D'ÉLIMINATION DIRECTE ══
+async function loadBracket() {
+  try {
+    const resp = await fetch(`${WEB_APP_URL}?action=getBracket`);
+    const data = await resp.json();
+    if (!data.bracket || !data.bracket.length) return;
+    renderBracket(data.bracket);
+  } catch(e) {}
+}
+
+function renderBracket(rounds) {
+  const container = document.getElementById('bracket-container');
+  if (!rounds.length) return;
+
+  let html = '<div class="bracket">';
+  rounds.forEach((round, ri) => {
+    html += `<div class="bracket-round">
+      <div class="round-label">${round.name}</div>
+      <div class="round-matches">`;
+    round.matches.forEach((match, mi) => {
+      const t1 = match.team1 || 'À déterminer';
+      const t2 = match.team2 || 'À déterminer';
+      const s1 = match.score1 !== undefined ? match.score1 : '';
+      const s2 = match.score2 !== undefined ? match.score2 : '';
+      const winner = match.winner || '';
+      html += `<div class="bracket-match" id="match-${ri}-${mi}">
+        <div class="bmatch-team ${winner === t1 ? 'winner' : winner ? 'loser' : ''}">
+          <span class="bteam-name">${t1}</span>
+          <input class="bscore" type="number" min="0" max="2" value="${s1}" 
+            placeholder="-" onchange="saveMatchScore(${ri},${mi},0,this.value)"
+            ${!match.team1 || !match.team2 ? 'disabled' : ''}>
+        </div>
+        <div class="bmatch-sep">vs</div>
+        <div class="bmatch-team ${winner === t2 ? 'winner' : winner ? 'loser' : ''}">
+          <span class="bteam-name">${t2}</span>
+          <input class="bscore" type="number" min="0" max="2" value="${s2}"
+            placeholder="-" onchange="saveMatchScore(${ri},${mi},1,this.value)"
+            ${!match.team1 || !match.team2 ? 'disabled' : ''}>
+        </div>
+      </div>`;
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+async function saveMatchScore(roundIdx, matchIdx, teamIdx, val) {
+  const params = new URLSearchParams({
+    action: 'saveScore',
+    roundIdx, matchIdx, teamIdx, score: val
+  });
+  await fetch(`${WEB_APP_URL}?${params.toString()}`, { mode: 'no-cors' });
+  setTimeout(loadBracket, 1500);
+}
+
+loadBracket();
 </script>
 </body>
 </html>
