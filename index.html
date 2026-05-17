@@ -365,13 +365,17 @@ const ADMIN_PWD = 'marsara2026';
 // ── APPEL APPS SCRIPT ────────────────────────────────────────
 // Apps Script redirige via Google — on suit la redirection
 // et on lit la réponse JSON directement
-async function callScript(params) {
+// Lecture seule (getBracket, getTeams) — fonctionne sans CORS
+async function readScript(params) {
   const qs = new URLSearchParams(params).toString();
-  const r  = await fetch(`${WEB_APP_URL}?${qs}`, {
-    redirect: 'follow',
-    cache: 'no-cache'
-  });
+  const r  = await fetch(`${WEB_APP_URL}?${qs}`);
   return await r.json();
+}
+
+// Écriture (addTeam, saveScore) — via image tag, pas de CORS
+function writeScript(params) {
+  const img = new Image();
+  img.src = `${WEB_APP_URL}?${new URLSearchParams(params).toString()}`;
 }
 
 // ── NAVIGATION ───────────────────────────────────────────────
@@ -417,17 +421,13 @@ async function submitTeam() {
   btn.textContent = 'Envoi…'; btn.disabled = true;
 
   try {
-    const d = await callScript({ action: 'addTeam', ...f });
-    if (d.success) {
-      showMsg(msg, `✓ Équipe "${f.teamName}" inscrite ! Bonne chance 🎯`, 'success');
-      ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last']
-        .forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
-      document.getElementById('has-p3').checked = false;
-      toggleP3();
-      setTimeout(loadTeams, 1000);
-    } else {
-      showMsg(msg, d.error || 'Erreur.', 'error');
-    }
+    writeScript({ action: 'addTeam', ...f });
+    showMsg(msg, `✓ Équipe "${f.teamName}" inscrite ! Bonne chance 🎯`, 'success');
+    ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last']
+      .forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+    document.getElementById('has-p3').checked = false;
+    toggleP3();
+    setTimeout(loadTeams, 2500);
   } catch(e) {
     showMsg(msg, 'Erreur réseau : ' + e.message, 'error');
   }
@@ -439,7 +439,7 @@ let allTeams = [];
 
 async function loadTeams() {
   try {
-    const d = await callScript({ action: 'getTeams' });
+    const d = await readScript({ action: 'getTeams' });
     allTeams = d.teams || [];
     const list = document.getElementById('team-list');
     if (!allTeams.length) {
@@ -465,7 +465,7 @@ let bracket = [];
 
 async function loadBracket() {
   try {
-    const d = await callScript({ action: 'getBracket' });
+    const d = await readScript({ action: 'getBracket' });
     bracket = d.bracket || [];
     renderBracket();
   } catch(e) { console.error('loadBracket:', e.message); }
@@ -557,24 +557,19 @@ async function submitScore() {
 
   try {
     // 1. Envoyer le score
-    const d = await callScript({
+    writeScript({
       action: 'saveScore',
       roundIdx: curMatch.ri,
       matchIdx: curMatch.mi,
       score1: s1, score2: s2
     });
-
-    if (d.success) {
-      // 2. Photo si disponible — upload séparé en arrière-plan
-      const photoInput = document.getElementById('photo-input');
-      if (photoInput.files && photoInput.files[0]) {
-        uploadPhoto(photoInput.files[0], curMatch.ri, curMatch.mi);
-      }
-      showMsg(msg, '✓ Score enregistré !', 'success');
-      setTimeout(() => { closeModal(); loadBracket(); }, 1500);
-    } else {
-      showMsg(msg, d.error || 'Erreur.', 'error');
+    // Photo si disponible
+    const photoInput = document.getElementById('photo-input');
+    if (photoInput.files && photoInput.files[0]) {
+      uploadPhoto(photoInput.files[0], curMatch.ri, curMatch.mi);
     }
+    showMsg(msg, '✓ Score enregistré !', 'success');
+    setTimeout(() => { closeModal(); loadBracket(); }, 2500);
   } catch(e) {
     showMsg(msg, 'Erreur : ' + e.message, 'error');
   }
@@ -583,9 +578,9 @@ async function submitScore() {
 
 async function uploadPhoto(file, ri, mi) {
   try {
-    const base64    = await toBase64(file);
-    const b64clean  = base64.split(',')[1];
-    await callScript({
+    const base64   = await toBase64(file);
+    const b64clean = base64.split(',')[1];
+    writeScript({
       action: 'savePhoto', roundIdx: ri, matchIdx: mi,
       photo: b64clean, photoMime: file.type || 'image/jpeg'
     });
@@ -696,7 +691,7 @@ function adminLogout() {
 
 async function loadAdminData() {
   try {
-    const d     = await callScript({ action: 'getTeams' });
+    const d     = await readScript({ action: 'getTeams' });
     const teams = d.teams || [];
     document.getElementById('adm-count').textContent = teams.length;
     document.getElementById('adm-teams').innerHTML   = teams.length
@@ -720,7 +715,7 @@ async function adminGenerateBracket() {
   const msg = document.getElementById('bracket-msg');
   showMsg(msg, 'Tirage en cours…', 'success');
   try {
-    const d = await callScript({ action: 'generateBracket' });
+    const d = await readScript({ action: 'generateBracket' });
     showMsg(msg, d.success ? '✓ Tableau généré ! Allez sur l'onglet Tableau.' : d.error, d.success ? 'success' : 'error');
     if (d.success) setTimeout(loadBracket, 1000);
   } catch(e) { showMsg(msg, 'Erreur : ' + e.message, 'error'); }
@@ -730,7 +725,7 @@ async function adminResetBracket() {
   if (!confirm('Réinitialiser le tableau ?')) return;
   const msg = document.getElementById('bracket-msg');
   try {
-    await callScript({ action: 'resetBracket' });
+    await readScript({ action: 'resetBracket' });
     bracket = []; renderBracket();
     showMsg(msg, 'Tableau réinitialisé.', 'success');
   } catch(e) { showMsg(msg, 'Erreur.', 'error'); }
