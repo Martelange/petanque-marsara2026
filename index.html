@@ -377,23 +377,29 @@ function submitTeam() {
   var btn = document.getElementById('btn-submit');
   btn.textContent = 'Envoi…'; btn.disabled = true;
 
-  appsWrite({
+  appsRead({
     action:'addTeam', teamName:tn,
     p1First:p1f, p1Last:p1l,
     p2First:p2f, p2Last:p2l,
     p3First:p3f, p3Last:p3l,
     hasP3: has3 ? '1' : '0'
+  }).then(function(d) {
+    if (d.success) {
+      showMsg(msg, '✓ Équipe "' + tn + '" inscrite ! Bonne chance 🎯', 'success');
+      ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last'].forEach(function(id){
+        var el = document.getElementById(id); if (el) el.value = '';
+      });
+      document.getElementById('has-p3').checked = false;
+      toggleP3();
+      setTimeout(loadTeams, 1500);
+    } else {
+      showMsg(msg, d.error || 'Erreur.', 'error');
+    }
+    btn.textContent = "Confirmer l'inscription →"; btn.disabled = false;
+  }).catch(function(e){
+    showMsg(msg, 'Erreur réseau : ' + e.message, 'error');
+    btn.textContent = "Confirmer l'inscription →"; btn.disabled = false;
   });
-
-  showMsg(msg, '✓ Équipe "' + tn + '" inscrite ! Bonne chance 🎯', 'success');
-  ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last'].forEach(function(id){
-    var el = document.getElementById(id); if (el) el.value = '';
-  });
-  document.getElementById('has-p3').checked = false;
-  toggleP3();
-
-  btn.textContent = "Confirmer l'inscription →"; btn.disabled = false;
-  setTimeout(loadTeams, 3000);
 }
 
 // ── ÉQUIPES ──────────────────────────────────────────────────
@@ -404,7 +410,7 @@ function loadTeams() {
     allTeams = d.teams || [];
     var list = document.getElementById('team-list');
     if (!allTeams.length) {
-      list.innerHTML = '<li style="color:var(--muted);font-size:13px;padding:12px 0">Aucune équipe pour l\'instant.</li>';
+      list.innerHTML = '<li style="color:var(--muted);font-size:13px;padding:12px 0">Aucune équipe pour l&apos;instant.</li>';
     } else {
       list.innerHTML = allTeams.map(function(t, i) {
         return '<li class="team-item"><span class="team-num">' + (i+1) + '</span>' +
@@ -497,16 +503,23 @@ function submitScore() {
   var btn = document.getElementById('btn-score');
   btn.textContent = 'Envoi…'; btn.disabled = true;
 
-  appsWrite({ action:'saveScore', roundIdx:curMatch.ri, matchIdx:curMatch.mi, score1:s1, score2:s2 });
-
-  var photoInput = document.getElementById('photo-input');
-  if (photoInput.files && photoInput.files[0]) {
-    uploadPhoto(photoInput.files[0], curMatch.ri, curMatch.mi);
-  }
-
-  showMsg(msg, '✓ Score enregistré !', 'success');
-  setTimeout(function(){ closeModal(); loadBracket(); }, 2500);
-  btn.textContent = 'Valider le score →'; btn.disabled = false;
+  appsRead({ action:'saveScore', roundIdx:curMatch.ri, matchIdx:curMatch.mi, score1:s1, score2:s2 })
+  .then(function(d) {
+    if (d.success) {
+      var photoInput = document.getElementById('photo-input');
+      if (photoInput.files && photoInput.files[0]) {
+        uploadPhoto(photoInput.files[0], curMatch.ri, curMatch.mi);
+      }
+      showMsg(msg, '✓ Score enregistré !', 'success');
+      setTimeout(function(){ closeModal(); loadBracket(); }, 1500);
+    } else {
+      showMsg(msg, d.error || 'Erreur.', 'error');
+    }
+    btn.textContent = 'Valider le score →'; btn.disabled = false;
+  }).catch(function(e){
+    showMsg(msg, 'Erreur : ' + e.message, 'error');
+    btn.textContent = 'Valider le score →'; btn.disabled = false;
+  });
 }
 
 function uploadPhoto(file, ri, mi) {
@@ -536,11 +549,11 @@ function filterTeams() {
   if (!q) { sug.innerHTML = ''; return; }
   var matches = allTeams.filter(function(t){ return t.name.toLowerCase().indexOf(q) !== -1; });
   if (!matches.length) { sug.innerHTML = '<p style="color:var(--muted);font-size:13px">Aucune équipe trouvée.</p>'; return; }
-  sug.innerHTML = matches.map(function(t) {
-    return '<div onclick="selectTeam(\'' + t.name.replace(/'/g,"\\'") + '\');document.getElementById(\'team-suggestions\').innerHTML=\'\'" ' +
-      'style="padding:11px 14px;background:#fff;border:1.5px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;font-size:14px;font-weight:600">' +
-      t.name + '<span style="font-size:11px;color:var(--muted);font-weight:400"> · ' + t.player1 + (t.player2?' &amp; '+t.player2:'') + '</span></div>';
+  sug.innerHTML = matches.map(function(t,i) {
+    return '<div onclick="pickTeam(' + i + ')" style="padding:11px 14px;background:#fff;border:1.5px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;font-size:14px;font-weight:600">' +
+      t.name + '<span style="font-size:11px;color:var(--muted);font-weight:400"> &middot; ' + t.player1 + (t.player2 ? ' &amp; ' + t.player2 : '') + '</span></div>';
   }).join('');
+  window._sugMatches = matches;
 }
 
 function selectTeam(name) {
@@ -625,7 +638,7 @@ function adminGenerateBracket() {
   var msg = document.getElementById('bracket-msg');
   showMsg(msg, 'Tirage en cours…', 'success');
   appsRead({ action:'generateBracket' }).then(function(d) {
-    showMsg(msg, d.success ? '✓ Tableau généré ! Allez sur l\'onglet Tableau.' : (d.error||'Erreur.'), d.success?'success':'error');
+    showMsg(msg, d.success ? '✓ Tableau généré ! Allez sur l&apos;onglet Tableau.' : (d.error||'Erreur.'), d.success?'success':'error');
     if (d.success) setTimeout(loadBracket, 1000);
   }).catch(function(e){ showMsg(msg, 'Erreur : '+e.message, 'error'); });
 }
@@ -639,6 +652,14 @@ function adminResetBracket() {
 }
 
 // ── UTILS ────────────────────────────────────────────────────
+
+function pickTeam(i) {
+  var t = window._sugMatches && window._sugMatches[i];
+  if (!t) return;
+  document.getElementById('team-suggestions').innerHTML = '';
+  selectTeam(t.name);
+}
+
 function showMsg(el, txt, type) {
   el.textContent = txt; el.className = 'form-msg ' + type; el.style.display = 'block';
 }
