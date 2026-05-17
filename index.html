@@ -124,6 +124,20 @@ input::placeholder{color:#b0a89a}
 .adm-team{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
 .adm-team:last-child{border-bottom:none}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+.set-block{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px;transition:all .2s}
+.set-block.active{border-color:var(--navy);box-shadow:0 0 0 2px rgba(13,27,62,.1)}
+.set-block.won-t1{border-color:var(--green);background:#f0faf0}
+.set-block.won-t2{border-color:var(--red);background:#fff5f5}
+.set-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.set-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
+.set-team-name{font-size:11px;font-weight:700;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.set-team-name.right{text-align:right}
+.set-inputs{display:flex;align-items:center;gap:6px;justify-content:center}
+.set-input{width:52px;height:52px;text-align:center;font-family:'Black Han Sans',sans-serif;font-size:22px;border:2px solid var(--border);border-radius:8px;background:var(--cream);color:var(--navy);-webkit-appearance:none}
+.set-input:focus{border-color:var(--navy);outline:none;background:#fff}
+.set-input:disabled{opacity:.3;cursor:not-allowed}
+.set-dash{font-family:'Black Han Sans',sans-serif;font-size:18px;color:var(--muted)}
+.b-score-detail{font-size:9px;color:var(--muted);text-align:center;margin-top:2px}
 @media(min-width:640px){.page,.bottom-nav{max-width:480px;margin:0 auto}.bottom-nav{left:50%;transform:translateX(-50%)}}
 </style>
 </head>
@@ -301,19 +315,63 @@ input::placeholder{color:#b0a89a}
     </div>
     <div id="m-winner" style="display:none"><div class="winner-box"><div class="winner-lbl">Vainqueur</div><div class="winner-name" id="m-winner-name">—</div></div></div>
     <div id="m-score-section">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Score (sets gagnés · max 2)</div>
-      <div class="score-row">
-        <div class="score-wrap"><div class="score-lbl" id="sl1">Éq. 1</div><input type="number" class="score-big" id="s1" min="0" max="2" placeholder="0"></div>
-        <div class="score-dash">–</div>
-        <div class="score-wrap"><div class="score-lbl" id="sl2">Éq. 2</div><input type="number" class="score-big" id="s2" min="0" max="2" placeholder="0"></div>
+
+      <!-- SET 1 -->
+      <div class="set-block" id="set1-block">
+        <div class="set-label">🎯 Set 1</div>
+        <div class="set-row">
+          <div class="set-team-name" id="set-t1-1">Éq. 1</div>
+          <div class="set-inputs">
+            <input type="number" class="set-input" id="set1-t1" min="0" max="13" placeholder="0" oninput="onSetInput()">
+            <span class="set-dash">–</span>
+            <input type="number" class="set-input" id="set1-t2" min="0" max="13" placeholder="0" oninput="onSetInput()">
+          </div>
+          <div class="set-team-name right" id="set-t2-1">Éq. 2</div>
+        </div>
       </div>
+
+      <!-- SET 2 -->
+      <div class="set-block" id="set2-block" style="opacity:.4">
+        <div class="set-label">🎯 Set 2</div>
+        <div class="set-row">
+          <div class="set-team-name" id="set-t1-2">Éq. 1</div>
+          <div class="set-inputs">
+            <input type="number" class="set-input" id="set2-t1" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled>
+            <span class="set-dash">–</span>
+            <input type="number" class="set-input" id="set2-t2" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled>
+          </div>
+          <div class="set-team-name right" id="set-t2-2">Éq. 2</div>
+        </div>
+      </div>
+
+      <!-- SET 3 (décisif) -->
+      <div class="set-block" id="set3-block" style="display:none;opacity:.4">
+        <div class="set-label">⚡ Set décisif</div>
+        <div class="set-row">
+          <div class="set-team-name" id="set-t1-3">Éq. 1</div>
+          <div class="set-inputs">
+            <input type="number" class="set-input" id="set3-t1" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled>
+            <span class="set-dash">–</span>
+            <input type="number" class="set-input" id="set3-t2" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled>
+          </div>
+          <div class="set-team-name right" id="set-t2-3">Éq. 2</div>
+        </div>
+      </div>
+
+      <!-- RÉSUMÉ SETS -->
+      <div id="sets-summary" style="display:none;margin:12px 0;padding:10px;background:var(--navy);border-radius:8px;text-align:center">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px">Sets gagnés</div>
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:28px;color:var(--yellow)" id="sets-score-display">0 – 0</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px" id="sets-winner-hint"></div>
+      </div>
+
       <div class="photo-area" onclick="document.getElementById('photo-input').click()">
         <div style="font-size:26px;margin-bottom:4px">📸</div>
         <div style="font-size:13px;color:var(--muted)">Photo des équipes (optionnel)</div>
         <img id="photo-preview" class="photo-preview">
       </div>
       <input type="file" id="photo-input" accept="image/*" capture="environment" style="display:none" onchange="previewPhoto(this)">
-      <button class="btn btn-red" id="btn-score" onclick="submitScore()">Valider le score →</button>
+      <button class="btn btn-red" id="btn-score" onclick="submitScore()" disabled style="opacity:.5">Valider le score →</button>
       <div class="form-msg" id="m-msg"></div>
     </div>
   </div>
@@ -450,9 +508,12 @@ function renderBracket() {
         var s2  = (m.score2 !== null && m.score2 !== undefined && m.score2 !== '') ? m.score2 : '';
         var c1  = w && w === t1 ? 'winner' : (w && w !== t1 ? 'loser' : '');
         var c2  = w && w === t2 ? 'winner' : (w && w !== t2 ? 'loser' : '');
+        // Build set detail string e.g. "7-3, 5-7, 7-4"
+        var sets = m.sets || [];
+        var setDetail = sets.length ? sets.map(function(s){ return s.t1+'-'+s.t2; }).join(' · ') : '';
         return '<div class="b-match' + (bye ? ' b-bye' : '') + '" onclick="openMatch(' + ri + ',' + mi + ')">' +
           '<div class="b-team ' + c1 + '"><span class="b-name">' + t1 + '</span><span class="b-score">' + s1 + '</span></div>' +
-          '<div class="b-vs">' + (bye ? 'BYE' : 'vs') + '</div>' +
+          '<div class="b-vs">' + (bye ? 'BYE' : (setDetail ? setDetail : 'vs')) + '</div>' +
           '<div class="b-team ' + c2 + '"><span class="b-name">' + t2 + '</span><span class="b-score">' + s2 + '</span></div>' +
           '</div>';
       }).join('') + '</div></div>';
@@ -467,19 +528,32 @@ function openMatch(ri, mi) {
   curMatch = { ri:ri, mi:mi };
   var t1 = m.team1 || 'À déterminer', t2 = m.team2 || 'À déterminer';
   var hasTeams = m.team1 && m.team2 && t1 !== 'Bye' && t2 !== 'Bye';
+
   document.getElementById('m-round').textContent = rnd.name;
   document.getElementById('m-t1').textContent    = t1;
   document.getElementById('m-t2').textContent    = t2;
-  document.getElementById('sl1').textContent     = t1;
-  document.getElementById('sl2').textContent     = t2;
+
   var td1 = allTeams.find(function(t){ return t.name === m.team1; });
   var td2 = allTeams.find(function(t){ return t.name === m.team2; });
   document.getElementById('m-p1').textContent = td1 ? [td1.player1,td1.player2,td1.player3].filter(Boolean).join(' · ') : '—';
   document.getElementById('m-p2').textContent = td2 ? [td2.player1,td2.player2,td2.player3].filter(Boolean).join(' · ') : '—';
-  var s1 = (m.score1 !== null && m.score1 !== undefined && m.score1 !== '') ? m.score1 : '';
-  var s2 = (m.score2 !== null && m.score2 !== undefined && m.score2 !== '') ? m.score2 : '';
-  document.getElementById('s1').value = s1;
-  document.getElementById('s2').value = s2;
+
+  // Noms dans les sets
+  var t1short = t1.length > 12 ? t1.substring(0,12)+'…' : t1;
+  var t2short = t2.length > 12 ? t2.substring(0,12)+'…' : t2;
+  for (var s = 1; s <= 3; s++) {
+    document.getElementById('set-t1-'+s).textContent = t1short;
+    document.getElementById('set-t2-'+s).textContent = t2short;
+  }
+
+  // Remplir les sets existants si match déjà joué
+  var sets = m.sets || [];
+  resetSets();
+  if (sets.length >= 1) { fillSet(1, sets[0]); }
+  if (sets.length >= 2) { fillSet(2, sets[1]); }
+  if (sets.length >= 3) { fillSet(3, sets[2]); }
+  if (sets.length > 0) { onSetInput(); }
+
   document.getElementById('photo-preview').style.display = 'none';
   document.getElementById('photo-input').value = '';
   document.getElementById('m-winner').style.display = m.winner ? 'block' : 'none';
@@ -490,21 +564,148 @@ function openMatch(ri, mi) {
   document.getElementById('match-modal').classList.add('open');
 }
 
+function resetSets() {
+  for (var s = 1; s <= 3; s++) {
+    document.getElementById('set'+s+'-t1').value = '';
+    document.getElementById('set'+s+'-t2').value = '';
+    document.getElementById('set'+s+'-t1').disabled = s > 1;
+    document.getElementById('set'+s+'-t2').disabled = s > 1;
+    var block = document.getElementById('set'+s+'-block');
+    block.className = 'set-block';
+    block.style.opacity = s === 1 ? '1' : '0.4';
+  }
+  document.getElementById('set3-block').style.display = 'none';
+  document.getElementById('sets-summary').style.display = 'none';
+  document.getElementById('btn-score').disabled = true;
+  document.getElementById('btn-score').style.opacity = '0.5';
+}
+
+function fillSet(n, set) {
+  document.getElementById('set'+n+'-t1').value = set.t1 !== undefined ? set.t1 : '';
+  document.getElementById('set'+n+'-t2').value = set.t2 !== undefined ? set.t2 : '';
+  document.getElementById('set'+n+'-t1').disabled = false;
+  document.getElementById('set'+n+'-t2').disabled = false;
+  document.getElementById('set'+n+'-block').style.opacity = '1';
+}
+
+function onSetInput() {
+  var s1t1 = parseInt(document.getElementById('set1-t1').value);
+  var s1t2 = parseInt(document.getElementById('set1-t2').value);
+  var s2t1 = parseInt(document.getElementById('set2-t1').value);
+  var s2t2 = parseInt(document.getElementById('set2-t2').value);
+  var s3t1 = parseInt(document.getElementById('set3-t1').value);
+  var s3t2 = parseInt(document.getElementById('set3-t2').value);
+
+  var set1done = !isNaN(s1t1) && !isNaN(s1t2) && s1t1 !== s1t2;
+  var set1win  = set1done ? (s1t1 > s1t2 ? 1 : 2) : 0; // 1=t1 gagne, 2=t2 gagne
+
+  // Style set 1
+  if (set1done) {
+    document.getElementById('set1-block').className = 'set-block active ' + (set1win===1?'won-t1':'won-t2');
+    // Activer set 2
+    document.getElementById('set2-t1').disabled = false;
+    document.getElementById('set2-t2').disabled = false;
+    document.getElementById('set2-block').style.opacity = '1';
+    document.getElementById('set2-block').className = 'set-block active';
+  } else {
+    document.getElementById('set1-block').className = 'set-block active';
+    document.getElementById('set2-t1').disabled = true;
+    document.getElementById('set2-t2').disabled = true;
+    document.getElementById('set2-block').style.opacity = '0.4';
+  }
+
+  var set2done = set1done && !isNaN(s2t1) && !isNaN(s2t2) && s2t1 !== s2t2;
+  var set2win  = set2done ? (s2t1 > s2t2 ? 1 : 2) : 0;
+
+  if (set2done) {
+    document.getElementById('set2-block').className = 'set-block active ' + (set2win===1?'won-t1':'won-t2');
+  }
+
+  // Scores de sets
+  var winsT1 = (set1win===1?1:0) + (set2win===1?1:0);
+  var winsT2 = (set1win===2?1:0) + (set2win===2?1:0);
+
+  // Afficher set 3 si égalité 1-1
+  var need3 = set2done && winsT1 === 1 && winsT2 === 1;
+  document.getElementById('set3-block').style.display = need3 ? 'block' : 'none';
+  if (need3) {
+    document.getElementById('set3-t1').disabled = false;
+    document.getElementById('set3-t2').disabled = false;
+    document.getElementById('set3-block').style.opacity = '1';
+    document.getElementById('set3-block').className = 'set-block active';
+  }
+
+  var set3done = need3 && !isNaN(s3t1) && !isNaN(s3t2) && s3t1 !== s3t2;
+  var set3win  = set3done ? (s3t1 > s3t2 ? 1 : 2) : 0;
+  if (set3done) {
+    winsT1 += (set3win===1?1:0);
+    winsT2 += (set3win===2?1:0);
+    document.getElementById('set3-block').className = 'set-block active ' + (set3win===1?'won-t1':'won-t2');
+  }
+
+  // Match terminé ?
+  var matchDone = (winsT1 === 2 || winsT2 === 2);
+
+  // Résumé
+  if (set2done) {
+    var summary = document.getElementById('sets-summary');
+    summary.style.display = 'block';
+    document.getElementById('sets-score-display').textContent = winsT1 + ' – ' + winsT2;
+    var hint = '';
+    if (matchDone) {
+      var winnerName = winsT1 > winsT2
+        ? document.getElementById('m-t1').textContent
+        : document.getElementById('m-t2').textContent;
+      hint = '🏆 ' + winnerName + ' remporte le match !';
+    } else if (need3 && !set3done) {
+      hint = 'Égalité ! Set décisif en cours…';
+    }
+    document.getElementById('sets-winner-hint').textContent = hint;
+  } else {
+    document.getElementById('sets-summary').style.display = 'none';
+  }
+
+  // Activer le bouton valider
+  var canSubmit = matchDone;
+  document.getElementById('btn-score').disabled = !canSubmit;
+  document.getElementById('btn-score').style.opacity = canSubmit ? '1' : '0.5';
+}
+
 function closeModal() { document.getElementById('match-modal').classList.remove('open'); }
 
 function submitScore() {
   var msg = document.getElementById('m-msg');
-  var s1  = parseInt(document.getElementById('s1').value);
-  var s2  = parseInt(document.getElementById('s2').value);
-  if (isNaN(s1) || isNaN(s2)) { showMsg(msg, 'Entrez les deux scores.', 'error'); return; }
-  if (s1 === s2)               { showMsg(msg, 'Il doit y avoir un gagnant.', 'error'); return; }
-  if (s1 > 2 || s2 > 2 || s1 < 0 || s2 < 0) { showMsg(msg, 'Score entre 0 et 2.', 'error'); return; }
+
+  // Collecter les sets
+  var sets = [];
+  var s1t1 = parseInt(document.getElementById('set1-t1').value);
+  var s1t2 = parseInt(document.getElementById('set1-t2').value);
+  var s2t1 = parseInt(document.getElementById('set2-t1').value);
+  var s2t2 = parseInt(document.getElementById('set2-t2').value);
+  var s3t1 = parseInt(document.getElementById('set3-t1').value);
+  var s3t2 = parseInt(document.getElementById('set3-t2').value);
+
+  if (!isNaN(s1t1) && !isNaN(s1t2)) sets.push({t1:s1t1, t2:s1t2});
+  if (!isNaN(s2t1) && !isNaN(s2t2)) sets.push({t1:s2t1, t2:s2t2});
+  if (!isNaN(s3t1) && !isNaN(s3t2) && document.getElementById('set3-block').style.display !== 'none') sets.push({t1:s3t1, t2:s3t2});
+
+  // Calculer le score global (sets gagnés)
+  var winsT1 = 0, winsT2 = 0;
+  sets.forEach(function(s){ if(s.t1>s.t2) winsT1++; else if(s.t2>s.t1) winsT2++; });
+
+  if (winsT1 === winsT2) { showMsg(msg, 'Il doit y avoir un gagnant.', 'error'); return; }
 
   var btn = document.getElementById('btn-score');
   btn.textContent = 'Envoi…'; btn.disabled = true;
 
-  appsRead({ action:'saveScore', roundIdx:curMatch.ri, matchIdx:curMatch.mi, score1:s1, score2:s2 })
-  .then(function(d) {
+  appsRead({
+    action: 'saveScore',
+    roundIdx: curMatch.ri,
+    matchIdx: curMatch.mi,
+    score1: winsT1,
+    score2: winsT2,
+    setsJson: JSON.stringify(sets)
+  }).then(function(d) {
     if (d.success) {
       var photoInput = document.getElementById('photo-input');
       if (photoInput.files && photoInput.files[0]) {
@@ -514,8 +715,8 @@ function submitScore() {
       setTimeout(function(){ closeModal(); loadBracket(); }, 1500);
     } else {
       showMsg(msg, d.error || 'Erreur.', 'error');
+      btn.textContent = 'Valider le score →'; btn.disabled = false;
     }
-    btn.textContent = 'Valider le score →'; btn.disabled = false;
   }).catch(function(e){
     showMsg(msg, 'Erreur : ' + e.message, 'error');
     btn.textContent = 'Valider le score →'; btn.disabled = false;
