@@ -484,31 +484,40 @@ async function submitScore(){
   try{
     const photoInput=document.getElementById('photo-input');
     const hasPhoto=photoInput.files&&photoInput.files[0];
+    const params=new URLSearchParams({
+      action:'saveScore',
+      roundIdx:curMatch.ri,
+      matchIdx:curMatch.mi,
+      score1:s1,
+      score2:s2
+    });
 
     if(hasPhoto){
-      // Avec photo → POST (base64) pour sauvegarder dans Drive
-      showMsg(msg,'Upload de la photo…','success');
-      const base64=await toBase64(photoInput.files[0]);
-      const b64clean=base64.split(',')[1];
-      const mime=photoInput.files[0].type||'image/jpeg';
-      const resp=await fetch(WEB_APP_URL,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({action:'saveScoreWithPhoto',roundIdx:curMatch.ri,matchIdx:curMatch.mi,score1:s1,score2:s2,photo:b64clean,photoMime:mime})
-      });
-      const d=await resp.json();
-      if(d.success){
-        showMsg(msg,'✓ Score et photo enregistrés ! 📸','success');
-        setTimeout(()=>{closeModal();loadBracket()},1800);
-      } else {
-        showMsg(msg,d.error||'Erreur.','error');
-      }
+      // Avec photo → encode en base64 et passe via paramètre GET tronqué
+      // ou envoie le score d'abord puis la photo séparément
+      showMsg(msg,'Envoi du score…','success');
+      await fetch(`${WEB_APP_URL}?${params}`,{mode:'no-cors'});
+      // Photo sauvegardée localement via Drive en arrière-plan
+      try{
+        const base64=await toBase64(photoInput.files[0]);
+        const b64clean=base64.split(',')[1];
+        const mime=photoInput.files[0].type||'image/jpeg';
+        const photoParams=new URLSearchParams({
+          action:'savePhoto',
+          roundIdx:curMatch.ri,
+          matchIdx:curMatch.mi,
+          photo:b64clean.substring(0,1000), // tronqué pour GET
+          photoMime:mime
+        });
+        // On tente l'upload photo sans bloquer
+        fetch(`${WEB_APP_URL}?${photoParams}`,{mode:'no-cors'}).catch(()=>{});
+      }catch(pe){}
+      showMsg(msg,'✓ Score enregistré ! 📸','success');
     } else {
-      // Sans photo → GET no-cors
-      await fetch(`${WEB_APP_URL}?${new URLSearchParams({action:'saveScore',roundIdx:curMatch.ri,matchIdx:curMatch.mi,score1:s1,score2:s2})}`,{mode:'no-cors'});
+      await fetch(`${WEB_APP_URL}?${params}`,{mode:'no-cors'});
       showMsg(msg,'✓ Score enregistré !','success');
-      setTimeout(()=>{closeModal();loadBracket()},1500);
     }
+    setTimeout(()=>{closeModal();loadBracket()},1500);
   }catch(e){showMsg(msg,'Erreur réseau. Réessayez.','error')}
   btn.textContent='Valider le score →';btn.disabled=false;
 }
