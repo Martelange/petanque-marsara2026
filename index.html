@@ -7,23 +7,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --red:#D42B2B;--navy:#0D1B3E;--white:#F7F5F0;--cream:#EDE9E0;
-  --yellow:#F5C842;--sky:#7BB8D4;--muted:#6B6878;--border:rgba(13,27,62,0.13);
-  --green:#2E7D32;--safe:env(safe-area-inset-bottom,0px);
-}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+:root{--red:#D42B2B;--navy:#0D1B3E;--white:#F7F5F0;--cream:#EDE9E0;--yellow:#F5C842;--muted:#6B6878;--border:rgba(13,27,62,0.13);--green:#2E7D32;--safe:env(safe-area-inset-bottom,0px)}
+html{-webkit-text-size-adjust:100%}
 body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--navy);min-height:100vh;overflow-x:hidden}
-.page{display:none;min-height:100vh;padding-bottom:calc(70px + var(--safe))}
+.page{display:none;min-height:100vh;padding-bottom:calc(72px + var(--safe))}
 .page.active{display:block}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--navy);display:flex;padding-bottom:var(--safe);border-top:3px solid var(--red)}
-.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 8px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.45);transition:color .15s;border:none;background:none;-webkit-tap-highlight-color:transparent}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 8px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.45);border:none;background:none;-webkit-tap-highlight-color:transparent}
 .bn-item.active{color:var(--yellow)}
-.bn-icon{font-size:20px;margin-bottom:2px;line-height:1}
+.bn-icon{font-size:20px;margin-bottom:2px}
 .page-header{background:var(--navy);padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:3px solid var(--red)}
 .page-title{font-family:'Black Han Sans',sans-serif;font-size:16px;color:var(--white);letter-spacing:1px}
 .page-subtitle{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
-.header-logo{display:flex;align-items:center;gap:10px}
 .logo-ball{width:36px;height:36px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .hero-mountain{background:var(--navy);position:relative;overflow:hidden;min-height:220px;display:flex;align-items:flex-end}
 .hero-mountain svg{position:absolute;inset:0;width:100%;height:100%}
@@ -48,7 +43,7 @@ body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--navy);m
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(13,27,62,.5)}
 input[type=text],input[type=number],input[type=password]{border:1.5px solid var(--border);border-radius:6px;padding:11px 14px;font-size:15px;color:var(--navy);font-family:'Barlow',sans-serif;outline:none;background:var(--white);width:100%;transition:border-color .2s;-webkit-appearance:none}
-input:focus{border-color:var(--navy);background:#fff}
+input:focus{border-color:var(--navy)}
 input::placeholder{color:#b0a89a}
 .player-tag{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);background:var(--navy);display:inline-block;padding:5px 12px;border-radius:3px;margin:10px 0 8px}
 .player-tag.red{background:var(--red)}
@@ -56,7 +51,7 @@ input::placeholder{color:#b0a89a}
 .toggle-p3{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);cursor:pointer;margin:4px 0 12px;padding:10px 14px;background:var(--cream);border-radius:6px;border:1.5px dashed var(--border);-webkit-tap-highlight-color:transparent}
 .toggle-p3 input[type=checkbox]{width:18px;height:18px;margin:0;accent-color:var(--navy)}
 .boules-info{font-size:12px;color:var(--muted);background:var(--cream);border-radius:6px;padding:10px 14px;margin-bottom:12px;border-left:3px solid var(--yellow);line-height:1.5}
-.btn{width:100%;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;transition:background .15s;-webkit-tap-highlight-color:transparent}
+.btn{width:100%;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .btn-navy{background:var(--navy);color:var(--white)}
 .btn-red{background:var(--red);color:var(--white)}
 .btn-outline{background:transparent;border:2px solid var(--navy);color:var(--navy)}
@@ -70,7 +65,7 @@ input::placeholder{color:#b0a89a}
 .team-num{font-family:'Black Han Sans',sans-serif;font-size:16px;color:var(--red);min-width:24px}
 .team-name{font-weight:700;font-size:14px}
 .team-players{font-size:12px;color:var(--muted)}
-.team-badge{margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:10px;background:var(--cream);color:var(--navy);flex-shrink:0}
+.team-badge{margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;background:var(--cream);color:var(--navy);flex-shrink:0}
 .highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
 .hi{background:var(--navy);border-radius:8px;padding:12px 8px;text-align:center}
 .hi-num{font-family:'Black Han Sans',sans-serif;font-size:26px;color:var(--yellow);line-height:1;margin-bottom:2px}
@@ -80,21 +75,19 @@ input::placeholder{color:#b0a89a}
 .rule-badge{width:32px;height:32px;border-radius:6px;background:var(--navy);color:var(--yellow);font-family:'Black Han Sans',sans-serif;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .rule-title{font-weight:700;font-size:13px;margin-bottom:3px}
 .rule-body{font-size:12px;color:var(--muted);line-height:1.55;font-weight:300}
-/* BRACKET */
 .bracket-wrap{overflow-x:auto;padding-bottom:1rem;-webkit-overflow-scrolling:touch}
 .bracket{display:flex;gap:10px;min-width:max-content;padding:4px 0}
 .b-round{display:flex;flex-direction:column;width:150px}
 .b-round-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;margin-bottom:8px}
 .b-matches{display:flex;flex-direction:column;gap:10px;justify-content:space-around;flex:1}
-.b-match{background:#fff;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;border-top:2px solid var(--navy);-webkit-tap-highlight-color:transparent;active:box-shadow:0 0 0 2px var(--navy)}
+.b-match{background:#fff;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;border-top:2px solid var(--navy);-webkit-tap-highlight-color:transparent}
 .b-team{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;gap:6px;min-height:34px}
 .b-team.winner{background:rgba(13,27,62,.08)}
 .b-team.winner .b-name{font-weight:700}
-.b-team.loser{opacity:.3}
+.b-team.loser{opacity:.35}
 .b-name{font-size:11px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .b-score{font-family:'Black Han Sans',sans-serif;font-size:13px;color:var(--navy);min-width:16px;text-align:center}
-.b-vs{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--red);background:var(--cream);padding:2px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-/* MODAL */
+.b-vs{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;color:var(--red);background:var(--cream);padding:2px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;display:none;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:var(--white);border-radius:16px 16px 0 0;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;padding:1.25rem 1.25rem calc(1.5rem + var(--safe))}
@@ -117,8 +110,6 @@ input::placeholder{color:#b0a89a}
 .winner-box{background:var(--navy);color:var(--white);border-radius:8px;padding:10px;text-align:center;margin-bottom:1rem}
 .winner-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:2px}
 .winner-name{font-family:'Black Han Sans',sans-serif;font-size:18px;color:var(--yellow)}
-/* MON EQUIPE */
-.search-wrap{margin-bottom:1rem}
 .prog-match{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:11px;margin-bottom:8px}
 .prog-match.next{border-top:3px solid var(--yellow)}
 .prog-match.done-win{border-top:3px solid var(--green)}
@@ -129,14 +120,11 @@ input::placeholder{color:#b0a89a}
 .prog-tname{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .prog-score{font-family:'Black Han Sans',sans-serif;font-size:15px}
 .prog-vs{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--red)}
-/* ADMIN */
 .admin-section-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem;padding-bottom:6px;border-bottom:2px solid var(--border);margin-top:1.25rem}
 .adm-team{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
 .adm-team:last-child{border-bottom:none}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 @media(min-width:640px){.page,.bottom-nav{max-width:480px;margin:0 auto}.bottom-nav{left:50%;transform:translateX(-50%)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.page.active .section{animation:fadeUp .2s ease}
 </style>
 </head>
 <body>
@@ -144,12 +132,9 @@ input::placeholder{color:#b0a89a}
 <!-- PAGE HOME -->
 <div class="page active" id="page-home">
   <div class="page-header">
-    <div class="header-logo">
+    <div style="display:flex;align-items:center;gap:10px">
       <div class="logo-ball">🎯</div>
-      <div>
-        <div class="page-title">MARSARA 2026</div>
-        <div class="page-subtitle">Pétanque · Saint-Martin-de-Belleville</div>
-      </div>
+      <div><div class="page-title">MARSARA 2026</div><div class="page-subtitle">Pétanque · Saint-Martin-de-Belleville</div></div>
     </div>
   </div>
   <div class="hero-mountain">
@@ -158,7 +143,6 @@ input::placeholder{color:#b0a89a}
       <circle cx="330" cy="50" r="36" fill="#F5C842" opacity=".9"/>
       <polygon points="0,200 0,125 60,78 130,115 210,50 290,98 370,38 400,58 400,200" fill="#C4D9E6"/>
       <polygon points="210,50 226,26 244,50" fill="white" opacity=".95"/>
-      <polygon points="370,38 385,14 400,38" fill="white" opacity=".85"/>
       <polygon points="0,200 0,155 50,108 130,152 220,98 310,142 400,108 400,200" fill="#1E3060"/>
       <polygon points="220,98 236,73 253,98" fill="white"/>
       <polygon points="0,200 0,175 30,154 80,174 140,149 200,170 260,147 320,167 380,149 400,157 400,200" fill="#0D1B3E"/>
@@ -181,10 +165,7 @@ input::placeholder{color:#b0a89a}
     <div class="section-title">Votre équipe</div>
     <p class="section-sub">2 joueurs minimum, 3e joueur optionnel. 6 boules par équipe.</p>
     <div class="card">
-      <div class="form-group">
-        <label>🏆 Nom de l'équipe</label>
-        <input type="text" id="team-name" placeholder="Les Aigles des Cimes">
-      </div>
+      <div class="form-group"><label>🏆 Nom de l'équipe</label><input type="text" id="team-name" placeholder="Les Aigles des Cimes"></div>
       <div class="player-tag">Joueur 1</div>
       <div class="form-row">
         <div class="form-group"><label>Prénom</label><input type="text" id="p1-first" placeholder="Prénom"></div>
@@ -195,10 +176,7 @@ input::placeholder{color:#b0a89a}
         <div class="form-group"><label>Prénom</label><input type="text" id="p2-first" placeholder="Prénom"></div>
         <div class="form-group"><label>Nom</label><input type="text" id="p2-last" placeholder="Nom"></div>
       </div>
-      <label class="toggle-p3">
-        <input type="checkbox" id="has-p3" onchange="toggleP3()">
-        Ajouter un 3e joueur (optionnel)
-      </label>
+      <label class="toggle-p3"><input type="checkbox" id="has-p3" onchange="toggleP3()"> Ajouter un 3e joueur (optionnel)</label>
       <div id="p3-section" style="display:none">
         <div class="player-tag opt">Joueur 3</div>
         <div class="form-row">
@@ -207,13 +185,11 @@ input::placeholder{color:#b0a89a}
         </div>
       </div>
       <div class="boules-info" id="boules-info">🎳 <strong>3 boules par joueur</strong> — équipe de 2 · 6 boules au total</div>
-      <button class="btn btn-navy" onclick="submitTeam()">Confirmer l'inscription →</button>
+      <button class="btn btn-navy" id="btn-submit" onclick="submitTeam()">Confirmer l'inscription →</button>
       <div class="form-msg" id="form-msg"></div>
     </div>
     <div class="section-eyebrow" style="margin-top:1.25rem">Équipes inscrites</div>
-    <ul class="team-list" id="team-list">
-      <li style="color:var(--muted);font-size:13px;padding:12px 0">Aucune équipe pour l'instant.</li>
-    </ul>
+    <ul class="team-list" id="team-list"><li style="color:var(--muted);font-size:13px;padding:12px 0">Chargement…</li></ul>
   </div>
 </div>
 
@@ -224,33 +200,24 @@ input::placeholder{color:#b0a89a}
     <button class="btn btn-sm btn-outline" onclick="loadBracket()" style="width:auto;padding:7px 14px;font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px">↻ Actu</button>
   </div>
   <div class="section">
-    <p class="section-sub" style="margin-bottom:0.75rem">Appuyez sur un match pour voir le détail et saisir le score.</p>
-    <div id="bracket-empty" style="color:var(--muted);font-size:14px;padding:1rem 0;display:none">Le tableau sera affiché une fois le tirage effectué par Martin &amp; Sara.</div>
+    <p class="section-sub" style="margin-bottom:.75rem">Appuyez sur un match pour voir le détail et saisir le score.</p>
+    <div id="bracket-empty" style="color:var(--muted);font-size:14px;padding:1rem 0;display:none">Le tableau sera généré par Martin &amp; Sara avant le début du tournoi.</div>
     <div class="bracket-wrap"><div class="bracket" id="bracket"></div></div>
   </div>
 </div>
 
 <!-- PAGE MON EQUIPE -->
 <div class="page" id="page-team">
-  <div class="page-header">
-    <div><div class="page-title">MON ÉQUIPE</div><div class="page-subtitle">Programme &amp; résultats</div></div>
-  </div>
+  <div class="page-header"><div><div class="page-title">MON ÉQUIPE</div><div class="page-subtitle">Programme &amp; résultats</div></div></div>
   <div class="section">
     <p class="section-sub">Cherchez votre équipe pour voir votre programme.</p>
-    <div class="search-wrap">
-      <div class="form-group" style="margin-bottom:8px">
-        <input type="text" id="team-search" placeholder="Tapez le nom de votre équipe…" oninput="filterTeams()" style="font-size:16px">
-      </div>
-      <div id="team-suggestions"></div>
-    </div>
+    <div class="form-group" style="margin-bottom:8px"><input type="text" id="team-search" placeholder="Tapez le nom de votre équipe…" oninput="filterTeams()" style="font-size:16px"></div>
+    <div id="team-suggestions" style="margin-bottom:1rem"></div>
     <div id="team-program" style="display:none">
       <div class="card red-top" style="margin-bottom:1rem">
         <div style="font-family:'Black Han Sans',sans-serif;font-size:22px" id="prog-name">—</div>
         <div style="font-size:12px;color:var(--muted);margin-top:4px" id="prog-players">—</div>
-        <div style="margin-top:8px;display:flex;gap:8px">
-          <span id="prog-badge" class="team-badge">—</span>
-          <span id="prog-status" class="team-badge" style="background:var(--navy);color:var(--yellow)">—</span>
-        </div>
+        <div style="margin-top:8px;display:flex;gap:8px"><span id="prog-badge" class="team-badge">—</span><span id="prog-status" class="team-badge" style="background:var(--navy);color:var(--yellow)">—</span></div>
       </div>
       <div id="prog-matches"></div>
     </div>
@@ -259,9 +226,7 @@ input::placeholder{color:#b0a89a}
 
 <!-- PAGE REGLES -->
 <div class="page" id="page-rules">
-  <div class="page-header">
-    <div><div class="page-title">RÈGLES</div><div class="page-subtitle">Tout savoir avant de jouer</div></div>
-  </div>
+  <div class="page-header"><div><div class="page-title">RÈGLES</div><div class="page-subtitle">Tout savoir avant de jouer</div></div></div>
   <div class="section">
     <div class="highlights">
       <div class="hi"><div class="hi-num">2-3</div><div class="hi-lbl">Joueurs</div></div>
@@ -272,13 +237,13 @@ input::placeholder{color:#b0a89a}
       <div class="hi"><div class="hi-num">❌</div><div class="hi-lbl">Élimination</div></div>
     </div>
     <div class="card">
-      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">🎯 Format du match</div><div class="rule-body">2 sets gagnants à 7 points. En cas d'égalité 1-1, set décisif à 7 points. Le 7ème point est roi.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">02</div><div><div class="rule-title">👥 Équipes</div><div class="rule-body"><strong>2 ou 3 joueurs.</strong> 6 boules au total : 3 par joueur si 2, 2 par joueur si 3. Même équipe tout le tournoi.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">03</div><div><div class="rule-title">⚙️ Déroulement d'une mène</div><div class="rule-body">Cochonnet à 6–9m. L'équipe qui n'est pas au point joue en premier. Seule l'équipe la plus proche marque — autant de points que de boules devant la meilleure adverse.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">04</div><div><div class="rule-title">🏆 Élimination directe</div><div class="rule-body">Tirage au sort. Perdant = éliminé. Pas de repêchage. Le meilleur gagne tout.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">05</div><div><div class="rule-title">🕐 Gestion du temps</div><div class="rule-body">Max <strong>20 minutes.</strong> Temps écoulé → gagnant immédiat (équipe qui mène). Égalité parfaite → une dernière mène décisive.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">06</div><div><div class="rule-title">📝 Scores</div><div class="rule-body">Les deux équipes saisissent le score sur le site après chaque match. Une selfie des équipes est bienvenue 📸</div></div></div>
-      <div class="rule-item"><div class="rule-badge">07</div><div><div class="rule-title">🥂 Esprit du tournoi</div><div class="rule-body">C'est une fête ! Fair-play obligatoire. Décision de l'arbitre (Martin ou Sara) = définitive. Verre à la main encouragé.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">🎯 Format du match</div><div class="rule-body">2 sets gagnants à 7 points. En cas d'égalité 1-1, set décisif à 7 points.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">02</div><div><div class="rule-title">👥 Équipes</div><div class="rule-body"><strong>2 ou 3 joueurs.</strong> 6 boules au total : 3/joueur si 2, 2/joueur si 3. Même équipe tout le tournoi.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">03</div><div><div class="rule-title">⚙️ Déroulement d'une mène</div><div class="rule-body">Cochonnet à 6–9m. L'équipe qui n'est pas au point joue en premier. Seule l'équipe la plus proche marque.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">04</div><div><div class="rule-title">🏆 Élimination directe</div><div class="rule-body">Tirage au sort. Perdant = éliminé. Pas de repêchage.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">05</div><div><div class="rule-title">🕐 Gestion du temps</div><div class="rule-body">Max <strong>20 min.</strong> Temps écoulé → gagnant immédiat. Égalité parfaite → une dernière mène décisive.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">06</div><div><div class="rule-title">📝 Scores</div><div class="rule-body">Les deux équipes saisissent le score sur le site après chaque match. Photo bienvenue 📸</div></div></div>
+      <div class="rule-item"><div class="rule-badge">07</div><div><div class="rule-title">🥂 Esprit du tournoi</div><div class="rule-body">C'est une fête ! Fair-play obligatoire. Décision de Martin ou Sara = définitive. Verre à la main encouragé.</div></div></div>
     </div>
   </div>
 </div>
@@ -301,8 +266,8 @@ input::placeholder{color:#b0a89a}
   </div>
   <div id="admin-content" style="display:none">
     <div class="section">
-      <div class="admin-section-title">🎯 Gestion du tableau</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Une fois les inscriptions fermées, générez le tableau. Le tirage au sort est automatique.</p>
+      <div class="admin-section-title">🎯 Tableau</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Générez le tableau une fois les inscriptions fermées.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.5rem">
         <button class="btn btn-navy" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminGenerateBracket()">🎲 Générer le tirage</button>
         <button class="btn btn-outline" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminResetBracket()">↺ Réinitialiser</button>
@@ -310,8 +275,6 @@ input::placeholder{color:#b0a89a}
       <div class="form-msg" id="bracket-msg" style="text-align:left"></div>
       <div class="admin-section-title">👥 Équipes (<span id="adm-count">0</span>)</div>
       <div id="adm-teams"><p style="font-size:13px;color:var(--muted)">Chargement…</p></div>
-      <div class="admin-section-title">📊 Statut</div>
-      <div id="adm-status" style="font-size:13px;color:var(--muted)">Chargement…</div>
     </div>
   </div>
 </div>
@@ -325,7 +288,7 @@ input::placeholder{color:#b0a89a}
   <button class="bn-item" onclick="showPage('admin',this)"><div class="bn-icon">⚙️</div>Admin</button>
 </nav>
 
-<!-- MATCH MODAL -->
+<!-- MODAL MATCH -->
 <div class="modal-overlay" id="match-modal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -336,15 +299,13 @@ input::placeholder{color:#b0a89a}
       <div class="m-vs">VS</div>
       <div class="m-team"><div class="m-team-name" id="m-t2">—</div><div class="m-team-players" id="m-p2">—</div></div>
     </div>
-    <div id="m-winner" style="display:none">
-      <div class="winner-box"><div class="winner-lbl">Vainqueur</div><div class="winner-name" id="m-winner-name">—</div></div>
-    </div>
+    <div id="m-winner" style="display:none"><div class="winner-box"><div class="winner-lbl">Vainqueur</div><div class="winner-name" id="m-winner-name">—</div></div></div>
     <div id="m-score-section">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Score (sets gagnés · max 2)</div>
       <div class="score-row">
-        <div class="score-wrap"><div class="score-lbl" id="sl1">Équipe 1</div><input type="number" class="score-big" id="s1" min="0" max="2" placeholder="0"></div>
+        <div class="score-wrap"><div class="score-lbl" id="sl1">Éq. 1</div><input type="number" class="score-big" id="s1" min="0" max="2" placeholder="0"></div>
         <div class="score-dash">–</div>
-        <div class="score-wrap"><div class="score-lbl" id="sl2">Équipe 2</div><input type="number" class="score-big" id="s2" min="0" max="2" placeholder="0"></div>
+        <div class="score-wrap"><div class="score-lbl" id="sl2">Éq. 2</div><input type="number" class="score-big" id="s2" min="0" max="2" placeholder="0"></div>
       </div>
       <div class="photo-area" onclick="document.getElementById('photo-input').click()">
         <div style="font-size:26px;margin-bottom:4px">📸</div>
@@ -352,46 +313,42 @@ input::placeholder{color:#b0a89a}
         <img id="photo-preview" class="photo-preview">
       </div>
       <input type="file" id="photo-input" accept="image/*" capture="environment" style="display:none" onchange="previewPhoto(this)">
-      <button class="btn btn-red" onclick="submitScore()">Valider le score →</button>
+      <button class="btn btn-red" id="btn-score" onclick="submitScore()">Valider le score →</button>
       <div class="form-msg" id="m-msg"></div>
     </div>
   </div>
 </div>
 
 <script>
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzru2qV_SdSjkRBkCpMBEvIBEP4n-bBN2vuQNAivbn1H6NQxCuV01TuaC2WudL3HM7H7Q/exec';
-const ADMIN_PWD = 'marsara2026';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzru2qV_SdSjkRBkCpMBEvIBEP4n-bBN2vuQNAivbn1H6NQxCuV01TuaC2WudL3HM7H7Q/exec';
+const ADMIN_PWD  = 'marsara2026';
 
-// ── APPEL APPS SCRIPT ────────────────────────────────────────
-// Apps Script redirige via Google — on suit la redirection
-// et on lit la réponse JSON directement
-// Lecture seule (getBracket, getTeams) — fonctionne sans CORS
-async function readScript(params) {
-  const qs = new URLSearchParams(params).toString();
-  const r  = await fetch(`${WEB_APP_URL}?${qs}`);
-  return await r.json();
+// ── ENVOI VERS APPS SCRIPT ───────────────────────────────────
+// Lecture : fetch normal (pas de CORS car lecture publique)
+function appsRead(params) {
+  return fetch(SCRIPT_URL + '?' + new URLSearchParams(params))
+    .then(function(r){ return r.json(); });
 }
-
-// Écriture (addTeam, saveScore) — via image tag, pas de CORS
-function writeScript(params) {
-  const img = new Image();
-  img.src = `${WEB_APP_URL}?${new URLSearchParams(params).toString()}`;
+// Écriture : balise img (contourne CORS pour les GET d'écriture)
+function appsWrite(params) {
+  var img = new Image();
+  img.src = SCRIPT_URL + '?' + new URLSearchParams(params);
 }
 
 // ── NAVIGATION ───────────────────────────────────────────────
 function showPage(name, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.bn-item').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById('page-' + name).classList.add('active');
   if (btn) btn.classList.add('active');
   window.scrollTo(0, 0);
   if (name === 'bracket') loadBracket();
-  if (name === 'admin' && document.getElementById('admin-content').style.display !== 'none') loadAdminData();
+  if (name === 'admin' && document.getElementById('admin-content').style.display !== 'none') loadAdminTeams();
 }
 
-// ── P3 TOGGLE ────────────────────────────────────────────────
+// ── P3 ───────────────────────────────────────────────────────
 function toggleP3() {
-  const has = document.getElementById('has-p3').checked;
+  var has = document.getElementById('has-p3').checked;
   document.getElementById('p3-section').style.display = has ? 'block' : 'none';
   document.getElementById('boules-info').innerHTML = has
     ? '🎳 <strong>2 boules par joueur</strong> — équipe de 3 · 6 boules au total'
@@ -399,208 +356,173 @@ function toggleP3() {
 }
 
 // ── INSCRIPTION ──────────────────────────────────────────────
-async function submitTeam() {
-  const msg  = document.getElementById('form-msg');
-  const has3 = document.getElementById('has-p3').checked;
-  const f = {
-    teamName: g('team-name'), p1First: g('p1-first'), p1Last: g('p1-last'),
-    p2First:  g('p2-first'), p2Last:  g('p2-last'),
-    p3First:  has3 ? g('p3-first') : '',
-    p3Last:   has3 ? g('p3-last')  : '',
-    hasP3:    has3 ? '1' : '0'
-  };
+function submitTeam() {
+  var msg  = document.getElementById('form-msg');
+  var has3 = document.getElementById('has-p3').checked;
+  var tn   = document.getElementById('team-name').value.trim();
+  var p1f  = document.getElementById('p1-first').value.trim();
+  var p1l  = document.getElementById('p1-last').value.trim();
+  var p2f  = document.getElementById('p2-first').value.trim();
+  var p2l  = document.getElementById('p2-last').value.trim();
+  var p3f  = has3 ? document.getElementById('p3-first').value.trim() : '';
+  var p3l  = has3 ? document.getElementById('p3-last').value.trim() : '';
 
-  if (!f.teamName || !f.p1First || !f.p1Last || !f.p2First || !f.p2Last) {
+  if (!tn || !p1f || !p1l || !p2f || !p2l) {
     showMsg(msg, 'Remplissez tous les champs obligatoires.', 'error'); return;
   }
-  if (has3 && (!f.p3First || !f.p3Last)) {
+  if (has3 && (!p3f || !p3l)) {
     showMsg(msg, 'Remplissez le 3e joueur ou décochez la case.', 'error'); return;
   }
 
-  const btn = document.querySelector('#page-home .btn-navy');
+  var btn = document.getElementById('btn-submit');
   btn.textContent = 'Envoi…'; btn.disabled = true;
 
-  try {
-    writeScript({ action: 'addTeam', ...f });
-    showMsg(msg, `✓ Équipe "${f.teamName}" inscrite ! Bonne chance 🎯`, 'success');
-    ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last']
-      .forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
-    document.getElementById('has-p3').checked = false;
-    toggleP3();
-    setTimeout(loadTeams, 2500);
-  } catch(e) {
-    showMsg(msg, 'Erreur réseau : ' + e.message, 'error');
-  }
+  appsWrite({
+    action:'addTeam', teamName:tn,
+    p1First:p1f, p1Last:p1l,
+    p2First:p2f, p2Last:p2l,
+    p3First:p3f, p3Last:p3l,
+    hasP3: has3 ? '1' : '0'
+  });
+
+  showMsg(msg, '✓ Équipe "' + tn + '" inscrite ! Bonne chance 🎯', 'success');
+  ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last'].forEach(function(id){
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('has-p3').checked = false;
+  toggleP3();
+
   btn.textContent = "Confirmer l'inscription →"; btn.disabled = false;
+  setTimeout(loadTeams, 3000);
 }
 
 // ── ÉQUIPES ──────────────────────────────────────────────────
-let allTeams = [];
+var allTeams = [];
 
-async function loadTeams() {
-  try {
-    const d = await readScript({ action: 'getTeams' });
+function loadTeams() {
+  appsRead({ action:'getTeams' }).then(function(d) {
     allTeams = d.teams || [];
-    const list = document.getElementById('team-list');
+    var list = document.getElementById('team-list');
     if (!allTeams.length) {
-      list.innerHTML = '<li style="color:var(--muted);font-size:13px;padding:12px 0">Aucune équipe pour l'instant.</li>';
+      list.innerHTML = '<li style="color:var(--muted);font-size:13px;padding:12px 0">Aucune équipe pour l\'instant.</li>';
     } else {
-      list.innerHTML = allTeams.map((t, i) => `
-        <li class="team-item">
-          <span class="team-num">${i+1}</span>
-          <div><div class="team-name">${t.name}</div>
-          <div class="team-players">${t.player1} &amp; ${t.player2}${t.player3 ? ' &amp; '+t.player3 : ''}</div></div>
-          <span class="team-badge">${t.player3 ? '3j' : '2j'}</span>
-        </li>`).join('');
+      list.innerHTML = allTeams.map(function(t, i) {
+        return '<li class="team-item"><span class="team-num">' + (i+1) + '</span>' +
+          '<div><div class="team-name">' + t.name + '</div>' +
+          '<div class="team-players">' + t.player1 + ' &amp; ' + t.player2 + (t.player3 ? ' &amp; ' + t.player3 : '') + '</div></div>' +
+          '<span class="team-badge">' + (t.player3 ? '3j' : '2j') + '</span></li>';
+      }).join('');
     }
-    const n = allTeams.length;
-    document.getElementById('stat-teams').textContent = n;
+    var n = allTeams.length;
+    document.getElementById('stat-teams').textContent  = n;
     document.getElementById('stat-tours').textContent  = n > 1 ? Math.ceil(Math.log2(n)) : 0;
     document.getElementById('stat-matches').textContent = n > 1 ? n - 1 : 0;
-  } catch(e) { console.error('loadTeams:', e.message); }
+  }).catch(function(e){ console.log('loadTeams error:', e.message); });
 }
 
 // ── BRACKET ──────────────────────────────────────────────────
-let bracket = [];
+var bracket = [];
 
-async function loadBracket() {
-  try {
-    const d = await readScript({ action: 'getBracket' });
+function loadBracket() {
+  appsRead({ action:'getBracket' }).then(function(d) {
     bracket = d.bracket || [];
     renderBracket();
-  } catch(e) { console.error('loadBracket:', e.message); }
+  }).catch(function(e){ console.log('loadBracket error:', e.message); });
 }
 
 function renderBracket() {
-  const c     = document.getElementById('bracket');
-  const empty = document.getElementById('bracket-empty');
+  var c     = document.getElementById('bracket');
+  var empty = document.getElementById('bracket-empty');
   if (!bracket.length) { empty.style.display = 'block'; c.innerHTML = ''; return; }
   empty.style.display = 'none';
-  c.innerHTML = bracket.map((rnd, ri) => `
-    <div class="b-round">
-      <div class="b-round-label">${rnd.name}</div>
-      <div class="b-matches">
-        ${rnd.matches.map((m, mi) => {
-          const t1 = m.team1 || '?', t2 = m.team2 || '?';
-          const w  = m.winner || '';
-          const bye = t1 === 'Bye' || t2 === 'Bye';
-          const s1 = (m.score1 !== null && m.score1 !== undefined && m.score1 !== '') ? m.score1 : '';
-          const s2 = (m.score2 !== null && m.score2 !== undefined && m.score2 !== '') ? m.score2 : '';
-          return `<div class="b-match${bye?' b-bye':''}" onclick="openMatch(${ri},${mi})">
-            <div class="b-team ${w&&w===t1?'winner':w&&w!==t1?'loser':''}">
-              <span class="b-name">${t1}</span><span class="b-score">${s1}</span>
-            </div>
-            <div class="b-vs">${bye?'BYE':'vs'}</div>
-            <div class="b-team ${w&&w===t2?'winner':w&&w!==t2?'loser':''}">
-              <span class="b-name">${t2}</span><span class="b-score">${s2}</span>
-            </div>
-          </div>`;
-        }).join('')}
-      </div>
-    </div>`).join('');
+  c.innerHTML = bracket.map(function(rnd, ri) {
+    return '<div class="b-round"><div class="b-round-label">' + rnd.name + '</div><div class="b-matches">' +
+      rnd.matches.map(function(m, mi) {
+        var t1  = m.team1 || '?', t2 = m.team2 || '?', w = m.winner || '';
+        var bye = t1 === 'Bye' || t2 === 'Bye';
+        var s1  = (m.score1 !== null && m.score1 !== undefined && m.score1 !== '') ? m.score1 : '';
+        var s2  = (m.score2 !== null && m.score2 !== undefined && m.score2 !== '') ? m.score2 : '';
+        var c1  = w && w === t1 ? 'winner' : (w && w !== t1 ? 'loser' : '');
+        var c2  = w && w === t2 ? 'winner' : (w && w !== t2 ? 'loser' : '');
+        return '<div class="b-match' + (bye ? ' b-bye' : '') + '" onclick="openMatch(' + ri + ',' + mi + ')">' +
+          '<div class="b-team ' + c1 + '"><span class="b-name">' + t1 + '</span><span class="b-score">' + s1 + '</span></div>' +
+          '<div class="b-vs">' + (bye ? 'BYE' : 'vs') + '</div>' +
+          '<div class="b-team ' + c2 + '"><span class="b-name">' + t2 + '</span><span class="b-score">' + s2 + '</span></div>' +
+          '</div>';
+      }).join('') + '</div></div>';
+  }).join('');
 }
 
-// ── MODAL MATCH ──────────────────────────────────────────────
-let curMatch = null;
+// ── MODAL ────────────────────────────────────────────────────
+var curMatch = null;
 
 function openMatch(ri, mi) {
-  const rnd = bracket[ri], m = rnd.matches[mi];
-  curMatch  = { ri, mi };
-  const t1  = m.team1 || 'À déterminer';
-  const t2  = m.team2 || 'À déterminer';
-  const hasTeams = m.team1 && m.team2 && t1 !== 'Bye' && t2 !== 'Bye';
-
-  document.getElementById('m-round').textContent  = rnd.name;
-  document.getElementById('m-t1').textContent     = t1;
-  document.getElementById('m-t2').textContent     = t2;
-  document.getElementById('sl1').textContent      = t1;
-  document.getElementById('sl2').textContent      = t2;
-
-  const td1 = allTeams.find(t => t.name === m.team1);
-  const td2 = allTeams.find(t => t.name === m.team2);
-  document.getElementById('m-p1').textContent = td1
-    ? [td1.player1, td1.player2, td1.player3].filter(Boolean).join(' · ') : '—';
-  document.getElementById('m-p2').textContent = td2
-    ? [td2.player1, td2.player2, td2.player3].filter(Boolean).join(' · ') : '—';
-
-  const s1 = (m.score1 !== null && m.score1 !== undefined && m.score1 !== '') ? m.score1 : '';
-  const s2 = (m.score2 !== null && m.score2 !== undefined && m.score2 !== '') ? m.score2 : '';
+  var rnd = bracket[ri], m = rnd.matches[mi];
+  curMatch = { ri:ri, mi:mi };
+  var t1 = m.team1 || 'À déterminer', t2 = m.team2 || 'À déterminer';
+  var hasTeams = m.team1 && m.team2 && t1 !== 'Bye' && t2 !== 'Bye';
+  document.getElementById('m-round').textContent = rnd.name;
+  document.getElementById('m-t1').textContent    = t1;
+  document.getElementById('m-t2').textContent    = t2;
+  document.getElementById('sl1').textContent     = t1;
+  document.getElementById('sl2').textContent     = t2;
+  var td1 = allTeams.find(function(t){ return t.name === m.team1; });
+  var td2 = allTeams.find(function(t){ return t.name === m.team2; });
+  document.getElementById('m-p1').textContent = td1 ? [td1.player1,td1.player2,td1.player3].filter(Boolean).join(' · ') : '—';
+  document.getElementById('m-p2').textContent = td2 ? [td2.player1,td2.player2,td2.player3].filter(Boolean).join(' · ') : '—';
+  var s1 = (m.score1 !== null && m.score1 !== undefined && m.score1 !== '') ? m.score1 : '';
+  var s2 = (m.score2 !== null && m.score2 !== undefined && m.score2 !== '') ? m.score2 : '';
   document.getElementById('s1').value = s1;
   document.getElementById('s2').value = s2;
-
   document.getElementById('photo-preview').style.display = 'none';
   document.getElementById('photo-input').value = '';
   document.getElementById('m-winner').style.display = m.winner ? 'block' : 'none';
   if (m.winner) document.getElementById('m-winner-name').textContent = m.winner;
-  document.getElementById('m-status').textContent = m.winner ? 'Match terminé ✓'
-    : hasTeams ? 'Match à jouer' : 'En attente des équipes';
+  document.getElementById('m-status').textContent = m.winner ? 'Match terminé ✓' : hasTeams ? 'Match à jouer' : 'En attente des équipes';
   document.getElementById('m-score-section').style.display = hasTeams ? 'block' : 'none';
   document.getElementById('m-msg').style.display = 'none';
   document.getElementById('match-modal').classList.add('open');
 }
 
-function closeModal() {
-  document.getElementById('match-modal').classList.remove('open');
-}
+function closeModal() { document.getElementById('match-modal').classList.remove('open'); }
 
-async function submitScore() {
-  const msg = document.getElementById('m-msg');
-  const s1  = parseInt(document.getElementById('s1').value);
-  const s2  = parseInt(document.getElementById('s2').value);
-
+function submitScore() {
+  var msg = document.getElementById('m-msg');
+  var s1  = parseInt(document.getElementById('s1').value);
+  var s2  = parseInt(document.getElementById('s2').value);
   if (isNaN(s1) || isNaN(s2)) { showMsg(msg, 'Entrez les deux scores.', 'error'); return; }
   if (s1 === s2)               { showMsg(msg, 'Il doit y avoir un gagnant.', 'error'); return; }
   if (s1 > 2 || s2 > 2 || s1 < 0 || s2 < 0) { showMsg(msg, 'Score entre 0 et 2.', 'error'); return; }
 
-  const btn = document.querySelector('#match-modal .btn-red');
+  var btn = document.getElementById('btn-score');
   btn.textContent = 'Envoi…'; btn.disabled = true;
 
-  try {
-    // 1. Envoyer le score
-    writeScript({
-      action: 'saveScore',
-      roundIdx: curMatch.ri,
-      matchIdx: curMatch.mi,
-      score1: s1, score2: s2
-    });
-    // Photo si disponible
-    const photoInput = document.getElementById('photo-input');
-    if (photoInput.files && photoInput.files[0]) {
-      uploadPhoto(photoInput.files[0], curMatch.ri, curMatch.mi);
-    }
-    showMsg(msg, '✓ Score enregistré !', 'success');
-    setTimeout(() => { closeModal(); loadBracket(); }, 2500);
-  } catch(e) {
-    showMsg(msg, 'Erreur : ' + e.message, 'error');
+  appsWrite({ action:'saveScore', roundIdx:curMatch.ri, matchIdx:curMatch.mi, score1:s1, score2:s2 });
+
+  var photoInput = document.getElementById('photo-input');
+  if (photoInput.files && photoInput.files[0]) {
+    uploadPhoto(photoInput.files[0], curMatch.ri, curMatch.mi);
   }
+
+  showMsg(msg, '✓ Score enregistré !', 'success');
+  setTimeout(function(){ closeModal(); loadBracket(); }, 2500);
   btn.textContent = 'Valider le score →'; btn.disabled = false;
 }
 
-async function uploadPhoto(file, ri, mi) {
-  try {
-    const base64   = await toBase64(file);
-    const b64clean = base64.split(',')[1];
-    writeScript({
-      action: 'savePhoto', roundIdx: ri, matchIdx: mi,
-      photo: b64clean, photoMime: file.type || 'image/jpeg'
-    });
-  } catch(e) { console.error('Photo upload:', e.message); }
-}
-
-function toBase64(file) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload  = e => res(e.target.result);
-    r.onerror = rej;
-    r.readAsDataURL(file);
-  });
+function uploadPhoto(file, ri, mi) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var b64 = e.target.result.split(',')[1];
+    appsWrite({ action:'savePhoto', roundIdx:ri, matchIdx:mi, photo:b64, photoMime:file.type||'image/jpeg' });
+  };
+  reader.readAsDataURL(file);
 }
 
 function previewPhoto(input) {
   if (input.files && input.files[0]) {
-    const r = new FileReader();
-    r.onload = e => {
-      const img = document.getElementById('photo-preview');
+    var r = new FileReader();
+    r.onload = function(e) {
+      var img = document.getElementById('photo-preview');
       img.src = e.target.result; img.style.display = 'block';
     };
     r.readAsDataURL(input.files[0]);
@@ -609,76 +531,71 @@ function previewPhoto(input) {
 
 // ── MON ÉQUIPE ───────────────────────────────────────────────
 function filterTeams() {
-  const q   = g('team-search').toLowerCase().trim();
-  const sug = document.getElementById('team-suggestions');
+  var q   = document.getElementById('team-search').value.toLowerCase().trim();
+  var sug = document.getElementById('team-suggestions');
   if (!q) { sug.innerHTML = ''; return; }
-  const matches = allTeams.filter(t => t.name.toLowerCase().includes(q));
+  var matches = allTeams.filter(function(t){ return t.name.toLowerCase().indexOf(q) !== -1; });
   if (!matches.length) { sug.innerHTML = '<p style="color:var(--muted);font-size:13px">Aucune équipe trouvée.</p>'; return; }
-  sug.innerHTML = matches.map(t => `
-    <div onclick="selectTeam('${t.name.replace(/'/g,"\'")}');document.getElementById('team-suggestions').innerHTML=''"
-      style="padding:11px 14px;background:#fff;border:1.5px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;font-size:14px;font-weight:600">
-      ${t.name}
-      <span style="font-size:11px;color:var(--muted);font-weight:400"> · ${t.player1}${t.player2?' &amp; '+t.player2:''}${t.player3?' &amp; '+t.player3:''}</span>
-    </div>`).join('');
+  sug.innerHTML = matches.map(function(t) {
+    return '<div onclick="selectTeam(\'' + t.name.replace(/'/g,"\\'") + '\');document.getElementById(\'team-suggestions\').innerHTML=\'\'" ' +
+      'style="padding:11px 14px;background:#fff;border:1.5px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;font-size:14px;font-weight:600">' +
+      t.name + '<span style="font-size:11px;color:var(--muted);font-weight:400"> · ' + t.player1 + (t.player2?' &amp; '+t.player2:'') + '</span></div>';
+  }).join('');
 }
 
 function selectTeam(name) {
-  const team = allTeams.find(t => t.name === name);
+  var team = allTeams.find(function(t){ return t.name === name; });
   if (!team) return;
   document.getElementById('prog-name').textContent    = team.name;
-  document.getElementById('prog-players').textContent = [team.player1, team.player2, team.player3].filter(Boolean).join(' · ');
+  document.getElementById('prog-players').textContent = [team.player1,team.player2,team.player3].filter(Boolean).join(' · ');
   document.getElementById('prog-badge').textContent   = team.player3 ? '3 joueurs' : '2 joueurs';
-
-  const matches = []; let elim = false;
-  bracket.forEach((rnd, ri) => rnd.matches.forEach((m, mi) => {
-    if (m.team1 === name || m.team2 === name) {
-      const opp  = m.team1 === name ? m.team2 : m.team1;
-      const ms   = m.team1 === name ? m.score1 : m.score2;
-      const os   = m.team1 === name ? m.score2 : m.score1;
-      const done = m.winner !== '' && m.winner !== undefined && m.winner !== null;
-      const won  = m.winner === name;
-      if (done && !won) elim = true;
-      matches.push({ round: rnd.name, opp, ms, os, done, won, ri, mi });
-    }
-  }));
-
+  var matches = [], elim = false;
+  bracket.forEach(function(rnd, ri) {
+    rnd.matches.forEach(function(m, mi) {
+      if (m.team1 === name || m.team2 === name) {
+        var opp  = m.team1 === name ? m.team2 : m.team1;
+        var ms   = m.team1 === name ? m.score1 : m.score2;
+        var os   = m.team1 === name ? m.score2 : m.score1;
+        var done = m.winner !== '' && m.winner !== undefined && m.winner !== null;
+        var won  = m.winner === name;
+        if (done && !won) elim = true;
+        matches.push({ round:rnd.name, opp:opp, ms:ms, os:os, done:done, won:won, ri:ri, mi:mi });
+      }
+    });
+  });
   document.getElementById('prog-status').textContent = elim ? '❌ Éliminé' : matches.length ? '✅ En lice' : '⏳ En attente';
-  const pm   = document.getElementById('prog-matches');
-  const next = matches.find(m => !m.done);
-  pm.innerHTML = !matches.length
-    ? '<p style="color:var(--muted);font-size:13px">Tableau pas encore généré.</p>'
-    : matches.map(m => {
-        const isNext = !m.done && m === next;
-        const cls    = m.done ? (m.won ? 'done-win' : 'done-loss') : isNext ? 'next' : 'future';
-        const badge  = m.done ? (m.won ? '🏆 Victoire' : '❌ Défaite') : isNext ? '⏳ Prochain match' : '🔜 À venir';
-        const bc     = m.done ? (m.won ? 'color:var(--green)' : 'color:var(--red)') : isNext ? 'color:#b58a00' : 'color:var(--muted)';
-        const s1show = (m.ms !== null && m.ms !== undefined && m.ms !== '') ? m.ms : '—';
-        const s2show = (m.os !== null && m.os !== undefined && m.os !== '') ? m.os : '—';
-        return `<div class="prog-match ${cls}">
-          <div class="prog-badge" style="${bc}">${m.round} · ${badge}</div>
-          <div class="prog-teams">
-            <span class="prog-tname">${name}</span>
-            <span class="prog-score">${s1show}</span>
-            <span class="prog-vs">vs</span>
-            <span class="prog-score">${s2show}</span>
-            <span class="prog-tname" style="text-align:right">${m.opp || '?'}</span>
-          </div>
-        </div>`;
-      }).join('');
-
-  document.getElementById('team-search').value        = name;
+  var pm = document.getElementById('prog-matches');
+  if (!matches.length) { pm.innerHTML = '<p style="color:var(--muted);font-size:13px">Tableau pas encore généré.</p>'; }
+  else {
+    var next = matches.find(function(m){ return !m.done; });
+    pm.innerHTML = matches.map(function(m) {
+      var isNext = !m.done && m === next;
+      var cls    = m.done ? (m.won ? 'done-win' : 'done-loss') : isNext ? 'next' : 'future';
+      var badge  = m.done ? (m.won ? '🏆 Victoire' : '❌ Défaite') : isNext ? '⏳ Prochain match' : '🔜 À venir';
+      var bc     = m.done ? (m.won ? 'color:var(--green)' : 'color:var(--red)') : isNext ? 'color:#b58a00' : 'color:var(--muted)';
+      var s1s    = (m.ms !== null && m.ms !== undefined && m.ms !== '') ? m.ms : '—';
+      var s2s    = (m.os !== null && m.os !== undefined && m.os !== '') ? m.os : '—';
+      return '<div class="prog-match ' + cls + '">' +
+        '<div class="prog-badge" style="' + bc + '">' + m.round + ' · ' + badge + '</div>' +
+        '<div class="prog-teams"><span class="prog-tname">' + name + '</span>' +
+        '<span class="prog-score">' + s1s + '</span><span class="prog-vs">vs</span>' +
+        '<span class="prog-score">' + s2s + '</span>' +
+        '<span class="prog-tname" style="text-align:right">' + (m.opp||'?') + '</span></div></div>';
+    }).join('');
+  }
+  document.getElementById('team-search').value         = name;
   document.getElementById('team-program').style.display = 'block';
 }
 
 // ── ADMIN ────────────────────────────────────────────────────
 function adminLogin() {
-  const pwd = document.getElementById('admin-pwd').value;
-  const msg = document.getElementById('login-msg');
+  var pwd = document.getElementById('admin-pwd').value;
+  var msg = document.getElementById('login-msg');
   if (pwd === ADMIN_PWD) {
-    document.getElementById('admin-login').style.display  = 'none';
+    document.getElementById('admin-login').style.display   = 'none';
     document.getElementById('admin-content').style.display = 'block';
-    document.getElementById('logout-btn').style.display   = 'block';
-    loadAdminData();
+    document.getElementById('logout-btn').style.display    = 'block';
+    loadAdminTeams();
   } else { showMsg(msg, 'Mot de passe incorrect.', 'error'); }
 }
 
@@ -689,57 +606,45 @@ function adminLogout() {
   document.getElementById('admin-pwd').value = '';
 }
 
-async function loadAdminData() {
-  try {
-    const d     = await readScript({ action: 'getTeams' });
-    const teams = d.teams || [];
+function loadAdminTeams() {
+  appsRead({ action:'getTeams' }).then(function(d) {
+    var teams = d.teams || [];
     document.getElementById('adm-count').textContent = teams.length;
     document.getElementById('adm-teams').innerHTML   = teams.length
-      ? teams.map(t => `<div class="adm-team"><div class="dot"></div><div>
-          <div style="font-weight:700;font-size:13px">${t.name}</div>
-          <div style="font-size:11px;color:var(--muted)">${t.player1} · ${t.player2}${t.player3?' · '+t.player3:''}</div>
-        </div></div>`).join('')
+      ? teams.map(function(t) {
+          return '<div class="adm-team"><div class="dot"></div><div>' +
+            '<div style="font-weight:700;font-size:13px">' + t.name + '</div>' +
+            '<div style="font-size:11px;color:var(--muted)">' + t.player1 + ' · ' + t.player2 + (t.player3?' · '+t.player3:'') + '</div>' +
+            '</div></div>';
+        }).join('')
       : '<p style="font-size:13px;color:var(--muted)">Aucune équipe.</p>';
-    const n = teams.length, tours = n > 1 ? Math.ceil(Math.log2(n)) : 0;
-    document.getElementById('adm-status').innerHTML = `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <div class="card" style="padding:10px;margin:0"><div style="font-family:'Black Han Sans',sans-serif;font-size:20px">${n}</div><div style="font-size:11px;color:var(--muted)">équipes</div></div>
-        <div class="card" style="padding:10px;margin:0"><div style="font-family:'Black Han Sans',sans-serif;font-size:20px">${tours}</div><div style="font-size:11px;color:var(--muted)">tours</div></div>
-        <div class="card" style="padding:10px;margin:0"><div style="font-family:'Black Han Sans',sans-serif;font-size:20px">${n>1?n-1:0}</div><div style="font-size:11px;color:var(--muted)">matchs</div></div>
-        <div class="card" style="padding:10px;margin:0"><div style="font-family:'Black Han Sans',sans-serif;font-size:20px">${bracket.length?'✅':'⏳'}</div><div style="font-size:11px;color:var(--muted)">tableau</div></div>
-      </div>`;
-  } catch(e) { console.error('loadAdminData:', e.message); }
+  }).catch(function(e){ console.log(e); });
 }
 
-async function adminGenerateBracket() {
-  const msg = document.getElementById('bracket-msg');
+function adminGenerateBracket() {
+  var msg = document.getElementById('bracket-msg');
   showMsg(msg, 'Tirage en cours…', 'success');
-  try {
-    const d = await readScript({ action: 'generateBracket' });
-    showMsg(msg, d.success ? '✓ Tableau généré ! Allez sur l'onglet Tableau.' : d.error, d.success ? 'success' : 'error');
+  appsRead({ action:'generateBracket' }).then(function(d) {
+    showMsg(msg, d.success ? '✓ Tableau généré ! Allez sur l\'onglet Tableau.' : (d.error||'Erreur.'), d.success?'success':'error');
     if (d.success) setTimeout(loadBracket, 1000);
-  } catch(e) { showMsg(msg, 'Erreur : ' + e.message, 'error'); }
+  }).catch(function(e){ showMsg(msg, 'Erreur : '+e.message, 'error'); });
 }
 
-async function adminResetBracket() {
+function adminResetBracket() {
   if (!confirm('Réinitialiser le tableau ?')) return;
-  const msg = document.getElementById('bracket-msg');
-  try {
-    await readScript({ action: 'resetBracket' });
+  appsRead({ action:'resetBracket' }).then(function() {
     bracket = []; renderBracket();
-    showMsg(msg, 'Tableau réinitialisé.', 'success');
-  } catch(e) { showMsg(msg, 'Erreur.', 'error'); }
+    showMsg(document.getElementById('bracket-msg'), 'Tableau réinitialisé.', 'success');
+  });
 }
 
 // ── UTILS ────────────────────────────────────────────────────
-function g(id)  { return document.getElementById(id).value.trim(); }
 function showMsg(el, txt, type) {
   el.textContent = txt; el.className = 'form-msg ' + type; el.style.display = 'block';
 }
 
 // ── INIT ─────────────────────────────────────────────────────
 loadTeams();
-loadBracket();
 </script>
 </body>
 </html>
