@@ -396,7 +396,7 @@ async function submitTeam(){
   const btn=document.querySelector('#page-home .btn-navy');
   btn.textContent='Envoi…';btn.disabled=true;
   try{
-    await fetch(`${WEB_APP_URL}?${new URLSearchParams({action:'addTeam',...f})}`,{mode:'no-cors'});
+    sendViaIframe({action:'addTeam',...f});
     showMsg(msg,`✓ Équipe "${f.teamName}" inscrite ! Bonne chance 🎯`,'success');
     ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});
     document.getElementById('has-p3').checked=false;toggleP3();
@@ -481,44 +481,18 @@ async function submitScore(){
   const btn=document.querySelector('#match-modal .btn-red');
   btn.textContent='Envoi…';btn.disabled=true;
 
-  try{
-    const photoInput=document.getElementById('photo-input');
-    const hasPhoto=photoInput.files&&photoInput.files[0];
-    const params=new URLSearchParams({
-      action:'saveScore',
-      roundIdx:curMatch.ri,
-      matchIdx:curMatch.mi,
-      score1:s1,
-      score2:s2
-    });
-
-    if(hasPhoto){
-      // Avec photo → encode en base64 et passe via paramètre GET tronqué
-      // ou envoie le score d'abord puis la photo séparément
-      showMsg(msg,'Envoi du score…','success');
-      await fetch(`${WEB_APP_URL}?${params}`,{mode:'no-cors'});
-      // Photo sauvegardée localement via Drive en arrière-plan
-      try{
-        const base64=await toBase64(photoInput.files[0]);
-        const b64clean=base64.split(',')[1];
-        const mime=photoInput.files[0].type||'image/jpeg';
-        const photoParams=new URLSearchParams({
-          action:'savePhoto',
-          roundIdx:curMatch.ri,
-          matchIdx:curMatch.mi,
-          photo:b64clean.substring(0,1000), // tronqué pour GET
-          photoMime:mime
-        });
-        // On tente l'upload photo sans bloquer
-        fetch(`${WEB_APP_URL}?${photoParams}`,{mode:'no-cors'}).catch(()=>{});
-      }catch(pe){}
-      showMsg(msg,'✓ Score enregistré ! 📸','success');
-    } else {
-      await fetch(`${WEB_APP_URL}?${params}`,{mode:'no-cors'});
-      showMsg(msg,'✓ Score enregistré !','success');
-    }
-    setTimeout(()=>{closeModal();loadBracket()},1500);
-  }catch(e){showMsg(msg,'Erreur réseau. Réessayez.','error')}
+  // Technique iframe : contourne le CORS complètement
+  // On crée un formulaire caché qui soumet vers un iframe invisible
+  // Apps Script reçoit la requête normalement, sans restriction CORS
+  sendViaIframe({
+    action:'saveScore',
+    roundIdx:curMatch.ri,
+    matchIdx:curMatch.mi,
+    score1:s1,
+    score2:s2
+  });
+  showMsg(msg,'✓ Score enregistré !','success');
+  setTimeout(()=>{closeModal();loadBracket()},2000);
   btn.textContent='Valider le score →';btn.disabled=false;
 }
 
@@ -632,6 +606,45 @@ async function adminResetBracket(){
 // UTILS
 function g(id){return document.getElementById(id).value.trim()}
 function showMsg(el,txt,type){el.textContent=txt;el.className='form-msg '+type;el.style.display='block'}
+
+
+// ── IFRAME TRICK — contourne le CORS pour Apps Script ──
+// Crée un formulaire invisible qui poste vers un iframe caché.
+// Apps Script reçoit la requête GET normalement.
+function sendViaIframe(params) {
+  // Nettoyer l'ancien iframe s'il existe
+  const old = document.getElementById('hidden-iframe');
+  if (old) old.remove();
+
+  // Créer l'iframe cible
+  const iframe = document.createElement('iframe');
+  iframe.id = 'hidden-iframe';
+  iframe.name = 'hidden-iframe';
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
+  // Créer le formulaire
+  const form = document.createElement('form');
+  form.method = 'GET';
+  form.action = WEB_APP_URL;
+  form.target = 'hidden-iframe';
+  form.style.display = 'none';
+
+  // Ajouter les champs
+  Object.entries(params).forEach(([key, val]) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = val;
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+
+  // Nettoyage après envoi
+  setTimeout(() => { form.remove(); }, 3000);
+}
 
 // INIT
 loadTeams();
