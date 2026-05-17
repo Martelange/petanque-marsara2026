@@ -724,10 +724,31 @@ function submitScore() {
 }
 
 function uploadPhoto(file, ri, mi) {
+  // Redimensionner à max 600px et compresser à 60% avant envoi
+  var img = new Image();
   var reader = new FileReader();
   reader.onload = function(e) {
-    var b64 = e.target.result.split(',')[1];
-    appsWrite({ action:'savePhoto', roundIdx:ri, matchIdx:mi, photo:b64, photoMime:file.type||'image/jpeg' });
+    img.onload = function() {
+      var maxSize = 600;
+      var w = img.width, h = img.height;
+      if (w > maxSize || h > maxSize) {
+        if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+        else        { w = Math.round(w * maxSize / h); h = maxSize; }
+      }
+      var canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      var b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1];
+
+      // Envoi en POST — pas de limite de taille
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action:'savePhoto', roundIdx:ri, matchIdx:mi, photo:b64, photoMime:'image/jpeg' }),
+        mode: 'no-cors'
+      }).catch(function(){});
+    };
+    img.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
