@@ -396,7 +396,8 @@ async function submitTeam(){
   const btn=document.querySelector('#page-home .btn-navy');
   btn.textContent='Envoi…';btn.disabled=true;
   try{
-    sendViaIframe({action:'addTeam',...f});
+    const teamParams = new URLSearchParams({action:'addTeam',...f});
+    pingScript(teamParams.toString());
     showMsg(msg,`✓ Équipe "${f.teamName}" inscrite ! Bonne chance 🎯`,'success');
     ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});
     document.getElementById('has-p3').checked=false;toggleP3();
@@ -437,9 +438,9 @@ async function loadBracket(){
       const t1=m.team1||'?',t2=m.team2||'?',w=m.winner;
       const bye=t1==='Bye'||t2==='Bye';
       return `<div class="b-match${bye?' b-bye':''}" onclick="openMatch(${ri},${mi})">
-        <div class="b-team ${w&&w===t1?'winner':w&&w!==t1?'loser':''}"><span class="b-name">${t1}</span><span class="b-score">${m.score1!==''&&m.score1!==undefined?m.score1:''}</span></div>
+        <div class="b-team ${w&&w===t1?'winner':w&&w!==t1?'loser':''}"><span class="b-name">${t1}</span><span class="b-score">${m.score1!==null&&m.score1!==undefined&&m.score1!==''?m.score1:''}</span></div>
         <div class="b-vs">${bye?'BYE':'vs'}</div>
-        <div class="b-team ${w&&w===t2?'winner':w&&w!==t2?'loser':''}"><span class="b-name">${t2}</span><span class="b-score">${m.score2!==''&&m.score2!==undefined?m.score2:''}</span></div>
+        <div class="b-team ${w&&w===t2?'winner':w&&w!==t2?'loser':''}"><span class="b-name">${t2}</span><span class="b-score">${m.score2!==null&&m.score2!==undefined&&m.score2!==''?m.score2:''}</span></div>
       </div>`;
     }).join('')}</div></div>`).join('');
   }catch(e){console.log(e)}
@@ -481,18 +482,17 @@ async function submitScore(){
   const btn=document.querySelector('#match-modal .btn-red');
   btn.textContent='Envoi…';btn.disabled=true;
 
-  // Technique iframe : contourne le CORS complètement
-  // On crée un formulaire caché qui soumet vers un iframe invisible
-  // Apps Script reçoit la requête normalement, sans restriction CORS
-  sendViaIframe({
+  // Envoi via image tag — méthode la plus fiable avec Apps Script
+  const scoreParams = new URLSearchParams({
     action:'saveScore',
     roundIdx:curMatch.ri,
     matchIdx:curMatch.mi,
     score1:s1,
     score2:s2
   });
+  pingScript(scoreParams.toString());
   showMsg(msg,'✓ Score enregistré !','success');
-  setTimeout(()=>{closeModal();loadBracket()},2000);
+  setTimeout(()=>{closeModal();loadBracket()},2500);
   btn.textContent='Valider le score →';btn.disabled=false;
 }
 
@@ -608,42 +608,15 @@ function g(id){return document.getElementById(id).value.trim()}
 function showMsg(el,txt,type){el.textContent=txt;el.className='form-msg '+type;el.style.display='block'}
 
 
-// ── IFRAME TRICK — contourne le CORS pour Apps Script ──
-// Crée un formulaire invisible qui poste vers un iframe caché.
-// Apps Script reçoit la requête GET normalement.
-function sendViaIframe(params) {
-  // Nettoyer l'ancien iframe s'il existe
-  const old = document.getElementById('hidden-iframe');
-  if (old) old.remove();
-
-  // Créer l'iframe cible
-  const iframe = document.createElement('iframe');
-  iframe.id = 'hidden-iframe';
-  iframe.name = 'hidden-iframe';
-  iframe.style.display = 'none';
-  document.body.appendChild(iframe);
-
-  // Créer le formulaire
-  const form = document.createElement('form');
-  form.method = 'GET';
-  form.action = WEB_APP_URL;
-  form.target = 'hidden-iframe';
-  form.style.display = 'none';
-
-  // Ajouter les champs
-  Object.entries(params).forEach(([key, val]) => {
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = key;
-    input.value = val;
-    form.appendChild(input);
-  });
-
-  document.body.appendChild(form);
-  form.submit();
-
-  // Nettoyage après envoi
-  setTimeout(() => { form.remove(); }, 3000);
+// ── PING SCRIPT — envoie une requête GET à Apps Script ──────
+// Utilise une balise <img> dont le src déclenche une requête GET.
+// Contourne les restrictions CORS car les images ne sont pas
+// soumises aux mêmes règles de sécurité que fetch().
+function pingScript(queryString) {
+  const img = new Image();
+  img.src = WEB_APP_URL + '?' + queryString;
+  // L'image "échouera" (pas une vraie image) mais la requête
+  // GET est bien envoyée et reçue par Apps Script ✅
 }
 
 // INIT
