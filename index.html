@@ -2,799 +2,630 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Tournoi Pétanque — Marsara 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --red:    #D42B2B;
-    --navy:   #0D1B3E;
-    --white:  #F7F5F0;
-    --cream:  #EDE9E0;
-    --yellow: #F5C842;
-    --sky:    #7BB8D4;
-    --muted:  #6B6878;
-    --border: rgba(13,27,62,0.13);
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Barlow', sans-serif;
-    background: var(--white);
-    color: var(--navy);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ── TOP STRIPE ── */
-  .top-stripe { background: var(--red); height: 5px; }
-
-  /* ── NAV ── */
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 3rem;
-    border-bottom: 1.5px solid var(--border);
-    background: var(--white);
-    position: sticky; top: 0; z-index: 100;
-  }
-  .logo-group { display: flex; align-items: center; gap: 14px; }
-  .logo-emblem {
-    width: 42px; height: 42px;
-    background: var(--navy);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .logo-emblem svg { width: 22px; height: 22px; }
-  .logo-top { font-family: 'Black Han Sans', sans-serif; font-size: 15px; color: var(--navy); letter-spacing: 2px; line-height: 1.2; }
-  .logo-bot { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); }
-
-  .nav-links { display: flex; gap: 2rem; }
-  .nav-links a {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--navy); text-decoration: none; opacity: 0.55; transition: opacity 0.15s;
-  }
-  .nav-links a:hover { opacity: 1; }
-  .nav-cta {
-    background: var(--red); color: var(--white); border: none;
-    padding: 10px 22px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    border-radius: 3px; cursor: pointer; text-decoration: none;
-    transition: background 0.15s;
-  }
-  .nav-cta:hover { background: #b52020; }
-
-  /* ── HERO ── */
-  .hero {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 560px;
-  }
-
-  .hero-left {
-    background: var(--navy);
-    padding: 4rem 3.5rem 3rem;
-    display: flex; flex-direction: column; justify-content: space-between;
-    position: relative; overflow: hidden;
-  }
-  .hero-left::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: repeating-linear-gradient(
-      -45deg, transparent, transparent 18px,
-      rgba(255,255,255,0.022) 18px, rgba(255,255,255,0.022) 19px
-    );
-    pointer-events: none;
-  }
-
-  .hero-eyebrow {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--yellow); margin-bottom: 1.25rem; position: relative;
-  }
-
-  h1 {
-    font-family: 'Black Han Sans', sans-serif;
-    font-size: 72px; color: var(--white);
-    line-height: 0.88; letter-spacing: -1px;
-    margin-bottom: 1rem; position: relative;
-  }
-  h1 .red-word { color: var(--red); }
-  h1 .outline-word { -webkit-text-stroke: 2px var(--white); color: transparent; }
-
-  .hero-desc {
-    font-size: 15px; color: rgba(247,245,240,0.58);
-    line-height: 1.65; max-width: 380px;
-    font-weight: 300; position: relative; margin-bottom: 2rem;
-  }
-
-  .hero-btns { display: flex; gap: 10px; position: relative; flex-wrap: wrap; }
-  .btn-red {
-    background: var(--red); color: var(--white); border: none;
-    padding: 13px 28px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    border-radius: 3px; cursor: pointer; text-decoration: none;
-    transition: background 0.15s;
-  }
-  .btn-red:hover { background: #b52020; }
-  .btn-outline-w {
-    background: transparent; color: var(--white);
-    border: 1.5px solid rgba(247,245,240,0.3);
-    padding: 12px 24px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    border-radius: 3px; cursor: pointer; text-decoration: none;
-    transition: border-color 0.15s;
-  }
-  .btn-outline-w:hover { border-color: rgba(247,245,240,0.7); }
-
-  .hero-footer-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-    color: rgba(247,245,240,0.25); position: relative;
-  }
-
-  /* ── HERO RIGHT — Mountain Poster ── */
-  .hero-right { background: var(--sky); position: relative; overflow: hidden; }
-  .hero-right svg { width: 100%; height: 100%; position: absolute; inset: 0; }
-
-  /* ── STATS BAR ── */
-  .stats-bar {
-    background: var(--yellow);
-    display: flex; justify-content: center; gap: 5rem;
-    padding: 1.25rem 3rem;
-  }
-  .stat { display: flex; align-items: baseline; gap: 8px; }
-  .stat-num { font-family: 'Black Han Sans', sans-serif; font-size: 36px; color: var(--navy); line-height: 1; }
-  .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(13,27,62,0.5); }
-
-  /* ── SECTIONS ── */
-  .content { max-width: 1060px; margin: 0 auto; padding: 4rem 3rem; }
-  .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
-  h2 { font-family: 'Black Han Sans', sans-serif; font-size: 40px; color: var(--navy); line-height: 1; margin-bottom: 0.5rem; }
-  .section-sub { font-size: 15px; color: var(--muted); margin-bottom: 2.5rem; font-weight: 300; line-height: 1.6; }
-
-  /* ── FORM ── */
-  .form-card {
-    background: var(--cream);
-    border-radius: 4px; padding: 2.5rem;
-    max-width: 560px;
-    border-top: 4px solid var(--navy);
-    border: 1px solid var(--border);
-    border-top: 4px solid var(--navy);
-  }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-  label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(13,27,62,0.5); }
-  input {
-    border: 1.5px solid var(--border); border-radius: 3px;
-    padding: 11px 14px; font-size: 14px; color: var(--navy);
-    font-family: 'Barlow', sans-serif; outline: none;
-    background: var(--white); transition: border-color 0.2s;
-  }
-  input:focus { border-color: var(--navy); }
-  input::placeholder { color: #b0a89a; }
-  .player-tag {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--white); background: var(--navy);
-    display: inline-block; padding: 5px 14px; border-radius: 2px;
-    margin: 1.25rem 0 0.75rem;
-  }
-  .player-tag.red { background: var(--red); }
-  .submit-btn {
-    width: 100%; background: var(--navy); color: var(--white); border: none;
-    padding: 14px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 15px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-    border-radius: 3px; cursor: pointer; margin-top: 10px;
-    transition: background 0.15s;
-  }
-  .submit-btn:hover { background: #1a2e5e; }
-  .form-msg { margin-top: 12px; font-size: 13px; text-align: center; display: none; font-weight: 600; }
-
-  /* ── TEAM LIST ── */
-  .team-list-wrap { margin-top: 2.5rem; max-width: 560px; }
-  .team-list-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
-  }
-  .team-list-title::after { content:''; flex:1; height:1px; background:var(--border); }
-  .team-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-  .team-item {
-    background: var(--cream); border: 1px solid var(--border); border-radius: 3px;
-    padding: 10px 16px; display: flex; align-items: center; gap: 12px;
-    font-size: 14px;
-  }
-  .team-num {
-    font-family: 'Black Han Sans', sans-serif; font-size: 15px; color: var(--red);
-    min-width: 22px;
-  }
-  .team-name-text { font-weight: 600; color: var(--navy); }
-  .team-players { font-size: 12px; color: var(--muted); margin-left: auto; }
-
-  /* ── RULES ── */
-  .rules-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-  }
-  .rule-card {
-    background: var(--white);
-    border: 1.5px solid var(--border);
-    border-radius: 4px;
-    padding: 1.75rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .rule-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--navy);
-  }
-  .rule-card.accent::before { background: var(--red); }
-  .rule-card.yellow::before { background: var(--yellow); }
-  .rule-card.sky::before { background: var(--sky); }
-
-  .rule-num {
-    font-family: 'Black Han Sans', sans-serif;
-    font-size: 48px; color: var(--cream);
-    position: absolute; top: 12px; right: 16px;
-    line-height: 1;
-    user-select: none;
-  }
-  .rule-icon { font-size: 28px; margin-bottom: 10px; display: block; }
-  .rule-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 15px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--navy); margin-bottom: 8px;
-  }
-  .rule-body { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 300; }
-  .rule-body strong { color: var(--navy); font-weight: 600; }
-
-  /* highlight box */
-  .rules-highlight {
-    background: var(--navy);
-    border-radius: 4px;
-    padding: 2rem 2.5rem;
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-    margin-bottom: 2.5rem;
-    flex-wrap: wrap;
-  }
-  .highlight-item { text-align: center; flex: 1; min-width: 100px; }
-  .highlight-num {
-    font-family: 'Black Han Sans', sans-serif;
-    font-size: 48px; color: var(--yellow); line-height: 1;
-    margin-bottom: 4px;
-  }
-  .highlight-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-    color: rgba(247,245,240,0.55);
-  }
-  .highlight-div { width: 1px; height: 50px; background: rgba(247,245,240,0.15); flex-shrink: 0; }
-
-  /* ── FOOTER ── */
-  .footer-stripe { height: 5px; background: var(--red); margin-top: 3rem; }
-  footer {
-    background: var(--navy);
-    padding: 2rem 3rem;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .footer-logo { font-family: 'Black Han Sans', sans-serif; font-size: 17px; color: var(--white); letter-spacing: 2px; }
-  .footer-tagline { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(247,245,240,0.35); }
-
-  .sep { height: 1px; background: var(--border); }
-
-  /* ── BRACKET ── */
-  .bracket {
-    display: flex;
-    gap: 2rem;
-    overflow-x: auto;
-    padding-bottom: 1rem;
-  }
-  .bracket-round { display: flex; flex-direction: column; gap: 0; min-width: 220px; }
-  .round-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--red); margin-bottom: 12px; text-align: center;
-  }
-  .round-matches { display: flex; flex-direction: column; gap: 16px; justify-content: space-around; flex: 1; }
-  .bracket-match {
-    background: var(--white);
-    border: 1.5px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-    border-top: 3px solid var(--navy);
-  }
-  .bmatch-team {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 9px 12px; gap: 8px;
-    transition: background 0.15s;
-  }
-  .bmatch-team.winner { background: rgba(13,27,62,0.07); }
-  .bmatch-team.winner .bteam-name { font-weight: 700; color: var(--navy); }
-  .bmatch-team.loser { opacity: 0.4; }
-  .bteam-name { font-size: 13px; font-weight: 500; flex: 1; }
-  .bscore {
-    width: 36px; text-align: center;
-    border: 1.5px solid var(--border); border-radius: 3px;
-    padding: 4px 2px; font-size: 13px; font-weight: 700;
-    color: var(--navy); font-family: 'Barlow', sans-serif;
-    background: var(--cream);
-  }
-  .bscore:focus { border-color: var(--navy); outline: none; }
-  .bscore:disabled { opacity: 0.3; cursor: not-allowed; }
-  .bmatch-sep {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px; font-weight: 700; letter-spacing: 1px;
-    color: var(--red); text-align: center;
-    background: var(--cream); padding: 3px 12px;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#D42B2B;--navy:#0D1B3E;--white:#F7F5F0;--cream:#EDE9E0;
+  --yellow:#F5C842;--sky:#7BB8D4;--muted:#6B6878;--border:rgba(13,27,62,0.13);
+  --green:#2E7D32;--safe:env(safe-area-inset-bottom,0px);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--navy);min-height:100vh;overflow-x:hidden}
+.page{display:none;min-height:100vh;padding-bottom:calc(70px + var(--safe))}
+.page.active{display:block}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--navy);display:flex;padding-bottom:var(--safe);border-top:3px solid var(--red)}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 8px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.45);transition:color .15s;border:none;background:none;-webkit-tap-highlight-color:transparent}
+.bn-item.active{color:var(--yellow)}
+.bn-icon{font-size:20px;margin-bottom:2px;line-height:1}
+.page-header{background:var(--navy);padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:3px solid var(--red)}
+.page-title{font-family:'Black Han Sans',sans-serif;font-size:16px;color:var(--white);letter-spacing:1px}
+.page-subtitle{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+.header-logo{display:flex;align-items:center;gap:10px}
+.logo-ball{width:36px;height:36px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.hero-mountain{background:var(--navy);position:relative;overflow:hidden;min-height:220px;display:flex;align-items:flex-end}
+.hero-mountain svg{position:absolute;inset:0;width:100%;height:100%}
+.hero-text{position:relative;z-index:2;padding:1.25rem 1.25rem 1.75rem;color:var(--white)}
+.hero-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--yellow);margin-bottom:.4rem}
+.hero-h1{font-family:'Black Han Sans',sans-serif;font-size:38px;line-height:.9;margin-bottom:.4rem}
+.hero-h1 .red{color:var(--red)}
+.hero-h1 .outline{-webkit-text-stroke:1.5px var(--white);color:transparent}
+.hero-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5;font-weight:300}
+.stats-strip{background:var(--yellow);display:flex;justify-content:space-around;padding:.75rem 1rem}
+.stat{text-align:center}
+.stat-num{font-family:'Black Han Sans',sans-serif;font-size:26px;color:var(--navy);line-height:1}
+.stat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(13,27,62,.5)}
+.section{padding:1.25rem}
+.section-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.section-title{font-family:'Black Han Sans',sans-serif;font-size:26px;color:var(--navy);margin-bottom:.25rem}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;font-weight:300}
+.card{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:1.25rem;margin-bottom:1rem;border-top:3px solid var(--navy)}
+.card.red-top{border-top-color:var(--red)}
+.card.yellow-top{border-top-color:var(--yellow)}
+.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(13,27,62,.5)}
+input[type=text],input[type=number],input[type=password]{border:1.5px solid var(--border);border-radius:6px;padding:11px 14px;font-size:15px;color:var(--navy);font-family:'Barlow',sans-serif;outline:none;background:var(--white);width:100%;transition:border-color .2s;-webkit-appearance:none}
+input:focus{border-color:var(--navy);background:#fff}
+input::placeholder{color:#b0a89a}
+.player-tag{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);background:var(--navy);display:inline-block;padding:5px 12px;border-radius:3px;margin:10px 0 8px}
+.player-tag.red{background:var(--red)}
+.player-tag.opt{background:var(--muted)}
+.toggle-p3{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);cursor:pointer;margin:4px 0 12px;padding:10px 14px;background:var(--cream);border-radius:6px;border:1.5px dashed var(--border);-webkit-tap-highlight-color:transparent}
+.toggle-p3 input[type=checkbox]{width:18px;height:18px;margin:0;accent-color:var(--navy)}
+.boules-info{font-size:12px;color:var(--muted);background:var(--cream);border-radius:6px;padding:10px 14px;margin-bottom:12px;border-left:3px solid var(--yellow);line-height:1.5}
+.btn{width:100%;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;transition:background .15s;-webkit-tap-highlight-color:transparent}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-red{background:var(--red);color:var(--white)}
+.btn-outline{background:transparent;border:2px solid var(--navy);color:var(--navy)}
+.btn-sm{width:auto;padding:8px 16px;font-size:12px}
+.form-msg{margin-top:10px;font-size:13px;text-align:center;font-weight:600;display:none;padding:10px;border-radius:6px}
+.form-msg.success{background:#E8F5E9;color:var(--green)}
+.form-msg.error{background:#FFEBEE;color:var(--red)}
+.team-list{list-style:none}
+.team-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.team-item:last-child{border-bottom:none}
+.team-num{font-family:'Black Han Sans',sans-serif;font-size:16px;color:var(--red);min-width:24px}
+.team-name{font-weight:700;font-size:14px}
+.team-players{font-size:12px;color:var(--muted)}
+.team-badge{margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:10px;background:var(--cream);color:var(--navy);flex-shrink:0}
+.highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
+.hi{background:var(--navy);border-radius:8px;padding:12px 8px;text-align:center}
+.hi-num{font-family:'Black Han Sans',sans-serif;font-size:26px;color:var(--yellow);line-height:1;margin-bottom:2px}
+.hi-lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(247,245,240,.55)}
+.rule-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.rule-item:last-child{border-bottom:none}
+.rule-badge{width:32px;height:32px;border-radius:6px;background:var(--navy);color:var(--yellow);font-family:'Black Han Sans',sans-serif;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rule-title{font-weight:700;font-size:13px;margin-bottom:3px}
+.rule-body{font-size:12px;color:var(--muted);line-height:1.55;font-weight:300}
+/* BRACKET */
+.bracket-wrap{overflow-x:auto;padding-bottom:1rem;-webkit-overflow-scrolling:touch}
+.bracket{display:flex;gap:10px;min-width:max-content;padding:4px 0}
+.b-round{display:flex;flex-direction:column;width:150px}
+.b-round-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;margin-bottom:8px}
+.b-matches{display:flex;flex-direction:column;gap:10px;justify-content:space-around;flex:1}
+.b-match{background:#fff;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;border-top:2px solid var(--navy);-webkit-tap-highlight-color:transparent;active:box-shadow:0 0 0 2px var(--navy)}
+.b-team{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;gap:6px;min-height:34px}
+.b-team.winner{background:rgba(13,27,62,.08)}
+.b-team.winner .b-name{font-weight:700}
+.b-team.loser{opacity:.3}
+.b-name{font-size:11px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.b-score{font-family:'Black Han Sans',sans-serif;font-size:13px;color:var(--navy);min-width:16px;text-align:center}
+.b-vs{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--red);background:var(--cream);padding:2px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:16px 16px 0 0;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;padding:1.25rem 1.25rem calc(1.5rem + var(--safe))}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 1rem}
+.modal-title{font-family:'Black Han Sans',sans-serif;font-size:20px;margin-bottom:.2rem}
+.modal-sub{font-size:12px;color:var(--muted);margin-bottom:1rem}
+.modal-teams{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:1rem}
+.m-team{background:var(--cream);border-radius:8px;padding:10px;text-align:center}
+.m-team-name{font-weight:700;font-size:13px;margin-bottom:3px}
+.m-team-players{font-size:11px;color:var(--muted)}
+.m-vs{font-family:'Black Han Sans',sans-serif;font-size:18px;color:var(--red);text-align:center}
+.score-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:1rem}
+.score-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+.score-lbl{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.score-big{width:70px;height:70px;text-align:center;font-family:'Black Han Sans',sans-serif;font-size:30px;border:2px solid var(--border);border-radius:10px;background:var(--cream);color:var(--navy);-webkit-appearance:none}
+.score-big:focus{border-color:var(--navy);outline:none}
+.score-dash{font-family:'Black Han Sans',sans-serif;font-size:22px;color:var(--muted)}
+.photo-area{border:2px dashed var(--border);border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem;cursor:pointer;background:var(--cream)}
+.photo-preview{max-width:100%;border-radius:8px;margin-top:8px;display:none}
+.winner-box{background:var(--navy);color:var(--white);border-radius:8px;padding:10px;text-align:center;margin-bottom:1rem}
+.winner-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:2px}
+.winner-name{font-family:'Black Han Sans',sans-serif;font-size:18px;color:var(--yellow)}
+/* MON EQUIPE */
+.search-wrap{margin-bottom:1rem}
+.prog-match{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:11px;margin-bottom:8px}
+.prog-match.next{border-top:3px solid var(--yellow)}
+.prog-match.done-win{border-top:3px solid var(--green)}
+.prog-match.done-loss{border-top:3px solid var(--red)}
+.prog-match.future{border-top:3px solid var(--navy);opacity:.6}
+.prog-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.prog-teams{display:flex;align-items:center;gap:6px;font-size:13px}
+.prog-tname{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prog-score{font-family:'Black Han Sans',sans-serif;font-size:15px}
+.prog-vs{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--red)}
+/* ADMIN */
+.admin-section-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem;padding-bottom:6px;border-bottom:2px solid var(--border);margin-top:1.25rem}
+.adm-team{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.adm-team:last-child{border-bottom:none}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+@media(min-width:640px){.page,.bottom-nav{max-width:480px;margin:0 auto}.bottom-nav{left:50%;transform:translateX(-50%)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.page.active .section{animation:fadeUp .2s ease}
 </style>
 </head>
 <body>
 
-<div class="top-stripe"></div>
-
-<nav>
-  <div class="logo-group">
-    <div class="logo-emblem">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="9" stroke="#F7F5F0" stroke-width="1.5"/>
-        <circle cx="9" cy="9" r="2" fill="#F5C842" opacity="0.85"/>
-        <path d="M12 3 C 16 7, 18 14, 14 20" stroke="#F7F5F0" stroke-width="0.8" opacity="0.35" fill="none"/>
-      </svg>
-    </div>
-    <div>
-      <div class="logo-top">MARSARA 2026</div>
-      <div class="logo-bot">Tournoi Pétanque · Saint-Martin-de-Belleville</div>
-    </div>
-  </div>
-  <div class="nav-links">
-    <a href="#inscription">Inscription</a>
-    <a href="#tableau">Tableau</a>
-    <a href="#regles">Règles</a>
-  </div>
-  <a href="#inscription" class="nav-cta">S'inscrire</a>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-left">
-    <div>
-      <div class="hero-eyebrow">▲ Saint-Martin-de-Belleville · 1 450 m</div>
-      <h1>
-        GRAND<br>
-        <span class="red-word">TOURNOI</span><br>
-        <span class="outline-word">PÉTANQUE</span>
-      </h1>
-      <p class="hero-desc">La compétition amicale de l'année, la veille du mariage de Martin & Sara. Équipes de 2, poules, podium — et après, on danse.</p>
-      <div class="hero-btns">
-        <a href="#inscription" class="btn-red">Inscrire mon équipe</a>
-        <a href="#regles" class="btn-outline-w">Voir les règles</a>
+<!-- PAGE HOME -->
+<div class="page active" id="page-home">
+  <div class="page-header">
+    <div class="header-logo">
+      <div class="logo-ball">🎯</div>
+      <div>
+        <div class="page-title">MARSARA 2026</div>
+        <div class="page-subtitle">Pétanque · Saint-Martin-de-Belleville</div>
       </div>
     </div>
-    <div class="hero-footer-label">Vendredi soir · Veille de la cérémonie</div>
   </div>
-
-  <div class="hero-right">
-    <svg viewBox="0 0 600 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-      <rect width="600" height="560" fill="#7BB8D4"/>
-      <rect width="600" height="280" fill="#9CCCE0" opacity="0.35"/>
-      <!-- Sun -->
-      <circle cx="480" cy="105" r="58" fill="#F5C842" opacity="0.88"/>
-      <circle cx="480" cy="105" r="44" fill="#F7D96A"/>
-      <!-- Sun rays -->
-      <g stroke="#F5C842" stroke-width="1.5" opacity="0.4">
-        <line x1="480" y1="30" x2="480" y2="10"/>
-        <line x1="535" y1="50" x2="548" y2="37"/>
-        <line x1="555" y1="105" x2="578" y2="105"/>
-        <line x1="535" y1="160" x2="548" y2="173"/>
-        <line x1="425" y1="50" x2="412" y2="37"/>
-        <line x1="405" y1="105" x2="382" y2="105"/>
-      </g>
-      <!-- Far mountains (pale blue) -->
-      <polygon points="0,560 0,310 100,205 200,285 320,165 440,255 560,145 600,175 600,560" fill="#C4D9E6"/>
-      <!-- Snow caps far -->
-      <polygon points="320,165 338,136 356,165" fill="white" opacity="0.95"/>
-      <polygon points="560,145 578,116 596,145" fill="white" opacity="0.88"/>
-      <polygon points="100,205 117,180 135,205" fill="white" opacity="0.8"/>
-      <!-- Mid mountains -->
-      <polygon points="0,560 0,385 80,285 200,365 340,245 480,335 600,265 600,560" fill="#1E3060"/>
-      <!-- Snow caps mid -->
-      <polygon points="340,245 357,215 376,245" fill="white" opacity="0.95"/>
-      <polygon points="80,285 97,260 115,285" fill="white" opacity="0.9"/>
-      <polygon points="480,335 496,308 513,335" fill="white" opacity="0.85"/>
-      <!-- Front mountains -->
-      <polygon points="0,560 0,445 160,325 300,425 460,315 600,385 600,560" fill="#0D1B3E"/>
-      <polygon points="460,315 477,286 496,315" fill="white"/>
-      <!-- Pine forest -->
-      <g fill="#06102A">
-        <polygon points="0,560 0,505 22,465 44,505 68,460 92,505 116,462 140,505 164,460 188,505 212,464 236,505 260,458 284,505 308,462 332,505 356,456 380,505 404,464 428,505 452,459 476,505 500,463 524,505 548,459 572,505 600,468 600,560"/>
-      </g>
-      <!-- Red banner bottom -->
-      <rect x="0" y="512" width="600" height="48" fill="#D42B2B"/>
-      <text x="300" y="544" text-anchor="middle" font-family="'Black Han Sans', sans-serif" font-size="18" fill="white" letter-spacing="5">SAINT-MARTIN-DE-BELLEVILLE</text>
+  <div class="hero-mountain">
+    <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="200" fill="#7BB8D4"/>
+      <circle cx="330" cy="50" r="36" fill="#F5C842" opacity=".9"/>
+      <polygon points="0,200 0,125 60,78 130,115 210,50 290,98 370,38 400,58 400,200" fill="#C4D9E6"/>
+      <polygon points="210,50 226,26 244,50" fill="white" opacity=".95"/>
+      <polygon points="370,38 385,14 400,38" fill="white" opacity=".85"/>
+      <polygon points="0,200 0,155 50,108 130,152 220,98 310,142 400,108 400,200" fill="#1E3060"/>
+      <polygon points="220,98 236,73 253,98" fill="white"/>
+      <polygon points="0,200 0,175 30,154 80,174 140,149 200,170 260,147 320,167 380,149 400,157 400,200" fill="#0D1B3E"/>
+      <rect x="0" y="186" width="400" height="14" fill="#D42B2B"/>
+      <text x="200" y="197" text-anchor="middle" font-family="'Black Han Sans',sans-serif" font-size="8" fill="white" letter-spacing="3">SAINT-MARTIN-DE-BELLEVILLE</text>
     </svg>
-  </div>
-</div>
-
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stat">
-    <span class="stat-num" id="stat-teams">0</span>
-    <span class="stat-label">Équipes inscrites</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num" id="stat-tours">0</span>
-    <span class="stat-label">Tours</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num" id="stat-matches">0</span>
-    <span class="stat-label">Matchs prévus</span>
-  </div>
-</div>
-
-<!-- ══ INSCRIPTION ══ -->
-<div class="content" id="inscription">
-  <div class="section-label">Étape 01</div>
-  <h2>Inscription</h2>
-  <p class="section-sub">Formez votre équipe de 2 et inscrivez-vous avant le jour J. Un seul formulaire par équipe, chacun joue avec son binôme.</p>
-
-  <div class="form-card">
-    <div class="form-group" style="margin-bottom:14px;">
-      <label>🏆 Nom de l'équipe</label>
-      <input type="text" id="team-name" placeholder="ex: Les Aigles des Trois Vallées">
+    <div class="hero-text">
+      <div class="hero-eyebrow">▲ Vendredi soir · Veille du mariage</div>
+      <div class="hero-h1">GRAND<br><span class="red">TOURNOI</span><br><span class="outline">PÉTANQUE</span></div>
+      <div class="hero-desc">Élimination directe · 2 ou 3 joueurs · Martin &amp; Sara 2026</div>
     </div>
-
-    <div class="player-tag">Joueur 1</div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Prénom</label>
-        <input type="text" id="p1-first" placeholder="Prénom">
-      </div>
-      <div class="form-group">
-        <label>Nom</label>
-        <input type="text" id="p1-last" placeholder="Nom">
-      </div>
-    </div>
-
-    <div class="player-tag red">Joueur 2</div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Prénom</label>
-        <input type="text" id="p2-first" placeholder="Prénom">
-      </div>
-      <div class="form-group">
-        <label>Nom</label>
-        <input type="text" id="p2-last" placeholder="Nom">
-      </div>
-    </div>
-
-    <button class="submit-btn" onclick="submitTeam()">Confirmer l'inscription →</button>
-    <div class="form-msg" id="form-msg"></div>
   </div>
-
-  <!-- Team list -->
-  <div class="team-list-wrap">
-    <div class="team-list-title">Équipes inscrites</div>
+  <div class="stats-strip">
+    <div class="stat"><div class="stat-num" id="stat-teams">0</div><div class="stat-lbl">Équipes</div></div>
+    <div class="stat"><div class="stat-num" id="stat-tours">0</div><div class="stat-lbl">Tours</div></div>
+    <div class="stat"><div class="stat-num" id="stat-matches">0</div><div class="stat-lbl">Matchs</div></div>
+  </div>
+  <div class="section">
+    <div class="section-eyebrow">Inscription</div>
+    <div class="section-title">Votre équipe</div>
+    <p class="section-sub">2 joueurs minimum, 3e joueur optionnel. 6 boules par équipe.</p>
+    <div class="card">
+      <div class="form-group">
+        <label>🏆 Nom de l'équipe</label>
+        <input type="text" id="team-name" placeholder="Les Aigles des Cimes">
+      </div>
+      <div class="player-tag">Joueur 1</div>
+      <div class="form-row">
+        <div class="form-group"><label>Prénom</label><input type="text" id="p1-first" placeholder="Prénom"></div>
+        <div class="form-group"><label>Nom</label><input type="text" id="p1-last" placeholder="Nom"></div>
+      </div>
+      <div class="player-tag red">Joueur 2</div>
+      <div class="form-row">
+        <div class="form-group"><label>Prénom</label><input type="text" id="p2-first" placeholder="Prénom"></div>
+        <div class="form-group"><label>Nom</label><input type="text" id="p2-last" placeholder="Nom"></div>
+      </div>
+      <label class="toggle-p3">
+        <input type="checkbox" id="has-p3" onchange="toggleP3()">
+        Ajouter un 3e joueur (optionnel)
+      </label>
+      <div id="p3-section" style="display:none">
+        <div class="player-tag opt">Joueur 3</div>
+        <div class="form-row">
+          <div class="form-group"><label>Prénom</label><input type="text" id="p3-first" placeholder="Prénom"></div>
+          <div class="form-group"><label>Nom</label><input type="text" id="p3-last" placeholder="Nom"></div>
+        </div>
+      </div>
+      <div class="boules-info" id="boules-info">🎳 <strong>3 boules par joueur</strong> — équipe de 2 · 6 boules au total</div>
+      <button class="btn btn-navy" onclick="submitTeam()">Confirmer l'inscription →</button>
+      <div class="form-msg" id="form-msg"></div>
+    </div>
+    <div class="section-eyebrow" style="margin-top:1.25rem">Équipes inscrites</div>
     <ul class="team-list" id="team-list">
-      <li class="team-item" style="color:var(--muted);font-size:13px;justify-content:center;">Aucune équipe inscrite pour l'instant.</li>
+      <li style="color:var(--muted);font-size:13px;padding:12px 0">Aucune équipe pour l'instant.</li>
     </ul>
   </div>
 </div>
 
-<div class="sep"></div>
-
-<!-- ══ RÈGLES ══ -->
-<div class="content" id="regles">
-  <div class="section-label">À savoir avant de jouer</div>
-  <h2>Règles du tournoi</h2>
-  <p class="section-sub">Format rapide, ambiance festive — chaque partie dure environ 20 minutes maximum. Voici tout ce qu'il faut savoir pour jouer.</p>
-
-  <!-- Key numbers -->
-  <div class="rules-highlight">
-    <div class="highlight-item">
-      <div class="highlight-num">2</div>
-      <div class="highlight-label">Joueurs par équipe</div>
-    </div>
-    <div class="highlight-div"></div>
-    <div class="highlight-item">
-      <div class="highlight-num">2</div>
-      <div class="highlight-label">Sets pour gagner</div>
-    </div>
-    <div class="highlight-div"></div>
-    <div class="highlight-item">
-      <div class="highlight-num">7</div>
-      <div class="highlight-label">Points par set</div>
-    </div>
-    <div class="highlight-div"></div>
-    <div class="highlight-item">
-      <div class="highlight-num">~20</div>
-      <div class="highlight-label">Minutes par match</div>
-    </div>
-    <div class="highlight-div"></div>
-    <div class="highlight-item">
-      <div class="highlight-num">3</div>
-      <div class="highlight-label">Boules par joueur</div>
-    </div>
-    <div class="highlight-div"></div>
-    <div class="highlight-item">
-      <div class="highlight-num">❌</div>
-      <div class="highlight-label">Élimination directe</div>
-    </div>
+<!-- PAGE BRACKET -->
+<div class="page" id="page-bracket">
+  <div class="page-header">
+    <div><div class="page-title">TABLEAU</div><div class="page-subtitle">Élimination directe</div></div>
+    <button class="btn btn-sm btn-outline" onclick="loadBracket()" style="width:auto;padding:7px 14px;font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px">↻ Actu</button>
   </div>
-
-  <!-- Rule cards -->
-  <div class="rules-grid">
-
-    <div class="rule-card">
-      <span class="rule-num">01</span>
-      <span class="rule-icon">🎯</span>
-      <div class="rule-title">Format du match</div>
-      <div class="rule-body">
-        Chaque match se joue en <strong>2 sets gagnants</strong>. Le premier set à <strong>7 points</strong> est remporté. En cas d'égalité 1-1, un <strong>set décisif</strong> à 7 points départage les équipes. Pas de prolongation — le 7ème point est roi.
-      </div>
-    </div>
-
-    <div class="rule-card accent">
-      <span class="rule-num">02</span>
-      <span class="rule-icon">🏔️</span>
-      <div class="rule-title">Composition des équipes</div>
-      <div class="rule-body">
-        Les équipes sont composées de <strong>2 joueurs</strong>, qui restent ensemble pour toute la durée du tournoi. Chaque joueur dispose de <strong>3 boules</strong>. On joue en <strong>doublette</strong> : chacun lance ses 3 boules à chaque mène.
-      </div>
-    </div>
-
-    <div class="rule-card yellow">
-      <span class="rule-num">03</span>
-      <span class="rule-icon">⚙️</span>
-      <div class="rule-title">Déroulement d'une mène</div>
-      <div class="rule-body">
-        Le cochonnet est lancé à <strong>6–9 mètres</strong>. Les équipes se relaient pour lancer leurs boules, en commençant par l'équipe qui n'est pas au point. <strong>Seule l'équipe dont la boule est la plus proche</strong> du cochonnet marque des points à la fin de la mène — autant de points que de boules plus proches que la meilleure boule adverse.
-      </div>
-    </div>
-
-    <div class="rule-card sky">
-      <span class="rule-num">04</span>
-      <span class="rule-icon">🏆</span>
-      <div class="rule-title">Élimination directe</div>
-      <div class="rule-body">
-        Le tournoi se joue en <strong>élimination directe</strong>. Les équipes sont tirées au sort et s'affrontent en tableau. <strong>L'équipe perdante est immédiatement éliminée</strong>, le gagnant passe au tour suivant. Avec 8 équipes : quarts → demis → finale. Avec 16 équipes : un tour de plus. Pas de repêchage.
-      </div>
-    </div>
-
-    <div class="rule-card">
-      <span class="rule-num">05</span>
-      <span class="rule-icon">🕐</span>
-      <div class="rule-title">Gestion du temps</div>
-      <div class="rule-body">
-        Pour respecter le programme de la soirée, <strong>chaque match ne doit pas dépasser 20 minutes</strong>. Si le temps est écoulé avant la fin du match, <strong>le gagnant immédiat l'emporte</strong> — c'est-à-dire l'équipe qui mène à ce moment-là. En cas d'<strong>égalité parfaite</strong> entre les deux équipes, on joue <strong>une dernière mène décisive</strong> pour départager.
-      </div>
-    </div>
-
-    <div class="rule-card accent">
-      <span class="rule-num">06</span>
-      <span class="rule-icon">🏆</span>
-      <div class="rule-title">Esprit du tournoi</div>
-      <div class="rule-body">
-        C'est avant tout une <strong>fête</strong> ! Le fair-play est obligatoire, la bonne humeur aussi. En cas de litige, la décision de l'arbitre (Martin ou Sara) est <strong>définitive et irrévocable</strong>. Le verre à la main pendant les tirs est vivement encouragé. 🥂
-      </div>
-    </div>
-
-    <div class="rule-card yellow">
-      <span class="rule-num">07</span>
-      <span class="rule-icon">📝</span>
-      <div class="rule-title">Saisie des scores</div>
-      <div class="rule-body">
-        Les <strong>deux équipes sont responsables</strong> d'inscrire le résultat de leur match sur le site dès la fin de la partie. Rendez-vous sur la page <strong>Poules & Matchs</strong>, trouvez votre rencontre et entrez les scores. Sans résultat saisi, le match compte comme <strong>non joué</strong>.
-      </div>
-    </div>
-
+  <div class="section">
+    <p class="section-sub" style="margin-bottom:0.75rem">Appuyez sur un match pour voir le détail et saisir le score.</p>
+    <div id="bracket-empty" style="color:var(--muted);font-size:14px;padding:1rem 0;display:none">Le tableau sera affiché une fois le tirage effectué par Martin &amp; Sara.</div>
+    <div class="bracket-wrap"><div class="bracket" id="bracket"></div></div>
   </div>
+</div>
 
-  <!-- Quick recap -->
-  <div style="background:var(--cream);border:1.5px solid var(--border);border-radius:4px;padding:1.5rem 2rem;max-width:560px;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;">Récapitulatif express</div>
-    <div style="font-size:14px;color:var(--muted);line-height:2;font-weight:300;">
-      ✔ &nbsp;2 joueurs par équipe — 3 boules chacun<br>
-      ✔ &nbsp;Match en 2 sets gagnants à 7 points<br>
-      ✔ &nbsp;Set décisif à 7 points si 1-1<br>
-      ✔ &nbsp;Élimination directe — perdant éliminé, gagnant qualifié<br>
-      ✔ &nbsp;Tirage au sort avant le tournoi<br>
-      ✔ &nbsp;Temps max par match : 20 minutes (gagnant immédiat, ou mène décisive si égalité)<br>
-      ✔ &nbsp;Scores à saisir sur le site par les équipes après chaque match<br>
-      ✔ &nbsp;Fair-play & bonne humeur obligatoires 🎉
+<!-- PAGE MON EQUIPE -->
+<div class="page" id="page-team">
+  <div class="page-header">
+    <div><div class="page-title">MON ÉQUIPE</div><div class="page-subtitle">Programme &amp; résultats</div></div>
+  </div>
+  <div class="section">
+    <p class="section-sub">Cherchez votre équipe pour voir votre programme.</p>
+    <div class="search-wrap">
+      <div class="form-group" style="margin-bottom:8px">
+        <input type="text" id="team-search" placeholder="Tapez le nom de votre équipe…" oninput="filterTeams()" style="font-size:16px">
+      </div>
+      <div id="team-suggestions"></div>
+    </div>
+    <div id="team-program" style="display:none">
+      <div class="card red-top" style="margin-bottom:1rem">
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:22px" id="prog-name">—</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px" id="prog-players">—</div>
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <span id="prog-badge" class="team-badge">—</span>
+          <span id="prog-status" class="team-badge" style="background:var(--navy);color:var(--yellow)">—</span>
+        </div>
+      </div>
+      <div id="prog-matches"></div>
     </div>
   </div>
 </div>
 
-<div class="sep"></div>
-
-<!-- ══ TABLEAU ══ -->
-<div class="content" id="tableau">
-  <div class="section-label">Tournoi</div>
-  <h2>Tableau</h2>
-  <p class="section-sub">Tirage au sort effectué par Martin &amp; Sara avant le début de la soirée. Entrez vos scores après chaque match.</p>
-
-  <div id="bracket-container">
-    <p style="color:var(--muted);font-size:14px;">Le tableau sera affiché une fois les inscriptions fermées et le tirage au sort effectué.</p>
+<!-- PAGE REGLES -->
+<div class="page" id="page-rules">
+  <div class="page-header">
+    <div><div class="page-title">RÈGLES</div><div class="page-subtitle">Tout savoir avant de jouer</div></div>
+  </div>
+  <div class="section">
+    <div class="highlights">
+      <div class="hi"><div class="hi-num">2-3</div><div class="hi-lbl">Joueurs</div></div>
+      <div class="hi"><div class="hi-num">6</div><div class="hi-lbl">Boules</div></div>
+      <div class="hi"><div class="hi-num">7</div><div class="hi-lbl">Pts/set</div></div>
+      <div class="hi"><div class="hi-num">2</div><div class="hi-lbl">Sets gagnants</div></div>
+      <div class="hi"><div class="hi-num">20'</div><div class="hi-lbl">Max/match</div></div>
+      <div class="hi"><div class="hi-num">❌</div><div class="hi-lbl">Élimination</div></div>
+    </div>
+    <div class="card">
+      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">🎯 Format du match</div><div class="rule-body">2 sets gagnants à 7 points. En cas d'égalité 1-1, set décisif à 7 points. Le 7ème point est roi.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">02</div><div><div class="rule-title">👥 Équipes</div><div class="rule-body"><strong>2 ou 3 joueurs.</strong> 6 boules au total : 3 par joueur si 2, 2 par joueur si 3. Même équipe tout le tournoi.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">03</div><div><div class="rule-title">⚙️ Déroulement d'une mène</div><div class="rule-body">Cochonnet à 6–9m. L'équipe qui n'est pas au point joue en premier. Seule l'équipe la plus proche marque — autant de points que de boules devant la meilleure adverse.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">04</div><div><div class="rule-title">🏆 Élimination directe</div><div class="rule-body">Tirage au sort. Perdant = éliminé. Pas de repêchage. Le meilleur gagne tout.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">05</div><div><div class="rule-title">🕐 Gestion du temps</div><div class="rule-body">Max <strong>20 minutes.</strong> Temps écoulé → gagnant immédiat (équipe qui mène). Égalité parfaite → une dernière mène décisive.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">06</div><div><div class="rule-title">📝 Scores</div><div class="rule-body">Les deux équipes saisissent le score sur le site après chaque match. Une selfie des équipes est bienvenue 📸</div></div></div>
+      <div class="rule-item"><div class="rule-badge">07</div><div><div class="rule-title">🥂 Esprit du tournoi</div><div class="rule-body">C'est une fête ! Fair-play obligatoire. Décision de l'arbitre (Martin ou Sara) = définitive. Verre à la main encouragé.</div></div></div>
+    </div>
   </div>
 </div>
 
-<div class="footer-stripe"></div>
-<footer>
-  <div class="footer-logo">MARSARA 2026</div>
-  <div class="footer-tagline">Saint-Martin-de-Belleville · Tournoi Pétanque · Veille du mariage</div>
-</footer>
+<!-- PAGE ADMIN -->
+<div class="page" id="page-admin">
+  <div class="page-header">
+    <div><div class="page-title">ADMIN</div><div class="page-subtitle">Gestion du tournoi</div></div>
+    <button id="logout-btn" onclick="adminLogout()" style="display:none;background:var(--red);color:#fff;border:none;border-radius:4px;padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">Déco</button>
+  </div>
+  <div id="admin-login" style="padding:2rem 1.25rem;text-align:center">
+    <div style="font-size:44px;margin-bottom:1rem">🔒</div>
+    <div style="font-family:'Black Han Sans',sans-serif;font-size:22px;margin-bottom:.5rem">Accès Admin</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">Réservé à Martin &amp; Sara</p>
+    <div style="max-width:280px;margin:0 auto">
+      <div class="form-group"><label>Mot de passe</label><input type="password" id="admin-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()"></div>
+      <button class="btn btn-navy" onclick="adminLogin()">Accéder →</button>
+      <div class="form-msg" id="login-msg"></div>
+    </div>
+  </div>
+  <div id="admin-content" style="display:none">
+    <div class="section">
+      <div class="admin-section-title">🎯 Gestion du tableau</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Une fois les inscriptions fermées, générez le tableau. Le tirage au sort est automatique.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.5rem">
+        <button class="btn btn-navy" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminGenerateBracket()">🎲 Générer le tirage</button>
+        <button class="btn btn-outline" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminResetBracket()">↺ Réinitialiser</button>
+      </div>
+      <div class="form-msg" id="bracket-msg" style="text-align:left"></div>
+      <div class="admin-section-title">👥 Équipes (<span id="adm-count">0</span>)</div>
+      <div id="adm-teams"><p style="font-size:13px;color:var(--muted)">Chargement…</p></div>
+      <div class="admin-section-title">📊 Statut</div>
+      <div id="adm-status" style="font-size:13px;color:var(--muted)">Chargement…</div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="bn-item active" onclick="showPage('home',this)"><div class="bn-icon">🏠</div>Accueil</button>
+  <button class="bn-item" onclick="showPage('bracket',this)"><div class="bn-icon">🏆</div>Tableau</button>
+  <button class="bn-item" onclick="showPage('team',this)"><div class="bn-icon">👤</div>Mon équipe</button>
+  <button class="bn-item" onclick="showPage('rules',this)"><div class="bn-icon">📋</div>Règles</button>
+  <button class="bn-item" onclick="showPage('admin',this)"><div class="bn-icon">⚙️</div>Admin</button>
+</nav>
+
+<!-- MATCH MODAL -->
+<div class="modal-overlay" id="match-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="m-round">—</div>
+    <div class="modal-sub" id="m-status">—</div>
+    <div class="modal-teams">
+      <div class="m-team"><div class="m-team-name" id="m-t1">—</div><div class="m-team-players" id="m-p1">—</div></div>
+      <div class="m-vs">VS</div>
+      <div class="m-team"><div class="m-team-name" id="m-t2">—</div><div class="m-team-players" id="m-p2">—</div></div>
+    </div>
+    <div id="m-winner" style="display:none">
+      <div class="winner-box"><div class="winner-lbl">Vainqueur</div><div class="winner-name" id="m-winner-name">—</div></div>
+    </div>
+    <div id="m-score-section">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Score (sets gagnés · max 2)</div>
+      <div class="score-row">
+        <div class="score-wrap"><div class="score-lbl" id="sl1">Équipe 1</div><input type="number" class="score-big" id="s1" min="0" max="2" placeholder="0"></div>
+        <div class="score-dash">–</div>
+        <div class="score-wrap"><div class="score-lbl" id="sl2">Équipe 2</div><input type="number" class="score-big" id="s2" min="0" max="2" placeholder="0"></div>
+      </div>
+      <div class="photo-area" onclick="document.getElementById('photo-input').click()">
+        <div style="font-size:26px;margin-bottom:4px">📸</div>
+        <div style="font-size:13px;color:var(--muted)">Photo des équipes (optionnel)</div>
+        <img id="photo-preview" class="photo-preview">
+      </div>
+      <input type="file" id="photo-input" accept="image/*" capture="environment" style="display:none" onchange="previewPhoto(this)">
+      <button class="btn btn-red" onclick="submitScore()">Valider le score →</button>
+      <div class="form-msg" id="m-msg"></div>
+    </div>
+  </div>
+</div>
 
 <script>
-// ══ CONFIG — À remplacer avec vos vraies valeurs ══
-// ══ SEULE CHOSE À CONFIGURER ══
-// Collez ici l'URL de déploiement de votre Apps Script
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzru2qV_SdSjkRBkCpMBEvIBEP4n-bBN2vuQNAivbn1H6NQxCuV01TuaC2WudL3HM7H7Q/exec';
+const ADMIN_PWD = 'marsara2026';
 
-// ══ INSCRIPTION ══
-async function submitTeam() {
-  const fields = {
-    teamName: document.getElementById('team-name').value.trim(),
-    p1First:  document.getElementById('p1-first').value.trim(),
-    p1Last:   document.getElementById('p1-last').value.trim(),
-    p2First:  document.getElementById('p2-first').value.trim(),
-    p2Last:   document.getElementById('p2-last').value.trim(),
+// NAV
+function showPage(name,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(btn)btn.classList.add('active');
+  window.scrollTo(0,0);
+  if(name==='bracket')loadBracket();
+  if(name==='admin'&&document.getElementById('admin-content').style.display!=='none')loadAdminData();
+}
+
+// P3 TOGGLE
+function toggleP3(){
+  const has=document.getElementById('has-p3').checked;
+  document.getElementById('p3-section').style.display=has?'block':'none';
+  document.getElementById('boules-info').innerHTML=has
+    ?'🎳 <strong>2 boules par joueur</strong> — équipe de 3 · 6 boules au total'
+    :'🎳 <strong>3 boules par joueur</strong> — équipe de 2 · 6 boules au total';
+}
+
+// INSCRIPTION
+async function submitTeam(){
+  const msg=document.getElementById('form-msg');
+  const has3=document.getElementById('has-p3').checked;
+  const f={
+    teamName:g('team-name'),p1First:g('p1-first'),p1Last:g('p1-last'),
+    p2First:g('p2-first'),p2Last:g('p2-last'),
+    p3First:has3?g('p3-first'):'',p3Last:has3?g('p3-last'):'',hasP3:has3?'1':'0'
   };
-  const msg = document.getElementById('form-msg');
-
-  if (Object.values(fields).some(v => !v)) {
-    showMsg(msg, 'Merci de remplir tous les champs.', 'error'); return;
-  }
-
-  const btn = document.querySelector('.submit-btn');
-  btn.textContent = 'Envoi en cours…'; btn.disabled = true;
-
-  try {
-    const params = new URLSearchParams({
-      action:   'addTeam',
-      teamName: fields.teamName,
-      p1First:  fields.p1First,
-      p1Last:   fields.p1Last,
-      p2First:  fields.p2First,
-      p2Last:   fields.p2Last
-    });
-    // mode no-cors : le navigateur envoie la requête mais ne lit pas la réponse
-    // C'est la seule façon fiable d'appeler Apps Script depuis un site externe
-    await fetch(`${WEB_APP_URL}?${params.toString()}`, { mode: 'no-cors' });
-    // On suppose que ça a fonctionné et on affiche le succès
-    showMsg(msg, `✓ Équipe "${fields.teamName}" inscrite ! Bonne chance 🎯`, 'success');
-    ['team-name','p1-first','p1-last','p2-first','p2-last'].forEach(id => document.getElementById(id).value = '');
-    // Recharger la liste après un court délai (le temps que le Sheet soit mis à jour)
-    setTimeout(loadTeams, 2000);
-  } catch(e) {
-    showMsg(msg, 'Impossible de joindre le serveur. Réessayez.', 'error');
-  }
-  btn.textContent = 'Confirmer l\'inscription →'; btn.disabled = false;
+  if(!f.teamName||!f.p1First||!f.p1Last||!f.p2First||!f.p2Last){showMsg(msg,'Remplissez tous les champs obligatoires.','error');return}
+  if(has3&&(!f.p3First||!f.p3Last)){showMsg(msg,'Remplissez le 3e joueur ou décochez la case.','error');return}
+  const btn=document.querySelector('#page-home .btn-navy');
+  btn.textContent='Envoi…';btn.disabled=true;
+  try{
+    await fetch(`${WEB_APP_URL}?${new URLSearchParams({action:'addTeam',...f})}`,{mode:'no-cors'});
+    showMsg(msg,`✓ Équipe "${f.teamName}" inscrite ! Bonne chance 🎯`,'success');
+    ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});
+    document.getElementById('has-p3').checked=false;toggleP3();
+    setTimeout(loadTeams,2000);
+  }catch(e){showMsg(msg,'Erreur réseau. Réessayez.','error')}
+  btn.textContent="Confirmer l'inscription →";btn.disabled=false;
 }
 
-function showMsg(el, text, type) {
-  el.style.display = 'block';
-  el.style.color = type === 'success' ? 'var(--navy)' : '#D42B2B';
-  el.textContent = text;
+// TEAMS
+let allTeams=[];
+async function loadTeams(){
+  try{
+    const r=await fetch(`${WEB_APP_URL}?action=getTeams`);
+    const d=await r.json();
+    allTeams=d.teams||[];
+    const list=document.getElementById('team-list');
+    if(!allTeams.length){list.innerHTML='<li style="color:var(--muted);font-size:13px;padding:12px 0">Aucune équipe pour l\'instant.</li>';return}
+    list.innerHTML=allTeams.map((t,i)=>`<li class="team-item"><span class="team-num">${i+1}</span><div><div class="team-name">${t.name}</div><div class="team-players">${t.player1} &amp; ${t.player2}${t.player3?' &amp; '+t.player3:''}</div></div><span class="team-badge">${t.player3?'3j':'2j'}</span></li>`).join('');
+    const n=allTeams.length;
+    document.getElementById('stat-teams').textContent=n;
+    document.getElementById('stat-tours').textContent=n>1?Math.ceil(Math.log2(n)):0;
+    document.getElementById('stat-matches').textContent=n>1?n-1:0;
+  }catch(e){}
 }
 
-// ══ LECTURE DES ÉQUIPES (via la Web App Apps Script) ══
-async function loadTeams() {
-  const list = document.getElementById('team-list');
-  try {
-    const resp = await fetch(`${WEB_APP_URL}?action=getTeams`);
-    const data = await resp.json();
-    const teams = data.teams || [];
-    if (!teams.length) {
-      list.innerHTML = '<li class="team-item" style="color:var(--muted);font-size:13px;justify-content:center;">Aucune équipe inscrite pour l\'instant.</li>';
-      return;
-    }
-    list.innerHTML = teams.map((t, i) => `
-      <li class="team-item">
-        <span class="team-num">${i + 1}</span>
-        <span class="team-name-text">${t.name}</span>
-        <span class="team-players">${t.player1} &amp; ${t.player2}</span>
-      </li>
-    `).join('');
-    updateStats(teams.length);
-  } catch(e) {
-    list.innerHTML = '<li class="team-item" style="color:var(--muted);font-size:13px;justify-content:center;">Impossible de charger les équipes.</li>';
-  }
-}
-
-function updateStats(n) {
-  document.getElementById('stat-teams').textContent = n;
-  // Tours pour élimination directe : log2 arrondi au supérieur
-  const tours = n > 1 ? Math.ceil(Math.log2(n)) : 0;
-  document.getElementById('stat-tours').textContent = tours;
-  // Matchs = n-1 en élimination directe (toujours)
-  document.getElementById('stat-matches').textContent = n > 1 ? n - 1 : 0;
-}
-
-function loadStats() { loadTeams(); }
-
-// Init
-loadTeams();
-loadStats();
-loadBracket();
-
-// ══ TABLEAU D'ÉLIMINATION DIRECTE ══
-async function loadBracket() {
-  try {
-    const resp = await fetch(`${WEB_APP_URL}?action=getBracket`);
-    const data = await resp.json();
-    if (!data.bracket || !data.bracket.length) return;
-    renderBracket(data.bracket);
-  } catch(e) {}
-}
-
-function renderBracket(rounds) {
-  const container = document.getElementById('bracket-container');
-  if (!rounds.length) return;
-
-  let html = '<div class="bracket">';
-  rounds.forEach((round, ri) => {
-    html += `<div class="bracket-round">
-      <div class="round-label">${round.name}</div>
-      <div class="round-matches">`;
-    round.matches.forEach((match, mi) => {
-      const t1 = match.team1 || 'À déterminer';
-      const t2 = match.team2 || 'À déterminer';
-      const s1 = match.score1 !== undefined ? match.score1 : '';
-      const s2 = match.score2 !== undefined ? match.score2 : '';
-      const winner = match.winner || '';
-      html += `<div class="bracket-match" id="match-${ri}-${mi}">
-        <div class="bmatch-team ${winner === t1 ? 'winner' : winner ? 'loser' : ''}">
-          <span class="bteam-name">${t1}</span>
-          <input class="bscore" type="number" min="0" max="2" value="${s1}" 
-            placeholder="-" onchange="saveMatchScore(${ri},${mi},0,this.value)"
-            ${!match.team1 || !match.team2 ? 'disabled' : ''}>
-        </div>
-        <div class="bmatch-sep">vs</div>
-        <div class="bmatch-team ${winner === t2 ? 'winner' : winner ? 'loser' : ''}">
-          <span class="bteam-name">${t2}</span>
-          <input class="bscore" type="number" min="0" max="2" value="${s2}"
-            placeholder="-" onchange="saveMatchScore(${ri},${mi},1,this.value)"
-            ${!match.team1 || !match.team2 ? 'disabled' : ''}>
-        </div>
+// BRACKET
+let bracket=[];
+async function loadBracket(){
+  try{
+    const r=await fetch(`${WEB_APP_URL}?action=getBracket`);
+    const d=await r.json();
+    bracket=d.bracket||[];
+    const c=document.getElementById('bracket');
+    const empty=document.getElementById('bracket-empty');
+    if(!bracket.length){empty.style.display='block';c.innerHTML='';return}
+    empty.style.display='none';
+    c.innerHTML=bracket.map((rnd,ri)=>`<div class="b-round"><div class="b-round-label">${rnd.name}</div><div class="b-matches">${rnd.matches.map((m,mi)=>{
+      const t1=m.team1||'?',t2=m.team2||'?',w=m.winner;
+      const bye=t1==='Bye'||t2==='Bye';
+      return `<div class="b-match${bye?' b-bye':''}" onclick="openMatch(${ri},${mi})">
+        <div class="b-team ${w&&w===t1?'winner':w&&w!==t1?'loser':''}"><span class="b-name">${t1}</span><span class="b-score">${m.score1!==''&&m.score1!==undefined?m.score1:''}</span></div>
+        <div class="b-vs">${bye?'BYE':'vs'}</div>
+        <div class="b-team ${w&&w===t2?'winner':w&&w!==t2?'loser':''}"><span class="b-name">${t2}</span><span class="b-score">${m.score2!==''&&m.score2!==undefined?m.score2:''}</span></div>
       </div>`;
-    });
-    html += '</div></div>';
-  });
-  html += '</div>';
-  container.innerHTML = html;
+    }).join('')}</div></div>`).join('');
+  }catch(e){console.log(e)}
 }
 
-async function saveMatchScore(roundIdx, matchIdx, teamIdx, val) {
-  const params = new URLSearchParams({
-    action: 'saveScore',
-    roundIdx, matchIdx, teamIdx, score: val
-  });
-  await fetch(`${WEB_APP_URL}?${params.toString()}`, { mode: 'no-cors' });
-  setTimeout(loadBracket, 1500);
+// MODAL
+let curMatch=null;
+function openMatch(ri,mi){
+  const rnd=bracket[ri],m=rnd.matches[mi];
+  curMatch={ri,mi};
+  const t1=m.team1||'À déterminer',t2=m.team2||'À déterminer';
+  const hasTeams=m.team1&&m.team2&&t1!=='Bye'&&t2!=='Bye';
+  document.getElementById('m-round').textContent=rnd.name;
+  document.getElementById('m-t1').textContent=t1;
+  document.getElementById('m-t2').textContent=t2;
+  const td1=allTeams.find(t=>t.name===m.team1),td2=allTeams.find(t=>t.name===m.team2);
+  document.getElementById('m-p1').textContent=td1?[td1.player1,td1.player2,td1.player3].filter(Boolean).join(' · '):'—';
+  document.getElementById('m-p2').textContent=td2?[td2.player1,td2.player2,td2.player3].filter(Boolean).join(' · '):'—';
+  document.getElementById('sl1').textContent=t1;document.getElementById('sl2').textContent=t2;
+  document.getElementById('s1').value=m.score1!==undefined&&m.score1!==''?m.score1:'';
+  document.getElementById('s2').value=m.score2!==undefined&&m.score2!==''?m.score2:'';
+  document.getElementById('photo-preview').style.display='none';
+  document.getElementById('photo-input').value='';
+  document.getElementById('m-winner').style.display=m.winner?'block':'none';
+  if(m.winner)document.getElementById('m-winner-name').textContent=m.winner;
+  document.getElementById('m-status').textContent=m.winner?'Match terminé ✓':hasTeams?'Match à jouer':'En attente des équipes';
+  document.getElementById('m-score-section').style.display=hasTeams?'block':'none';
+  document.getElementById('m-msg').style.display='none';
+  document.getElementById('match-modal').classList.add('open');
+}
+function closeModal(){document.getElementById('match-modal').classList.remove('open')}
+async function submitScore(){
+  const msg=document.getElementById('m-msg');
+  const s1=parseInt(document.getElementById('s1').value);
+  const s2=parseInt(document.getElementById('s2').value);
+  if(isNaN(s1)||isNaN(s2)){showMsg(msg,'Entrez les deux scores.','error');return}
+  if(s1===s2){showMsg(msg,'Il doit y avoir un gagnant.','error');return}
+  if(s1>2||s2>2||s1<0||s2<0){showMsg(msg,'Score entre 0 et 2 (sets gagnés).','error');return}
+  const btn=document.querySelector('#match-modal .btn-red');
+  btn.textContent='Envoi…';btn.disabled=true;
+
+  try{
+    const photoInput=document.getElementById('photo-input');
+    const hasPhoto=photoInput.files&&photoInput.files[0];
+
+    if(hasPhoto){
+      // Avec photo → POST (base64) pour sauvegarder dans Drive
+      showMsg(msg,'Upload de la photo…','success');
+      const base64=await toBase64(photoInput.files[0]);
+      const b64clean=base64.split(',')[1];
+      const mime=photoInput.files[0].type||'image/jpeg';
+      const resp=await fetch(WEB_APP_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({action:'saveScoreWithPhoto',roundIdx:curMatch.ri,matchIdx:curMatch.mi,score1:s1,score2:s2,photo:b64clean,photoMime:mime})
+      });
+      const d=await resp.json();
+      if(d.success){
+        showMsg(msg,'✓ Score et photo enregistrés ! 📸','success');
+        setTimeout(()=>{closeModal();loadBracket()},1800);
+      } else {
+        showMsg(msg,d.error||'Erreur.','error');
+      }
+    } else {
+      // Sans photo → GET no-cors
+      await fetch(`${WEB_APP_URL}?${new URLSearchParams({action:'saveScore',roundIdx:curMatch.ri,matchIdx:curMatch.mi,score1:s1,score2:s2})}`,{mode:'no-cors'});
+      showMsg(msg,'✓ Score enregistré !','success');
+      setTimeout(()=>{closeModal();loadBracket()},1500);
+    }
+  }catch(e){showMsg(msg,'Erreur réseau. Réessayez.','error')}
+  btn.textContent='Valider le score →';btn.disabled=false;
 }
 
+function toBase64(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=e=>res(e.target.result);
+    r.onerror=rej;
+    r.readAsDataURL(file);
+  });
+}
+function previewPhoto(input){
+  if(input.files&&input.files[0]){
+    const r=new FileReader();
+    r.onload=e=>{const img=document.getElementById('photo-preview');img.src=e.target.result;img.style.display='block'};
+    r.readAsDataURL(input.files[0]);
+  }
+}
+
+// MON EQUIPE
+function filterTeams(){
+  const q=g('team-search').toLowerCase().trim();
+  const sug=document.getElementById('team-suggestions');
+  if(!q){sug.innerHTML='';return}
+  const matches=allTeams.filter(t=>t.name.toLowerCase().includes(q));
+  if(!matches.length){sug.innerHTML='<p style="color:var(--muted);font-size:13px">Aucune équipe trouvée.</p>';return}
+  sug.innerHTML=matches.map(t=>`<div onclick="selectTeam('${t.name.replace(/'/g,"\\'")}');document.getElementById('team-suggestions').innerHTML=''" style="padding:11px 14px;background:#fff;border:1.5px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;font-size:14px;font-weight:600">${t.name}<span style="font-size:11px;color:var(--muted);font-weight:400"> · ${t.player1}${t.player2?' &amp; '+t.player2:''}${t.player3?' &amp; '+t.player3:''}</span></div>`).join('');
+}
+function selectTeam(name){
+  document.getElementById('team-search').value=name;
+  const team=allTeams.find(t=>t.name===name);
+  if(!team)return;
+  document.getElementById('prog-name').textContent=team.name;
+  document.getElementById('prog-players').textContent=[team.player1,team.player2,team.player3].filter(Boolean).join(' · ');
+  document.getElementById('prog-badge').textContent=team.player3?'3 joueurs':'2 joueurs';
+  const matches=[];let elim=false;
+  bracket.forEach((rnd,ri)=>rnd.matches.forEach((m,mi)=>{
+    if(m.team1===name||m.team2===name){
+      const opp=m.team1===name?m.team2:m.team1;
+      const ms=m.team1===name?m.score1:m.score2;
+      const os=m.team1===name?m.score2:m.score1;
+      const done=m.winner!==''&&m.winner!==undefined&&m.winner!==null;
+      const won=m.winner===name;
+      if(done&&!won)elim=true;
+      matches.push({round:rnd.name,opp,ms,os,done,won,ri,mi});
+    }
+  }));
+  document.getElementById('prog-status').textContent=elim?'❌ Éliminé':matches.length?'✅ En lice':'⏳ En attente';
+  const pm=document.getElementById('prog-matches');
+  if(!matches.length){pm.innerHTML='<p style="color:var(--muted);font-size:13px">Le tableau n\'a pas encore été généré.</p>';}
+  else{
+    const next=matches.find(m=>!m.done);
+    pm.innerHTML=matches.map(m=>{
+      const isNext=!m.done&&m===next;
+      const cls=m.done?(m.won?'done-win':'done-loss'):isNext?'next':'future';
+      const badge=m.done?(m.won?'🏆 Victoire':'❌ Défaite'):isNext?'⏳ Prochain match':'🔜 À venir';
+      const bc=m.done?(m.won?'color:var(--green)':'color:var(--red)'):isNext?'color:#b58a00':'color:var(--muted)';
+      return `<div class="prog-match ${cls}"><div class="prog-badge" style="${bc}">${m.round} · ${badge}</div><div class="prog-teams"><span class="prog-tname">${name}</span><span class="prog-score">${m.done?m.ms:'—'}</span><span class="prog-vs">vs</span><span class="prog-score">${m.done?m.os:'—'}</span><span class="prog-tname" style="text-align:right">${m.opp||'?'}</span></div></div>`;
+    }).join('');
+  }
+  document.getElementById('team-program').style.display='block';
+}
+
+// ADMIN
+function adminLogin(){
+  const pwd=document.getElementById('admin-pwd').value;
+  const msg=document.getElementById('login-msg');
+  if(pwd===ADMIN_PWD){
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('admin-content').style.display='block';
+    document.getElementById('logout-btn').style.display='block';
+    loadAdminData();
+  }else{showMsg(msg,'Mot de passe incorrect.','error')}
+}
+function adminLogout(){
+  document.getElementById('admin-login').style.display='block';
+  document.getElementById('admin-content').style.display='none';
+  document.getElementById('logout-btn').style.display='none';
+  document.getElementById('admin-pwd').value='';
+}
+async function loadAdminData(){
+  try{
+    const r=await fetch(`${WEB_APP_URL}?action=getTeams`);
+    const d=await r.json();
+    const teams=d.teams||[];
+    document.getElementById('adm-count').textContent=teams.length;
+    document.getElementById('adm-teams').innerHTML=teams.length?teams.map(t=>`<div class="adm-team"><div class="dot"></div><div><div style="font-weight:700;font-size:13px">${t.name}</div><div style="font-size:11px;color:var(--muted)">${t.player1} · ${t.player2}${t.player3?' · '+t.player3:''}</div></div></div>`).join(''):'<p style="font-size:13px;color:var(--muted)">Aucune équipe.</p>';
+    const n=teams.length,tours=n>1?Math.ceil(Math.log2(n)):0;
+    document.getElementById('adm-status').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="card" style="padding:10px;margin:0"><div style="font-family:'Black Han Sans',sans-serif;font-size:20px">${n}</div><div style="font-size:11px;color:var(--muted)">équipes</div></div>
+      <div class="card" style="padding:10px;margin:0"><div style="font-family:'Black Han Sans',sans-serif;font-size:20px">${tours}</div><div style="font-size:11px;color:var(--muted)">tours</div></div>
+      <div class="card" style="padding:10px;margin:0"><div style="font-family:'Black Han Sans',sans-serif;font-size:20px">${n>1?n-1:0}</div><div style="font-size:11px;color:var(--muted)">matchs</div></div>
+      <div class="card" style="padding:10px;margin:0"><div style="font-family:'Black Han Sans',sans-serif;font-size:20px">${bracket.length?'✅':'⏳'}</div><div style="font-size:11px;color:var(--muted)">tableau</div></div>
+    </div>`;
+  }catch(e){}
+}
+async function adminGenerateBracket(){
+  const msg=document.getElementById('bracket-msg');
+  showMsg(msg,'Tirage en cours…','success');
+  await fetch(`${WEB_APP_URL}?action=generateBracket`,{mode:'no-cors'});
+  showMsg(msg,'✓ Tableau généré ! Vérifiez l\'onglet Tableau.','success');
+  setTimeout(loadBracket,2000);
+}
+async function adminResetBracket(){
+  if(!confirm('Réinitialiser le tableau ?'))return;
+  await fetch(`${WEB_APP_URL}?action=resetBracket`,{mode:'no-cors'});
+  bracket=[];loadBracket();
+  showMsg(document.getElementById('bracket-msg'),'Tableau réinitialisé.','success');
+}
+
+// UTILS
+function g(id){return document.getElementById(id).value.trim()}
+function showMsg(el,txt,type){el.textContent=txt;el.className='form-msg '+type;el.style.display='block'}
+
+// INIT
+loadTeams();
 loadBracket();
 </script>
 </body>
