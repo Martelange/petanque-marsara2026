@@ -379,6 +379,7 @@ input::placeholder{color:#b0a89a}
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzru2qV_SdSjkRBkCpMBEvIBEP4n-bBN2vuQNAivbn1H6NQxCuV01TuaC2WudL3HM7H7Q/exec';
+const BOT_URL    = 'https://scaling-robot-jr59wj69574phjp7x-3000.app.github.dev';
 const ADMIN_PWD  = 'marsara2026';
 
 // ── ENVOI VERS APPS SCRIPT ───────────────────────────────────
@@ -724,12 +725,12 @@ function submitScore() {
 }
 
 function uploadPhoto(file, ri, mi) {
-  // Redimensionner à max 600px et compresser à 60% avant envoi
   var img = new Image();
   var reader = new FileReader();
   reader.onload = function(e) {
     img.onload = function() {
-      var maxSize = 600;
+      // Redimensionner à max 800px, compresser à 70%
+      var maxSize = 800;
       var w = img.width, h = img.height;
       if (w > maxSize || h > maxSize) {
         if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
@@ -738,15 +739,21 @@ function uploadPhoto(file, ri, mi) {
       var canvas = document.createElement('canvas');
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      var b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1];
+      var b64 = canvas.toDataURL('image/jpeg', 0.7).split(',')[1];
 
-      // Envoi en POST — pas de limite de taille
-      fetch(SCRIPT_URL, {
+      // Envoi via le bot (pas de CORS)
+      fetch(BOT_URL + '/photo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action:'savePhoto', roundIdx:ri, matchIdx:mi, photo:b64, photoMime:'image/jpeg' }),
-        mode: 'no-cors'
-      }).catch(function(){});
+        body: JSON.stringify({
+          roundIdx: ri,
+          matchIdx: mi,
+          photo: b64,
+          photoMime: 'image/jpeg'
+        })
+      }).then(function(r){ return r.json(); })
+        .then(function(d){ console.log('Photo uploaded:', d.photoUrl || d.error); })
+        .catch(function(e){ console.error('Photo upload error:', e.message); });
     };
     img.src = e.target.result;
   };
