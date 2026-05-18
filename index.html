@@ -138,6 +138,11 @@ input::placeholder{color:#b0a89a}
 .set-input:disabled{opacity:.3;cursor:not-allowed}
 .set-dash{font-family:'Black Han Sans',sans-serif;font-size:18px;color:var(--muted)}
 .b-score-detail{font-size:9px;color:var(--muted);text-align:center;margin-top:2px}
+.b-match-photo{width:100%;height:60px;object-fit:cover;display:block;border-top:1px solid var(--border)}
+.match-photo-wrap{margin-top:10px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border)}
+.match-photo-wrap img{width:100%;max-height:200px;object-fit:cover;display:block}
+.modal-photo{width:100%;border-radius:8px;margin-top:8px;overflow:hidden}
+.modal-photo img{width:100%;max-height:220px;object-fit:cover;display:block}
 @media(min-width:640px){.page,.bottom-nav{max-width:480px;margin:0 auto}.bottom-nav{left:50%;transform:translateX(-50%)}}
 </style>
 </head>
@@ -365,9 +370,13 @@ input::placeholder{color:#b0a89a}
         <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px" id="sets-winner-hint"></div>
       </div>
 
+      <!-- Photo existante du match -->
+      <div id="modal-existing-photo" style="display:none;margin-bottom:10px">
+        <div class="match-photo-wrap"><img id="modal-photo-img" src="" alt="Photo du match"></div>
+      </div>
       <div class="photo-area" onclick="document.getElementById('photo-input').click()">
         <div style="font-size:26px;margin-bottom:4px">📸</div>
-        <div style="font-size:13px;color:var(--muted)">Photo des équipes (optionnel)</div>
+        <div id="photo-area-label" style="font-size:13px;color:var(--muted)">Photo des équipes (optionnel)</div>
         <img id="photo-preview" class="photo-preview">
       </div>
       <input type="file" id="photo-input" accept="image/*" capture="environment" style="display:none" onchange="previewPhoto(this)">
@@ -512,10 +521,12 @@ function renderBracket() {
         // Build set detail string e.g. "7-3, 5-7, 7-4"
         var sets = m.sets || [];
         var setDetail = sets.length ? sets.map(function(s){ return s.t1+'-'+s.t2; }).join(' · ') : '';
+        var photoThumb = m.photoUrl ? '<img class="b-match-photo" src="' + m.photoUrl + '" alt="photo">' : '';
         return '<div class="b-match' + (bye ? ' b-bye' : '') + '" onclick="openMatch(' + ri + ',' + mi + ')">' +
           '<div class="b-team ' + c1 + '"><span class="b-name">' + t1 + '</span><span class="b-score">' + s1 + '</span></div>' +
           '<div class="b-vs">' + (bye ? 'BYE' : (setDetail ? setDetail : 'vs')) + '</div>' +
           '<div class="b-team ' + c2 + '"><span class="b-name">' + t2 + '</span><span class="b-score">' + s2 + '</span></div>' +
+          photoThumb +
           '</div>';
       }).join('') + '</div></div>';
   }).join('');
@@ -557,6 +568,17 @@ function openMatch(ri, mi) {
 
   document.getElementById('photo-preview').style.display = 'none';
   document.getElementById('photo-input').value = '';
+  // Photo existante du match
+  var existingPhotoDiv = document.getElementById('modal-existing-photo');
+  var existingPhotoImg = document.getElementById('modal-photo-img');
+  if (m.photoUrl) {
+    existingPhotoImg.src = m.photoUrl;
+    existingPhotoDiv.style.display = 'block';
+    document.getElementById('photo-area-label').textContent = 'Remplacer la photo';
+  } else {
+    existingPhotoDiv.style.display = 'none';
+    document.getElementById('photo-area-label').textContent = 'Photo des équipes (optionnel)';
+  }
   document.getElementById('m-winner').style.display = m.winner ? 'block' : 'none';
   if (m.winner) document.getElementById('m-winner-name').textContent = m.winner;
   document.getElementById('m-status').textContent = m.winner ? 'Match terminé ✓' : hasTeams ? 'Match à jouer' : 'En attente des équipes';
@@ -817,12 +839,17 @@ function selectTeam(name) {
       var bc     = m.done ? (m.won ? 'color:var(--green)' : 'color:var(--red)') : isNext ? 'color:#b58a00' : 'color:var(--muted)';
       var s1s    = (m.ms !== null && m.ms !== undefined && m.ms !== '') ? m.ms : '—';
       var s2s    = (m.os !== null && m.os !== undefined && m.os !== '') ? m.os : '—';
+      var matchData = bracket[m.ri] && bracket[m.ri].matches[m.mi];
+      var photoHtml = (matchData && matchData.photoUrl)
+        ? '<div class="match-photo-wrap"><img src="' + matchData.photoUrl + '" alt="photo du match"></div>'
+        : '';
       return '<div class="prog-match ' + cls + '">' +
         '<div class="prog-badge" style="' + bc + '">' + m.round + ' · ' + badge + '</div>' +
         '<div class="prog-teams"><span class="prog-tname">' + name + '</span>' +
         '<span class="prog-score">' + s1s + '</span><span class="prog-vs">vs</span>' +
         '<span class="prog-score">' + s2s + '</span>' +
-        '<span class="prog-tname" style="text-align:right">' + (m.opp||'?') + '</span></div></div>';
+        '<span class="prog-tname" style="text-align:right">' + (m.opp||'?') + '</span></div>' +
+        photoHtml + '</div>';
     }).join('');
   }
   document.getElementById('team-search').value         = name;
