@@ -509,9 +509,17 @@ function renderBracket() {
   var empty = document.getElementById('bracket-empty');
   if (!bracket.length) { empty.style.display = 'block'; c.innerHTML = ''; return; }
   empty.style.display = 'none';
-  c.innerHTML = bracket.map(function(rnd, ri) {
+  // Inverser l'ordre pour afficher 1er tour à gauche, Finale à droite
+  var displayBracket = bracket.slice().reverse();
+  var displayRiMap = [];
+  for (var x = 0; x < bracket.length; x++) {
+    displayRiMap[bracket.length - 1 - x] = x;
+  }
+  c.innerHTML = displayBracket.map(function(rnd, di) {
+    var ri = bracket.length - 1 - di; // vrai index dans bracket
     return '<div class="b-round"><div class="b-round-label">' + rnd.name + '</div><div class="b-matches">' +
       rnd.matches.map(function(m, mi) {
+        var ri2 = ri; // capture pour onclick
         var t1  = m.team1 || '?', t2 = m.team2 || '?', w = m.winner || '';
         var bye = t1 === 'Bye' || t2 === 'Bye';
         var s1  = (m.score1 !== null && m.score1 !== undefined && m.score1 !== '') ? m.score1 : '';
@@ -522,7 +530,7 @@ function renderBracket() {
         var sets = m.sets || [];
         var setDetail = sets.length ? sets.map(function(s){ return s.t1+'-'+s.t2; }).join(' · ') : '';
         var photoThumb = m.photoUrl ? '<img class="b-match-photo" src="' + m.photoUrl + '" alt="photo">' : '';
-        return '<div class="b-match' + (bye ? ' b-bye' : '') + '" onclick="openMatch(' + ri + ',' + mi + ')">' +
+        return '<div class="b-match' + (bye ? ' b-bye' : '') + '" onclick="openMatch(' + ri2 + ',' + mi + ')">' +
           '<div class="b-team ' + c1 + '"><span class="b-name">' + t1 + '</span><span class="b-score">' + s1 + '</span></div>' +
           '<div class="b-vs">' + (bye ? 'BYE' : (setDetail ? setDetail : 'vs')) + '</div>' +
           '<div class="b-team ' + c2 + '"><span class="b-name">' + t2 + '</span><span class="b-score">' + s2 + '</span></div>' +
@@ -840,16 +848,19 @@ function selectTeam(name) {
       var s1s    = (m.ms !== null && m.ms !== undefined && m.ms !== '') ? m.ms : '—';
       var s2s    = (m.os !== null && m.os !== undefined && m.os !== '') ? m.os : '—';
       var matchData = bracket[m.ri] && bracket[m.ri].matches[m.mi];
+      var hasTeams  = matchData && matchData.team1 && matchData.team2 && matchData.team1 !== 'Bye' && matchData.team2 !== 'Bye';
       var photoHtml = (matchData && matchData.photoUrl)
         ? '<div class="match-photo-wrap"><img src="' + matchData.photoUrl + '" alt="photo du match"></div>'
         : '';
-      return '<div class="prog-match ' + cls + '">' +
+      var clickAttr = hasTeams ? ' onclick="goToMatch(' + m.ri + ',' + m.mi + ')" style="cursor:pointer"' : '';
+      var tapHint   = hasTeams && !m.done ? '<div style="font-size:10px;color:var(--muted);margin-top:6px;text-align:center">Appuyez pour saisir le score</div>' : '';
+      return '<div class="prog-match ' + cls + '"' + clickAttr + '>' +
         '<div class="prog-badge" style="' + bc + '">' + m.round + ' · ' + badge + '</div>' +
         '<div class="prog-teams"><span class="prog-tname">' + name + '</span>' +
         '<span class="prog-score">' + s1s + '</span><span class="prog-vs">vs</span>' +
         '<span class="prog-score">' + s2s + '</span>' +
         '<span class="prog-tname" style="text-align:right">' + (m.opp||'?') + '</span></div>' +
-        photoHtml + '</div>';
+        tapHint + photoHtml + '</div>';
     }).join('');
   }
   document.getElementById('team-search').value         = name;
@@ -914,6 +925,21 @@ function pickTeam(i) {
   if (!t) return;
   document.getElementById('team-suggestions').innerHTML = '';
   selectTeam(t.name);
+}
+
+function goToMatch(ri, mi) {
+  // Aller sur l'onglet Tableau et ouvrir la modal du match
+  showPage('bracket', document.querySelectorAll('.bn-item')[1]);
+  // Attendre que le bracket soit chargé puis ouvrir le match
+  var attempts = 0;
+  var tryOpen = setInterval(function() {
+    attempts++;
+    if (bracket.length && bracket[ri] && bracket[ri].matches[mi]) {
+      clearInterval(tryOpen);
+      openMatch(ri, mi);
+    }
+    if (attempts > 20) clearInterval(tryOpen);
+  }, 150);
 }
 
 function showMsg(el, txt, type) {
