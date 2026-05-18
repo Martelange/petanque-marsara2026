@@ -509,17 +509,10 @@ function renderBracket() {
   var empty = document.getElementById('bracket-empty');
   if (!bracket.length) { empty.style.display = 'block'; c.innerHTML = ''; return; }
   empty.style.display = 'none';
-  // Inverser l'ordre pour afficher 1er tour à gauche, Finale à droite
-  var displayBracket = bracket.slice().reverse();
-  var displayRiMap = [];
-  for (var x = 0; x < bracket.length; x++) {
-    displayRiMap[bracket.length - 1 - x] = x;
-  }
-  c.innerHTML = displayBracket.map(function(rnd, di) {
-    var ri = bracket.length - 1 - di; // vrai index dans bracket
+  c.innerHTML = bracket.map(function(rnd, ri) {
     return '<div class="b-round"><div class="b-round-label">' + rnd.name + '</div><div class="b-matches">' +
       rnd.matches.map(function(m, mi) {
-        var ri2 = ri; // capture pour onclick
+        var ri2 = ri;
         var t1  = m.team1 || '?', t2 = m.team2 || '?', w = m.winner || '';
         var bye = t1 === 'Bye' || t2 === 'Bye';
         var s1  = (m.score1 !== null && m.score1 !== undefined && m.score1 !== '') ? m.score1 : '';
