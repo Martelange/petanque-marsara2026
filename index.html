@@ -764,19 +764,45 @@ function uploadPhoto(file, ri, mi) {
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
       var b64 = canvas.toDataURL('image/jpeg', 0.7).split(',')[1];
 
-      // Envoi via le bot (pas de CORS)
-      fetch(BOT_URL + '/photo', {
+      // 1. Upload sur Imgur (hébergement gratuit, URL publique directe)
+      fetch('https://api.imgur.com/3/image', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          roundIdx: ri,
-          matchIdx: mi,
-          photo: b64,
-          photoMime: 'image/jpeg'
-        })
-      }).then(function(r){ return r.json(); })
-        .then(function(d){ console.log('Photo uploaded:', d.photoUrl || d.error); })
-        .catch(function(e){ console.error('Photo upload error:', e.message); });
+        headers: {
+          'Authorization': 'Client-ID 546c25a59c58ad7',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ image: b64, type: 'base64' })
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(imgurData) {
+        if (imgurData.success) {
+          var photoUrl = imgurData.data.link;
+          console.log('Photo uploadee sur Imgur:', photoUrl);
+
+          // 2. Envoyer l'URL au bot (pas de base64, juste l'URL)
+          fetch(BOT_URL + '/photo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              roundIdx: ri,
+              matchIdx: mi,
+              photoUrl: photoUrl
+            })
+          }).catch(function(e){ console.error('Bot error:', e.message); });
+
+          // 3. Sauver l'URL dans Apps Script
+          appsRead({
+            action: 'savePhotoUrl',
+            roundIdx: ri,
+            matchIdx: mi,
+            photoUrl: photoUrl
+          }).catch(function(){});
+
+        } else {
+          console.error('Imgur error:', imgurData.data && imgurData.data.error);
+        }
+      })
+      .catch(function(e){ console.error('Imgur upload error:', e.message); });
     };
     img.src = e.target.result;
   };
