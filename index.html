@@ -779,14 +779,16 @@ function uploadPhoto(file, ri, mi) {
           var photoUrl = imgurData.data.link;
           console.log('Photo uploadee sur Imgur:', photoUrl);
 
-          // 2. Envoyer l'URL au bot (pas de base64, juste l'URL)
+          // 2. Envoyer l'URL + base64 au bot (le bot garde le b64 en cache)
           fetch(BOT_URL + '/photo', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               roundIdx: ri,
               matchIdx: mi,
-              photoUrl: photoUrl
+              photoUrl: photoUrl,
+              b64: b64,
+              photoMime: 'image/jpeg'
             })
           }).catch(function(e){ console.error('Bot error:', e.message); });
 
