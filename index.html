@@ -77,10 +77,15 @@ input::placeholder{color:#b0a89a}
 .rule-body{font-size:12px;color:var(--muted);line-height:1.55;font-weight:300}
 /* BRACKET */
 .bracket-wrap{overflow-x:auto;padding-bottom:1rem;-webkit-overflow-scrolling:touch}
-.bracket{display:flex;gap:0;min-width:max-content;padding:4px 0;align-items:stretch}
-.b-round{display:flex;flex-direction:column;width:155px;padding:0 8px}
+.bracket{display:flex;gap:0;min-width:max-content;padding:4px 0}
+.b-round{display:flex;flex-direction:column;width:160px;padding:0 6px}
 .b-round-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;margin-bottom:8px;flex-shrink:0}
-.b-matches{display:flex;flex-direction:column;flex:1;justify-content:space-around;gap:8px}
+/* Chaque round a une hauteur fixe basée sur le nombre de matchs du round 1
+   Les matchs sont répartis uniformément avec justify-content:space-around
+   Round N a 2x moins de matchs → chaque slot fait 2x la hauteur du round précédent */
+.b-matches{display:flex;flex-direction:column;flex:1;justify-content:space-around}
+/* Chaque "slot" contient le match centré dans son espace */
+.b-slot{display:flex;flex-direction:column;justify-content:center;flex:1}
 .b-match{background:#fff;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;border-top:2px solid var(--navy);-webkit-tap-highlight-color:transparent}
 .b-team{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;gap:6px;min-height:34px}
 .b-team.winner{background:rgba(13,27,62,.08)}
@@ -464,8 +469,14 @@ function renderBracket() {
   var empty=document.getElementById('bracket-empty');
   if (!bracket.length) { empty.style.display='block'; c.innerHTML=''; return; }
   empty.style.display='none';
+  var maxMatches = bracket.length ? bracket[0].matches.length : 1;
+  var SLOT_H = 115;
+  var totalH = maxMatches * SLOT_H;
+
   c.innerHTML = bracket.map(function(rnd,ri){
-    return '<div class="b-round"><div class="b-round-label">'+rnd.name+'</div><div class="b-matches">' +
+    var slotH = totalH / rnd.matches.length;
+    return '<div class="b-round" style="height:'+totalH+'px"><div class="b-round-label">'+rnd.name+'</div>' +
+      '<div class="b-matches" style="height:calc(100% - 22px)">' +
       rnd.matches.map(function(m,mi){
         var t1=m.team1||'?', t2=m.team2||'?', w=m.winner||'';
         var bye=t1==='Bye'||t2==='Bye';
@@ -476,7 +487,6 @@ function renderBracket() {
         var sets=m.sets||[];
         var setDetail=sets.length?sets.map(function(s){return s.t1+'-'+s.t2;}).join(' - '):'';
         var photoThumb=m.photoUrl?'<img class="b-match-photo" src="'+m.photoUrl+'" alt="photo">':'';
-        // Terrain badge - match via matchKey
         var terrainBadge='';
         var matchKeySearch=rnd.name+'_'+t1+'_'+t2;
         for (var ti=1;ti<=5;ti++){
@@ -485,12 +495,13 @@ function renderBracket() {
             break;
           }
         }
-        return '<div class="b-match'+(bye?' b-bye':'')+'" onclick="openMatch('+ri+','+mi+')">' +
+        var tileHtml = '<div class="b-match'+(bye?' b-bye':'')+'" onclick="openMatch('+ri+','+mi+')">' +
           terrainBadge +
           '<div class="b-team '+c1+'"><span class="b-name">'+t1+'</span><span class="b-score">'+s1+'</span></div>' +
           '<div class="b-vs">'+(bye?'BYE':(setDetail?setDetail:'vs'))+'</div>' +
           '<div class="b-team '+c2+'"><span class="b-name">'+t2+'</span><span class="b-score">'+s2+'</span></div>' +
           photoThumb+'</div>';
+        return '<div class="b-slot" style="height:'+slotH+'px;display:flex;flex-direction:column;justify-content:center;">'+tileHtml+'</div>';
       }).join('') + '</div></div>';
   }).join('');
 }
