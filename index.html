@@ -476,10 +476,11 @@ function renderBracket() {
         var sets=m.sets||[];
         var setDetail=sets.length?sets.map(function(s){return s.t1+'-'+s.t2;}).join(' - '):'';
         var photoThumb=m.photoUrl?'<img class="b-match-photo" src="'+m.photoUrl+'" alt="photo">':'';
-        // Terrain badge
+        // Terrain badge - match via matchKey
         var terrainBadge='';
+        var matchKeySearch=rnd.name+'_'+t1+'_'+t2;
         for (var ti=1;ti<=5;ti++){
-          if(window._terrains[ti]&&window._terrains[ti].team1===t1&&window._terrains[ti].team2===t2){
+          if(window._terrains[ti]&&window._terrains[ti].matchKey===matchKeySearch){
             terrainBadge='<div class="b-terrain-badge">'+BALLS[ti-1]+' Terrain '+ti+'</div>';
             break;
           }
@@ -692,10 +693,11 @@ function selectTeam(name){
       var photoHtml=(matchData&&matchData.photoUrl)?'<div class="match-photo-wrap"><img src="'+matchData.photoUrl+'" alt="photo"></div>':'';
       var hasTeams=matchData&&matchData.team1&&matchData.team2&&matchData.team1!=='Bye'&&matchData.team2!=='Bye';
       var clickAttr=hasTeams?' onclick="goToMatch('+m.ri+','+m.mi+')" style="cursor:pointer"':'';
-      // Terrain
+      // Terrain - match via matchKey
       var terrainHtml='';
+      var mKeySearch=m.round+'_'+m.team1+'_'+m.team2;
       for(var ti=1;ti<=5;ti++){
-        if(window._terrains[ti]&&window._terrains[ti].team1===m.team1&&window._terrains[ti].team2===m.team2){
+        if(window._terrains[ti]&&window._terrains[ti].matchKey===mKeySearch){
           terrainHtml='<div class="prog-terrain">'+BALLS[ti-1]+' Terrain '+ti+'</div>';break;
         }
       }
