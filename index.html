@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Tournoi Pétanque — Marsara 2026</title>
+<title>Tournoi Petanque Marsara 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -75,11 +75,12 @@ input::placeholder{color:#b0a89a}
 .rule-badge{width:32px;height:32px;border-radius:6px;background:var(--navy);color:var(--yellow);font-family:'Black Han Sans',sans-serif;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .rule-title{font-weight:700;font-size:13px;margin-bottom:3px}
 .rule-body{font-size:12px;color:var(--muted);line-height:1.55;font-weight:300}
+/* BRACKET */
 .bracket-wrap{overflow-x:auto;padding-bottom:1rem;-webkit-overflow-scrolling:touch}
-.bracket{display:flex;gap:10px;min-width:max-content;padding:4px 0}
-.b-round{display:flex;flex-direction:column;width:150px}
-.b-round-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;margin-bottom:8px}
-.b-matches{display:flex;flex-direction:column;gap:10px;justify-content:space-around;flex:1}
+.bracket{display:flex;gap:0;min-width:max-content;padding:4px 0;align-items:stretch}
+.b-round{display:flex;flex-direction:column;width:155px;padding:0 8px}
+.b-round-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;margin-bottom:8px;flex-shrink:0}
+.b-matches{display:flex;flex-direction:column;flex:1;justify-content:space-around;gap:8px}
 .b-match{background:#fff;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;border-top:2px solid var(--navy);-webkit-tap-highlight-color:transparent}
 .b-team{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;gap:6px;min-height:34px}
 .b-team.winner{background:rgba(13,27,62,.08)}
@@ -88,6 +89,11 @@ input::placeholder{color:#b0a89a}
 .b-name{font-size:11px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .b-score{font-family:'Black Han Sans',sans-serif;font-size:13px;color:var(--navy);min-width:16px;text-align:center}
 .b-vs{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;color:var(--red);background:var(--cream);padding:2px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.b-terrain-badge{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;padding:3px;background:var(--navy);color:var(--yellow)}
+.b-match-photo{width:100%;height:55px;object-fit:cover;display:block;border-top:1px solid var(--border)}
+.match-photo-wrap{margin-top:10px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border)}
+.match-photo-wrap img{width:100%;max-height:200px;object-fit:cover;display:block}
+/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;display:none;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:var(--white);border-radius:16px 16px 0 0;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;padding:1.25rem 1.25rem calc(1.5rem + var(--safe))}
@@ -99,31 +105,6 @@ input::placeholder{color:#b0a89a}
 .m-team-name{font-weight:700;font-size:13px;margin-bottom:3px}
 .m-team-players{font-size:11px;color:var(--muted)}
 .m-vs{font-family:'Black Han Sans',sans-serif;font-size:18px;color:var(--red);text-align:center}
-.score-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:1rem}
-.score-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
-.score-lbl{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.score-big{width:70px;height:70px;text-align:center;font-family:'Black Han Sans',sans-serif;font-size:30px;border:2px solid var(--border);border-radius:10px;background:var(--cream);color:var(--navy);-webkit-appearance:none}
-.score-big:focus{border-color:var(--navy);outline:none}
-.score-dash{font-family:'Black Han Sans',sans-serif;font-size:22px;color:var(--muted)}
-.photo-area{border:2px dashed var(--border);border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem;cursor:pointer;background:var(--cream)}
-.photo-preview{max-width:100%;border-radius:8px;margin-top:8px;display:none}
-.winner-box{background:var(--navy);color:var(--white);border-radius:8px;padding:10px;text-align:center;margin-bottom:1rem}
-.winner-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:2px}
-.winner-name{font-family:'Black Han Sans',sans-serif;font-size:18px;color:var(--yellow)}
-.prog-match{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:11px;margin-bottom:8px}
-.prog-match.next{border-top:3px solid var(--yellow)}
-.prog-match.done-win{border-top:3px solid var(--green)}
-.prog-match.done-loss{border-top:3px solid var(--red)}
-.prog-match.future{border-top:3px solid var(--navy);opacity:.6}
-.prog-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
-.prog-teams{display:flex;align-items:center;gap:6px;font-size:13px}
-.prog-tname{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.prog-score{font-family:'Black Han Sans',sans-serif;font-size:15px}
-.prog-vs{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--red)}
-.admin-section-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem;padding-bottom:6px;border-bottom:2px solid var(--border);margin-top:1.25rem}
-.adm-team{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
-.adm-team:last-child{border-bottom:none}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 .set-block{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px;transition:all .2s}
 .set-block.active{border-color:var(--navy);box-shadow:0 0 0 2px rgba(13,27,62,.1)}
 .set-block.won-t1{border-color:var(--green);background:#f0faf0}
@@ -137,12 +118,28 @@ input::placeholder{color:#b0a89a}
 .set-input:focus{border-color:var(--navy);outline:none;background:#fff}
 .set-input:disabled{opacity:.3;cursor:not-allowed}
 .set-dash{font-family:'Black Han Sans',sans-serif;font-size:18px;color:var(--muted)}
-.b-score-detail{font-size:9px;color:var(--muted);text-align:center;margin-top:2px}
-.b-match-photo{width:100%;height:60px;object-fit:cover;display:block;border-top:1px solid var(--border)}
-.match-photo-wrap{margin-top:10px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border)}
-.match-photo-wrap img{width:100%;max-height:200px;object-fit:cover;display:block}
-.modal-photo{width:100%;border-radius:8px;margin-top:8px;overflow:hidden}
-.modal-photo img{width:100%;max-height:220px;object-fit:cover;display:block}
+.photo-area{border:2px dashed var(--border);border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem;cursor:pointer;background:var(--cream)}
+.photo-preview{max-width:100%;border-radius:8px;margin-top:8px;display:none}
+.winner-box{background:var(--navy);color:var(--white);border-radius:8px;padding:10px;text-align:center;margin-bottom:1rem}
+.winner-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:2px}
+.winner-name{font-family:'Black Han Sans',sans-serif;font-size:18px;color:var(--yellow)}
+/* MON EQUIPE */
+.prog-match{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:11px;margin-bottom:8px}
+.prog-match.next{border-top:3px solid var(--yellow)}
+.prog-match.done-win{border-top:3px solid var(--green)}
+.prog-match.done-loss{border-top:3px solid var(--red)}
+.prog-match.future{border-top:3px solid var(--navy);opacity:.7}
+.prog-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.prog-terrain{font-size:11px;font-weight:700;margin-top:5px}
+.prog-teams{display:flex;align-items:center;gap:6px;font-size:13px}
+.prog-tname{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prog-score{font-family:'Black Han Sans',sans-serif;font-size:15px}
+.prog-vs{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--red)}
+/* ADMIN */
+.admin-section-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem;padding-bottom:6px;border-bottom:2px solid var(--border);margin-top:1.25rem}
+.adm-team{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.adm-team:last-child{border-bottom:none}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 @media(min-width:640px){.page,.bottom-nav{max-width:480px;margin:0 auto}.bottom-nav{left:50%;transform:translateX(-50%)}}
 </style>
 </head>
@@ -152,8 +149,8 @@ input::placeholder{color:#b0a89a}
 <div class="page active" id="page-home">
   <div class="page-header">
     <div style="display:flex;align-items:center;gap:10px">
-      <div class="logo-ball">🎯</div>
-      <div><div class="page-title">MARSARA 2026</div><div class="page-subtitle">Pétanque · Saint-Martin-de-Belleville</div></div>
+      <div class="logo-ball">&#127919;</div>
+      <div><div class="page-title">MARSARA 2026</div><div class="page-subtitle">Petanque - Saint-Martin-de-Belleville</div></div>
     </div>
   </div>
   <div class="hero-mountain">
@@ -169,74 +166,74 @@ input::placeholder{color:#b0a89a}
       <text x="200" y="197" text-anchor="middle" font-family="'Black Han Sans',sans-serif" font-size="8" fill="white" letter-spacing="3">SAINT-MARTIN-DE-BELLEVILLE</text>
     </svg>
     <div class="hero-text">
-      <div class="hero-eyebrow">▲ Vendredi soir · Veille du mariage</div>
-      <div class="hero-h1">GRAND<br><span class="red">TOURNOI</span><br><span class="outline">PÉTANQUE</span></div>
-      <div class="hero-desc">Élimination directe · 2 ou 3 joueurs · Martin &amp; Sara 2026</div>
+      <div class="hero-eyebrow">&#9650; Vendredi soir - Veille du mariage</div>
+      <div class="hero-h1">GRAND<br><span class="red">TOURNOI</span><br><span class="outline">PETANQUE</span></div>
+      <div class="hero-desc">Elimination directe - 2 ou 3 joueurs - Martin &amp; Sara 2026</div>
     </div>
   </div>
   <div class="stats-strip">
-    <div class="stat"><div class="stat-num" id="stat-teams">0</div><div class="stat-lbl">Équipes</div></div>
+    <div class="stat"><div class="stat-num" id="stat-teams">0</div><div class="stat-lbl">Equipes</div></div>
     <div class="stat"><div class="stat-num" id="stat-tours">0</div><div class="stat-lbl">Tours</div></div>
     <div class="stat"><div class="stat-num" id="stat-matches">0</div><div class="stat-lbl">Matchs</div></div>
   </div>
   <div class="section">
     <div class="section-eyebrow">Inscription</div>
-    <div class="section-title">Votre équipe</div>
-    <p class="section-sub">2 joueurs minimum, 3e joueur optionnel. 6 boules par équipe.</p>
+    <div class="section-title">Votre equipe</div>
+    <p class="section-sub">2 joueurs minimum, 3e joueur optionnel. 6 boules par equipe.</p>
     <div class="card">
-      <div class="form-group"><label>🏆 Nom de l'équipe</label><input type="text" id="team-name" placeholder="Les Aigles des Cimes"></div>
+      <div class="form-group"><label>&#127942; Nom de l'equipe</label><input type="text" id="team-name" placeholder="Les Aigles des Cimes"></div>
       <div class="player-tag">Joueur 1</div>
       <div class="form-row">
-        <div class="form-group"><label>Prénom</label><input type="text" id="p1-first" placeholder="Prénom"></div>
+        <div class="form-group"><label>Prenom</label><input type="text" id="p1-first" placeholder="Prenom"></div>
         <div class="form-group"><label>Nom</label><input type="text" id="p1-last" placeholder="Nom"></div>
       </div>
       <div class="player-tag red">Joueur 2</div>
       <div class="form-row">
-        <div class="form-group"><label>Prénom</label><input type="text" id="p2-first" placeholder="Prénom"></div>
+        <div class="form-group"><label>Prenom</label><input type="text" id="p2-first" placeholder="Prenom"></div>
         <div class="form-group"><label>Nom</label><input type="text" id="p2-last" placeholder="Nom"></div>
       </div>
       <label class="toggle-p3"><input type="checkbox" id="has-p3" onchange="toggleP3()"> Ajouter un 3e joueur (optionnel)</label>
       <div id="p3-section" style="display:none">
         <div class="player-tag opt">Joueur 3</div>
         <div class="form-row">
-          <div class="form-group"><label>Prénom</label><input type="text" id="p3-first" placeholder="Prénom"></div>
+          <div class="form-group"><label>Prenom</label><input type="text" id="p3-first" placeholder="Prenom"></div>
           <div class="form-group"><label>Nom</label><input type="text" id="p3-last" placeholder="Nom"></div>
         </div>
       </div>
-      <div class="boules-info" id="boules-info">🎳 <strong>3 boules par joueur</strong> — équipe de 2 · 6 boules au total</div>
-      <button class="btn btn-navy" id="btn-submit" onclick="submitTeam()">Confirmer l'inscription →</button>
+      <div class="boules-info" id="boules-info">&#127931; <strong>3 boules par joueur</strong> - equipe de 2 - 6 boules au total</div>
+      <button class="btn btn-navy" id="btn-submit" onclick="submitTeam()">Confirmer l'inscription &#8594;</button>
       <div class="form-msg" id="form-msg"></div>
     </div>
-    <div class="section-eyebrow" style="margin-top:1.25rem">Équipes inscrites</div>
-    <ul class="team-list" id="team-list"><li style="color:var(--muted);font-size:13px;padding:12px 0">Chargement…</li></ul>
+    <div class="section-eyebrow" style="margin-top:1.25rem">Equipes inscrites</div>
+    <ul class="team-list" id="team-list"><li style="color:var(--muted);font-size:13px;padding:12px 0">Chargement...</li></ul>
   </div>
 </div>
 
 <!-- PAGE BRACKET -->
 <div class="page" id="page-bracket">
   <div class="page-header">
-    <div><div class="page-title">TABLEAU</div><div class="page-subtitle">Élimination directe</div></div>
-    <button class="btn btn-sm btn-outline" onclick="loadBracket()" style="width:auto;padding:7px 14px;font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px">↻ Actu</button>
+    <div><div class="page-title">TABLEAU</div><div class="page-subtitle">Elimination directe</div></div>
+    <button class="btn btn-sm btn-outline" onclick="loadBracket()" style="width:auto;padding:7px 14px;font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px">&#8635; Actu</button>
   </div>
   <div class="section">
-    <p class="section-sub" style="margin-bottom:.75rem">Appuyez sur un match pour voir le détail et saisir le score.</p>
-    <div id="bracket-empty" style="color:var(--muted);font-size:14px;padding:1rem 0;display:none">Le tableau sera généré par Martin &amp; Sara avant le début du tournoi.</div>
+    <p class="section-sub" style="margin-bottom:.75rem">Appuyez sur un match pour voir le detail et saisir le score.</p>
+    <div id="bracket-empty" style="color:var(--muted);font-size:14px;padding:1rem 0;display:none">Le tableau sera genere par Martin &amp; Sara avant le debut du tournoi.</div>
     <div class="bracket-wrap"><div class="bracket" id="bracket"></div></div>
   </div>
 </div>
 
 <!-- PAGE MON EQUIPE -->
 <div class="page" id="page-team">
-  <div class="page-header"><div><div class="page-title">MON ÉQUIPE</div><div class="page-subtitle">Programme &amp; résultats</div></div></div>
+  <div class="page-header"><div><div class="page-title">MON EQUIPE</div><div class="page-subtitle">Programme &amp; resultats</div></div></div>
   <div class="section">
-    <p class="section-sub">Cherchez votre équipe pour voir votre programme.</p>
-    <div class="form-group" style="margin-bottom:8px"><input type="text" id="team-search" placeholder="Tapez le nom de votre équipe…" oninput="filterTeams()" style="font-size:16px"></div>
+    <p class="section-sub">Cherchez votre equipe pour voir votre programme.</p>
+    <div class="form-group" style="margin-bottom:8px"><input type="text" id="team-search" placeholder="Tapez le nom de votre equipe..." oninput="filterTeams()" style="font-size:16px"></div>
     <div id="team-suggestions" style="margin-bottom:1rem"></div>
     <div id="team-program" style="display:none">
       <div class="card red-top" style="margin-bottom:1rem">
-        <div style="font-family:'Black Han Sans',sans-serif;font-size:22px" id="prog-name">—</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:4px" id="prog-players">—</div>
-        <div style="margin-top:8px;display:flex;gap:8px"><span id="prog-badge" class="team-badge">—</span><span id="prog-status" class="team-badge" style="background:var(--navy);color:var(--yellow)">—</span></div>
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:22px" id="prog-name">-</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px" id="prog-players">-</div>
+        <div style="margin-top:8px;display:flex;gap:8px"><span id="prog-badge" class="team-badge">-</span><span id="prog-status" class="team-badge" style="background:var(--navy);color:var(--yellow)">-</span></div>
       </div>
       <div id="prog-matches"></div>
     </div>
@@ -245,7 +242,7 @@ input::placeholder{color:#b0a89a}
 
 <!-- PAGE REGLES -->
 <div class="page" id="page-rules">
-  <div class="page-header"><div><div class="page-title">RÈGLES</div><div class="page-subtitle">Tout savoir avant de jouer</div></div></div>
+  <div class="page-header"><div><div class="page-title">REGLES</div><div class="page-subtitle">Tout savoir avant de jouer</div></div></div>
   <div class="section">
     <div class="highlights">
       <div class="hi"><div class="hi-num">2-3</div><div class="hi-lbl">Joueurs</div></div>
@@ -253,16 +250,16 @@ input::placeholder{color:#b0a89a}
       <div class="hi"><div class="hi-num">7</div><div class="hi-lbl">Pts/set</div></div>
       <div class="hi"><div class="hi-num">2</div><div class="hi-lbl">Sets gagnants</div></div>
       <div class="hi"><div class="hi-num">20'</div><div class="hi-lbl">Max/match</div></div>
-      <div class="hi"><div class="hi-num">❌</div><div class="hi-lbl">Élimination</div></div>
+      <div class="hi"><div class="hi-num">X</div><div class="hi-lbl">Elimination</div></div>
     </div>
     <div class="card">
-      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">🎯 Format du match</div><div class="rule-body">2 sets gagnants à 7 points. En cas d'égalité 1-1, set décisif à 7 points.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">02</div><div><div class="rule-title">👥 Équipes</div><div class="rule-body"><strong>2 ou 3 joueurs.</strong> 6 boules au total : 3/joueur si 2, 2/joueur si 3. Même équipe tout le tournoi.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">03</div><div><div class="rule-title">⚙️ Déroulement d'une mène</div><div class="rule-body">Cochonnet à 6–9m. L'équipe qui n'est pas au point joue en premier. Seule l'équipe la plus proche marque.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">04</div><div><div class="rule-title">🏆 Élimination directe</div><div class="rule-body">Tirage au sort. Perdant = éliminé. Pas de repêchage.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">05</div><div><div class="rule-title">🕐 Gestion du temps</div><div class="rule-body">Max <strong>20 min.</strong> Temps écoulé → gagnant immédiat. Égalité parfaite → une dernière mène décisive.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">06</div><div><div class="rule-title">📝 Scores</div><div class="rule-body">Les deux équipes saisissent le score sur le site après chaque match. Photo bienvenue 📸</div></div></div>
-      <div class="rule-item"><div class="rule-badge">07</div><div><div class="rule-title">🥂 Esprit du tournoi</div><div class="rule-body">C'est une fête ! Fair-play obligatoire. Décision de Martin ou Sara = définitive. Verre à la main encouragé.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">&#127919; Format du match</div><div class="rule-body">2 sets gagnants a 7 points. En cas d'egalite 1-1, set decisif a 7 points.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">02</div><div><div class="rule-title">&#128101; Equipes</div><div class="rule-body"><strong>2 ou 3 joueurs.</strong> 6 boules au total : 3/joueur si 2, 2/joueur si 3. Meme equipe tout le tournoi.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">03</div><div><div class="rule-title">&#9881;&#65039; Deroulement d'une mene</div><div class="rule-body">Cochonnet a 6-9m. L'equipe qui n'est pas au point joue en premier. Seule l'equipe la plus proche marque.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">04</div><div><div class="rule-title">&#127942; Elimination directe</div><div class="rule-body">Tirage au sort. Perdant = elimine. Pas de repechage.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">05</div><div><div class="rule-title">&#128336; Gestion du temps</div><div class="rule-body">Max <strong>20 min.</strong> Temps ecoule : gagnant immediat. Egalite parfaite : une derniere mene decisive.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">06</div><div><div class="rule-title">&#128221; Scores</div><div class="rule-body">Les deux equipes saisissent le score sur le site apres chaque match. Photo bienvenue &#128247;</div></div></div>
+      <div class="rule-item"><div class="rule-badge">07</div><div><div class="rule-title">&#127946; Esprit du tournoi</div><div class="rule-body">C'est une fete ! Fair-play obligatoire. Decision de Martin ou Sara = definitive. Verre a la main encourage.</div></div></div>
     </div>
   </div>
 </div>
@@ -271,116 +268,95 @@ input::placeholder{color:#b0a89a}
 <div class="page" id="page-admin">
   <div class="page-header">
     <div><div class="page-title">ADMIN</div><div class="page-subtitle">Gestion du tournoi</div></div>
-    <button id="logout-btn" onclick="adminLogout()" style="display:none;background:var(--red);color:#fff;border:none;border-radius:4px;padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">Déco</button>
+    <button id="logout-btn" onclick="adminLogout()" style="display:none;background:var(--red);color:#fff;border:none;border-radius:4px;padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">Deco</button>
   </div>
   <div id="admin-login" style="padding:2rem 1.25rem;text-align:center">
-    <div style="font-size:44px;margin-bottom:1rem">🔒</div>
-    <div style="font-family:'Black Han Sans',sans-serif;font-size:22px;margin-bottom:.5rem">Accès Admin</div>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">Réservé à Martin &amp; Sara</p>
+    <div style="font-size:44px;margin-bottom:1rem">&#128274;</div>
+    <div style="font-family:'Black Han Sans',sans-serif;font-size:22px;margin-bottom:.5rem">Acces Admin</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">Reserve a Martin &amp; Sara</p>
     <div style="max-width:280px;margin:0 auto">
-      <div class="form-group"><label>Mot de passe</label><input type="password" id="admin-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()"></div>
-      <button class="btn btn-navy" onclick="adminLogin()">Accéder →</button>
+      <div class="form-group"><label>Mot de passe</label><input type="password" id="admin-pwd" placeholder="..." onkeydown="if(event.key==='Enter')adminLogin()"></div>
+      <button class="btn btn-navy" onclick="adminLogin()">Acceder &#8594;</button>
       <div class="form-msg" id="login-msg"></div>
     </div>
   </div>
   <div id="admin-content" style="display:none">
     <div class="section">
-      <div class="admin-section-title">🎯 Tableau</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Générez le tableau une fois les inscriptions fermées.</p>
+      <div class="admin-section-title">&#127919; Tableau</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Generez le tableau une fois les inscriptions fermees.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.5rem">
-        <button class="btn btn-navy" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminGenerateBracket()">🎲 Générer le tirage</button>
-        <button class="btn btn-outline" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminResetBracket()">↺ Réinitialiser</button>
+        <button class="btn btn-navy" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminGenerateBracket()">&#127922; Generer le tirage</button>
+        <button class="btn btn-outline" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminResetBracket()">&#8634; Reinitialiser</button>
       </div>
       <div class="form-msg" id="bracket-msg" style="text-align:left"></div>
-      <div class="admin-section-title">👥 Équipes (<span id="adm-count">0</span>)</div>
-      <div id="adm-teams"><p style="font-size:13px;color:var(--muted)">Chargement…</p></div>
+      <div class="admin-section-title">&#128101; Equipes (<span id="adm-count">0</span>)</div>
+      <div id="adm-teams"><p style="font-size:13px;color:var(--muted)">Chargement...</p></div>
     </div>
   </div>
 </div>
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <button class="bn-item active" onclick="showPage('home',this)"><div class="bn-icon">🏠</div>Accueil</button>
-  <button class="bn-item" onclick="showPage('bracket',this)"><div class="bn-icon">🏆</div>Tableau</button>
-  <button class="bn-item" onclick="showPage('team',this)"><div class="bn-icon">👤</div>Mon équipe</button>
-  <button class="bn-item" onclick="showPage('rules',this)"><div class="bn-icon">📋</div>Règles</button>
-  <button class="bn-item" onclick="showPage('admin',this)"><div class="bn-icon">⚙️</div>Admin</button>
+  <button class="bn-item active" onclick="showPage('home',this)"><div class="bn-icon">&#127968;</div>Accueil</button>
+  <button class="bn-item" onclick="showPage('bracket',this)"><div class="bn-icon">&#127942;</div>Tableau</button>
+  <button class="bn-item" onclick="showPage('team',this)"><div class="bn-icon">&#128100;</div>Mon equipe</button>
+  <button class="bn-item" onclick="showPage('rules',this)"><div class="bn-icon">&#128203;</div>Regles</button>
+  <button class="bn-item" onclick="showPage('admin',this)"><div class="bn-icon">&#9881;&#65039;</div>Admin</button>
 </nav>
 
 <!-- MODAL MATCH -->
 <div class="modal-overlay" id="match-modal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-title" id="m-round">—</div>
-    <div class="modal-sub" id="m-status">—</div>
+    <div class="modal-title" id="m-round">-</div>
+    <div class="modal-sub" id="m-status">-</div>
     <div class="modal-teams">
-      <div class="m-team"><div class="m-team-name" id="m-t1">—</div><div class="m-team-players" id="m-p1">—</div></div>
+      <div class="m-team"><div class="m-team-name" id="m-t1">-</div><div class="m-team-players" id="m-p1">-</div></div>
       <div class="m-vs">VS</div>
-      <div class="m-team"><div class="m-team-name" id="m-t2">—</div><div class="m-team-players" id="m-p2">—</div></div>
+      <div class="m-team"><div class="m-team-name" id="m-t2">-</div><div class="m-team-players" id="m-p2">-</div></div>
     </div>
-    <div id="m-winner" style="display:none"><div class="winner-box"><div class="winner-lbl">Vainqueur</div><div class="winner-name" id="m-winner-name">—</div></div></div>
+    <div id="m-winner" style="display:none"><div class="winner-box"><div class="winner-lbl">Vainqueur</div><div class="winner-name" id="m-winner-name">-</div></div></div>
     <div id="m-score-section">
-
-      <!-- SET 1 -->
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Score (sets gagnes - max 2)</div>
       <div class="set-block" id="set1-block">
-        <div class="set-label">🎯 Set 1</div>
+        <div class="set-label">Set 1</div>
         <div class="set-row">
-          <div class="set-team-name" id="set-t1-1">Éq. 1</div>
-          <div class="set-inputs">
-            <input type="number" class="set-input" id="set1-t1" min="0" max="13" placeholder="0" oninput="onSetInput()">
-            <span class="set-dash">–</span>
-            <input type="number" class="set-input" id="set1-t2" min="0" max="13" placeholder="0" oninput="onSetInput()">
-          </div>
-          <div class="set-team-name right" id="set-t2-1">Éq. 2</div>
+          <div class="set-team-name" id="set-t1-1">Eq. 1</div>
+          <div class="set-inputs"><input type="number" class="set-input" id="set1-t1" min="0" max="13" placeholder="0" oninput="onSetInput()"><span class="set-dash">-</span><input type="number" class="set-input" id="set1-t2" min="0" max="13" placeholder="0" oninput="onSetInput()"></div>
+          <div class="set-team-name right" id="set-t2-1">Eq. 2</div>
         </div>
       </div>
-
-      <!-- SET 2 -->
       <div class="set-block" id="set2-block" style="opacity:.4">
-        <div class="set-label">🎯 Set 2</div>
+        <div class="set-label">Set 2</div>
         <div class="set-row">
-          <div class="set-team-name" id="set-t1-2">Éq. 1</div>
-          <div class="set-inputs">
-            <input type="number" class="set-input" id="set2-t1" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled>
-            <span class="set-dash">–</span>
-            <input type="number" class="set-input" id="set2-t2" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled>
-          </div>
-          <div class="set-team-name right" id="set-t2-2">Éq. 2</div>
+          <div class="set-team-name" id="set-t1-2">Eq. 1</div>
+          <div class="set-inputs"><input type="number" class="set-input" id="set2-t1" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled><span class="set-dash">-</span><input type="number" class="set-input" id="set2-t2" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled></div>
+          <div class="set-team-name right" id="set-t2-2">Eq. 2</div>
         </div>
       </div>
-
-      <!-- SET 3 (décisif) -->
       <div class="set-block" id="set3-block" style="display:none;opacity:.4">
-        <div class="set-label">⚡ Set décisif</div>
+        <div class="set-label">Set decisif</div>
         <div class="set-row">
-          <div class="set-team-name" id="set-t1-3">Éq. 1</div>
-          <div class="set-inputs">
-            <input type="number" class="set-input" id="set3-t1" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled>
-            <span class="set-dash">–</span>
-            <input type="number" class="set-input" id="set3-t2" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled>
-          </div>
-          <div class="set-team-name right" id="set-t2-3">Éq. 2</div>
+          <div class="set-team-name" id="set-t1-3">Eq. 1</div>
+          <div class="set-inputs"><input type="number" class="set-input" id="set3-t1" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled><span class="set-dash">-</span><input type="number" class="set-input" id="set3-t2" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled></div>
+          <div class="set-team-name right" id="set-t2-3">Eq. 2</div>
         </div>
       </div>
-
-      <!-- RÉSUMÉ SETS -->
       <div id="sets-summary" style="display:none;margin:12px 0;padding:10px;background:var(--navy);border-radius:8px;text-align:center">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px">Sets gagnés</div>
-        <div style="font-family:'Black Han Sans',sans-serif;font-size:28px;color:var(--yellow)" id="sets-score-display">0 – 0</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px">Sets gagnes</div>
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:28px;color:var(--yellow)" id="sets-score-display">0 - 0</div>
         <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px" id="sets-winner-hint"></div>
       </div>
-
-      <!-- Photo existante du match -->
       <div id="modal-existing-photo" style="display:none;margin-bottom:10px">
         <div class="match-photo-wrap"><img id="modal-photo-img" src="" alt="Photo du match"></div>
       </div>
       <div class="photo-area" onclick="document.getElementById('photo-input').click()">
-        <div style="font-size:26px;margin-bottom:4px">📸</div>
-        <div id="photo-area-label" style="font-size:13px;color:var(--muted)">Photo des équipes (optionnel)</div>
+        <div style="font-size:26px;margin-bottom:4px">&#128247;</div>
+        <div id="photo-area-label" style="font-size:13px;color:var(--muted)">Photo des equipes (optionnel)</div>
         <img id="photo-preview" class="photo-preview">
       </div>
       <input type="file" id="photo-input" accept="image/*" capture="environment" style="display:none" onchange="previewPhoto(this)">
-      <button class="btn btn-red" id="btn-score" onclick="submitScore()" disabled style="opacity:.5">Valider le score →</button>
+      <button class="btn btn-red" id="btn-score" onclick="submitScore()" disabled style="opacity:.5">Valider le score &#8594;</button>
       <div class="form-msg" id="m-msg"></div>
     </div>
   </div>
@@ -390,20 +366,18 @@ input::placeholder{color:#b0a89a}
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzru2qV_SdSjkRBkCpMBEvIBEP4n-bBN2vuQNAivbn1H6NQxCuV01TuaC2WudL3HM7H7Q/exec';
 const BOT_URL    = 'https://scaling-robot-jr59wj69574phjp7x-3000.app.github.dev';
 const ADMIN_PWD  = 'marsara2026';
+const BALLS      = ['\uD83D\uDD34','\uD83D\uDD35','\uD83D\uDFE2','\uD83D\uDFE1','\uD83D\uDFE3'];
 
-// ── ENVOI VERS APPS SCRIPT ───────────────────────────────────
-// Lecture : fetch normal (pas de CORS car lecture publique)
+window._terrains = {};
+
 function appsRead(params) {
-  return fetch(SCRIPT_URL + '?' + new URLSearchParams(params))
-    .then(function(r){ return r.json(); });
+  return fetch(SCRIPT_URL + '?' + new URLSearchParams(params)).then(function(r){ return r.json(); });
 }
-// Écriture : balise img (contourne CORS pour les GET d'écriture)
 function appsWrite(params) {
-  var img = new Image();
-  img.src = SCRIPT_URL + '?' + new URLSearchParams(params);
+  var img = new Image(); img.src = SCRIPT_URL + '?' + new URLSearchParams(params);
 }
 
-// ── NAVIGATION ───────────────────────────────────────────────
+// NAV
 function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.bn-item').forEach(function(b){ b.classList.remove('active'); });
@@ -414,561 +388,363 @@ function showPage(name, btn) {
   if (name === 'admin' && document.getElementById('admin-content').style.display !== 'none') loadAdminTeams();
 }
 
-// ── P3 ───────────────────────────────────────────────────────
+// P3
 function toggleP3() {
   var has = document.getElementById('has-p3').checked;
   document.getElementById('p3-section').style.display = has ? 'block' : 'none';
   document.getElementById('boules-info').innerHTML = has
-    ? '🎳 <strong>2 boules par joueur</strong> — équipe de 3 · 6 boules au total'
-    : '🎳 <strong>3 boules par joueur</strong> — équipe de 2 · 6 boules au total';
+    ? '&#127931; <strong>2 boules par joueur</strong> - equipe de 3 - 6 boules au total'
+    : '&#127931; <strong>3 boules par joueur</strong> - equipe de 2 - 6 boules au total';
 }
 
-// ── INSCRIPTION ──────────────────────────────────────────────
+// INSCRIPTION
 function submitTeam() {
-  var msg  = document.getElementById('form-msg');
+  var msg = document.getElementById('form-msg');
   var has3 = document.getElementById('has-p3').checked;
-  var tn   = document.getElementById('team-name').value.trim();
-  var p1f  = document.getElementById('p1-first').value.trim();
-  var p1l  = document.getElementById('p1-last').value.trim();
-  var p2f  = document.getElementById('p2-first').value.trim();
-  var p2l  = document.getElementById('p2-last').value.trim();
-  var p3f  = has3 ? document.getElementById('p3-first').value.trim() : '';
-  var p3l  = has3 ? document.getElementById('p3-last').value.trim() : '';
-
-  if (!tn || !p1f || !p1l || !p2f || !p2l) {
-    showMsg(msg, 'Remplissez tous les champs obligatoires.', 'error'); return;
-  }
-  if (has3 && (!p3f || !p3l)) {
-    showMsg(msg, 'Remplissez le 3e joueur ou décochez la case.', 'error'); return;
-  }
-
+  var tn = document.getElementById('team-name').value.trim();
+  var p1f = document.getElementById('p1-first').value.trim();
+  var p1l = document.getElementById('p1-last').value.trim();
+  var p2f = document.getElementById('p2-first').value.trim();
+  var p2l = document.getElementById('p2-last').value.trim();
+  var p3f = has3 ? document.getElementById('p3-first').value.trim() : '';
+  var p3l = has3 ? document.getElementById('p3-last').value.trim() : '';
+  if (!tn||!p1f||!p1l||!p2f||!p2l) { showMsg(msg,'Remplissez tous les champs obligatoires.','error'); return; }
+  if (has3 && (!p3f||!p3l)) { showMsg(msg,'Remplissez le 3e joueur ou decochez la case.','error'); return; }
   var btn = document.getElementById('btn-submit');
-  btn.textContent = 'Envoi…'; btn.disabled = true;
-
-  appsRead({
-    action:'addTeam', teamName:tn,
-    p1First:p1f, p1Last:p1l,
-    p2First:p2f, p2Last:p2l,
-    p3First:p3f, p3Last:p3l,
-    hasP3: has3 ? '1' : '0'
-  }).then(function(d) {
+  btn.textContent = 'Envoi...'; btn.disabled = true;
+  appsRead({ action:'addTeam',teamName:tn,p1First:p1f,p1Last:p1l,p2First:p2f,p2Last:p2l,p3First:p3f,p3Last:p3l,hasP3:has3?'1':'0' })
+  .then(function(d) {
     if (d.success) {
-      showMsg(msg, '✓ Équipe "' + tn + '" inscrite ! Bonne chance 🎯', 'success');
-      ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last'].forEach(function(id){
-        var el = document.getElementById(id); if (el) el.value = '';
-      });
-      document.getElementById('has-p3').checked = false;
-      toggleP3();
-      setTimeout(loadTeams, 1500);
-    } else {
-      showMsg(msg, d.error || 'Erreur.', 'error');
-    }
-    btn.textContent = "Confirmer l'inscription →"; btn.disabled = false;
-  }).catch(function(e){
-    showMsg(msg, 'Erreur réseau : ' + e.message, 'error');
-    btn.textContent = "Confirmer l'inscription →"; btn.disabled = false;
-  });
+      showMsg(msg,'Equipe "'+tn+'" inscrite ! Bonne chance !','success');
+      ['team-name','p1-first','p1-last','p2-first','p2-last','p3-first','p3-last'].forEach(function(id){ var e=document.getElementById(id); if(e)e.value=''; });
+      document.getElementById('has-p3').checked=false; toggleP3();
+      setTimeout(loadTeams,1500);
+    } else { showMsg(msg,d.error||'Erreur.','error'); }
+    btn.textContent="Confirmer l'inscription \u2192"; btn.disabled=false;
+  }).catch(function(e){ showMsg(msg,'Erreur : '+e.message,'error'); btn.textContent="Confirmer l'inscription \u2192"; btn.disabled=false; });
 }
 
-// ── ÉQUIPES ──────────────────────────────────────────────────
+// TEAMS
 var allTeams = [];
-
 function loadTeams() {
-  appsRead({ action:'getTeams' }).then(function(d) {
-    allTeams = d.teams || [];
+  appsRead({action:'getTeams'}).then(function(d) {
+    allTeams = d.teams||[];
     var list = document.getElementById('team-list');
-    if (!allTeams.length) {
-      list.innerHTML = '<li style="color:var(--muted);font-size:13px;padding:12px 0">Aucune équipe pour l&apos;instant.</li>';
-    } else {
-      list.innerHTML = allTeams.map(function(t, i) {
-        return '<li class="team-item"><span class="team-num">' + (i+1) + '</span>' +
-          '<div><div class="team-name">' + t.name + '</div>' +
-          '<div class="team-players">' + t.player1 + ' &amp; ' + t.player2 + (t.player3 ? ' &amp; ' + t.player3 : '') + '</div></div>' +
-          '<span class="team-badge">' + (t.player3 ? '3j' : '2j') + '</span></li>';
-      }).join('');
-    }
-    var n = allTeams.length;
-    document.getElementById('stat-teams').textContent  = n;
-    document.getElementById('stat-tours').textContent  = n > 1 ? Math.ceil(Math.log2(n)) : 0;
-    document.getElementById('stat-matches').textContent = n > 1 ? n - 1 : 0;
-  }).catch(function(e){ console.log('loadTeams error:', e.message); });
+    if (!allTeams.length) { list.innerHTML='<li style="color:var(--muted);font-size:13px;padding:12px 0">Aucune equipe pour l&apos;instant.</li>'; return; }
+    list.innerHTML = allTeams.map(function(t,i){
+      return '<li class="team-item"><span class="team-num">'+(i+1)+'</span><div><div class="team-name">'+t.name+'</div><div class="team-players">'+t.player1+' &amp; '+t.player2+(t.player3?' &amp; '+t.player3:'')+'</div></div><span class="team-badge">'+(t.player3?'3j':'2j')+'</span></li>';
+    }).join('');
+    var n=allTeams.length;
+    document.getElementById('stat-teams').textContent=n;
+    document.getElementById('stat-tours').textContent=n>1?Math.ceil(Math.log2(n)):0;
+    document.getElementById('stat-matches').textContent=n>1?n-1:0;
+  }).catch(function(){});
 }
 
-// ── BRACKET ──────────────────────────────────────────────────
-var bracket = [];
+// TERRAINS (depuis le bot)
+function loadTerrains() {
+  fetch(BOT_URL + '/')
+  .then(function(r){ return r.json(); })
+  .then(function(d){ if(d.terrains){ window._terrains=d.terrains; renderBracket(); } })
+  .catch(function(){});
+  setTimeout(loadTerrains,15000);
+}
 
+// BRACKET
+var bracket = [];
 function loadBracket() {
-  appsRead({ action:'getBracket' }).then(function(d) {
-    bracket = d.bracket || [];
+  appsRead({action:'getBracket'}).then(function(d){
+    bracket=d.bracket||[];
     renderBracket();
-  }).catch(function(e){ console.log('loadBracket error:', e.message); });
+  }).catch(function(){});
 }
 
 function renderBracket() {
-  var c     = document.getElementById('bracket');
-  var empty = document.getElementById('bracket-empty');
-  if (!bracket.length) { empty.style.display = 'block'; c.innerHTML = ''; return; }
-  empty.style.display = 'none';
-  c.innerHTML = bracket.map(function(rnd, ri) {
-    return '<div class="b-round"><div class="b-round-label">' + rnd.name + '</div><div class="b-matches">' +
-      rnd.matches.map(function(m, mi) {
-        var ri2 = ri;
-        var t1  = m.team1 || '?', t2 = m.team2 || '?', w = m.winner || '';
-        var bye = t1 === 'Bye' || t2 === 'Bye';
-        var s1  = (m.score1 !== null && m.score1 !== undefined && m.score1 !== '') ? m.score1 : '';
-        var s2  = (m.score2 !== null && m.score2 !== undefined && m.score2 !== '') ? m.score2 : '';
-        var c1  = w && w === t1 ? 'winner' : (w && w !== t1 ? 'loser' : '');
-        var c2  = w && w === t2 ? 'winner' : (w && w !== t2 ? 'loser' : '');
-        // Build set detail string e.g. "7-3, 5-7, 7-4"
-        var sets = m.sets || [];
-        var setDetail = sets.length ? sets.map(function(s){ return s.t1+'-'+s.t2; }).join(' · ') : '';
-        var photoThumb = m.photoUrl ? '<img class="b-match-photo" src="' + m.photoUrl + '" alt="photo">' : '';
-        return '<div class="b-match' + (bye ? ' b-bye' : '') + '" onclick="openMatch(' + ri2 + ',' + mi + ')">' +
-          '<div class="b-team ' + c1 + '"><span class="b-name">' + t1 + '</span><span class="b-score">' + s1 + '</span></div>' +
-          '<div class="b-vs">' + (bye ? 'BYE' : (setDetail ? setDetail : 'vs')) + '</div>' +
-          '<div class="b-team ' + c2 + '"><span class="b-name">' + t2 + '</span><span class="b-score">' + s2 + '</span></div>' +
-          photoThumb +
-          '</div>';
+  var c=document.getElementById('bracket');
+  var empty=document.getElementById('bracket-empty');
+  if (!bracket.length) { empty.style.display='block'; c.innerHTML=''; return; }
+  empty.style.display='none';
+  c.innerHTML = bracket.map(function(rnd,ri){
+    return '<div class="b-round"><div class="b-round-label">'+rnd.name+'</div><div class="b-matches">' +
+      rnd.matches.map(function(m,mi){
+        var t1=m.team1||'?', t2=m.team2||'?', w=m.winner||'';
+        var bye=t1==='Bye'||t2==='Bye';
+        var s1=(m.score1!==null&&m.score1!==undefined&&m.score1!=='')?m.score1:'';
+        var s2=(m.score2!==null&&m.score2!==undefined&&m.score2!=='')?m.score2:'';
+        var c1=w&&w===t1?'winner':(w&&w!==t1?'loser':'');
+        var c2=w&&w===t2?'winner':(w&&w!==t2?'loser':'');
+        var sets=m.sets||[];
+        var setDetail=sets.length?sets.map(function(s){return s.t1+'-'+s.t2;}).join(' - '):'';
+        var photoThumb=m.photoUrl?'<img class="b-match-photo" src="'+m.photoUrl+'" alt="photo">':'';
+        // Terrain badge
+        var terrainBadge='';
+        for (var ti=1;ti<=5;ti++){
+          if(window._terrains[ti]&&window._terrains[ti].team1===t1&&window._terrains[ti].team2===t2){
+            terrainBadge='<div class="b-terrain-badge">'+BALLS[ti-1]+' Terrain '+ti+'</div>';
+            break;
+          }
+        }
+        return '<div class="b-match'+(bye?' b-bye':'')+'" onclick="openMatch('+ri+','+mi+')">' +
+          terrainBadge +
+          '<div class="b-team '+c1+'"><span class="b-name">'+t1+'</span><span class="b-score">'+s1+'</span></div>' +
+          '<div class="b-vs">'+(bye?'BYE':(setDetail?setDetail:'vs'))+'</div>' +
+          '<div class="b-team '+c2+'"><span class="b-name">'+t2+'</span><span class="b-score">'+s2+'</span></div>' +
+          photoThumb+'</div>';
       }).join('') + '</div></div>';
   }).join('');
 }
 
-// ── MODAL ────────────────────────────────────────────────────
-var curMatch = null;
-
-function openMatch(ri, mi) {
-  var rnd = bracket[ri], m = rnd.matches[mi];
-  curMatch = { ri:ri, mi:mi };
-  var t1 = m.team1 || 'À déterminer', t2 = m.team2 || 'À déterminer';
-  var hasTeams = m.team1 && m.team2 && t1 !== 'Bye' && t2 !== 'Bye';
-
-  document.getElementById('m-round').textContent = rnd.name;
-  document.getElementById('m-t1').textContent    = t1;
-  document.getElementById('m-t2').textContent    = t2;
-
-  var td1 = allTeams.find(function(t){ return t.name === m.team1; });
-  var td2 = allTeams.find(function(t){ return t.name === m.team2; });
-  document.getElementById('m-p1').textContent = td1 ? [td1.player1,td1.player2,td1.player3].filter(Boolean).join(' · ') : '—';
-  document.getElementById('m-p2').textContent = td2 ? [td2.player1,td2.player2,td2.player3].filter(Boolean).join(' · ') : '—';
-
-  // Noms dans les sets
-  var t1short = t1.length > 12 ? t1.substring(0,12)+'…' : t1;
-  var t2short = t2.length > 12 ? t2.substring(0,12)+'…' : t2;
-  for (var s = 1; s <= 3; s++) {
-    document.getElementById('set-t1-'+s).textContent = t1short;
-    document.getElementById('set-t2-'+s).textContent = t2short;
+// MODAL
+var curMatch=null;
+function openMatch(ri,mi){
+  var rnd=bracket[ri],m=rnd.matches[mi];
+  curMatch={ri:ri,mi:mi};
+  var t1=m.team1||'A determiner',t2=m.team2||'A determiner';
+  var hasTeams=m.team1&&m.team2&&t1!=='Bye'&&t2!=='Bye';
+  document.getElementById('m-round').textContent=rnd.name;
+  document.getElementById('m-t1').textContent=t1; document.getElementById('m-t2').textContent=t2;
+  var td1=allTeams.find(function(t){return t.name===m.team1;}),td2=allTeams.find(function(t){return t.name===m.team2;});
+  document.getElementById('m-p1').textContent=td1?[td1.player1,td1.player2,td1.player3].filter(Boolean).join(' - '):'';
+  document.getElementById('m-p2').textContent=td2?[td2.player1,td2.player2,td2.player3].filter(Boolean).join(' - '):'';
+  for(var s=1;s<=3;s++){
+    var t1s=t1.length>12?t1.substring(0,12)+'...':t1;
+    var t2s=t2.length>12?t2.substring(0,12)+'...':t2;
+    document.getElementById('set-t1-'+s).textContent=t1s;
+    document.getElementById('set-t2-'+s).textContent=t2s;
   }
-
-  // Remplir les sets existants si match déjà joué
-  var sets = m.sets || [];
+  var sets=m.sets||[];
   resetSets();
-  if (sets.length >= 1) { fillSet(1, sets[0]); }
-  if (sets.length >= 2) { fillSet(2, sets[1]); }
-  if (sets.length >= 3) { fillSet(3, sets[2]); }
-  if (sets.length > 0) { onSetInput(); }
-
-  document.getElementById('photo-preview').style.display = 'none';
-  document.getElementById('photo-input').value = '';
-  // Photo existante du match
-  var existingPhotoDiv = document.getElementById('modal-existing-photo');
-  var existingPhotoImg = document.getElementById('modal-photo-img');
-  if (m.photoUrl) {
-    existingPhotoImg.src = m.photoUrl;
-    existingPhotoDiv.style.display = 'block';
-    document.getElementById('photo-area-label').textContent = 'Remplacer la photo';
-  } else {
-    existingPhotoDiv.style.display = 'none';
-    document.getElementById('photo-area-label').textContent = 'Photo des équipes (optionnel)';
-  }
-  document.getElementById('m-winner').style.display = m.winner ? 'block' : 'none';
-  if (m.winner) document.getElementById('m-winner-name').textContent = m.winner;
-  document.getElementById('m-status').textContent = m.winner ? 'Match terminé ✓' : hasTeams ? 'Match à jouer' : 'En attente des équipes';
-  document.getElementById('m-score-section').style.display = hasTeams ? 'block' : 'none';
-  document.getElementById('m-msg').style.display = 'none';
+  if(sets.length>=1)fillSet(1,sets[0]);
+  if(sets.length>=2)fillSet(2,sets[1]);
+  if(sets.length>=3)fillSet(3,sets[2]);
+  if(sets.length>0)onSetInput();
+  document.getElementById('photo-preview').style.display='none';
+  document.getElementById('photo-input').value='';
+  var ep=document.getElementById('modal-existing-photo'),ei=document.getElementById('modal-photo-img');
+  if(m.photoUrl){ei.src=m.photoUrl;ep.style.display='block';document.getElementById('photo-area-label').textContent='Remplacer la photo';}
+  else{ep.style.display='none';document.getElementById('photo-area-label').textContent='Photo des equipes (optionnel)';}
+  document.getElementById('m-winner').style.display=m.winner?'block':'none';
+  if(m.winner)document.getElementById('m-winner-name').textContent=m.winner;
+  document.getElementById('m-status').textContent=m.winner?'Match termine':hasTeams?'Match a jouer':'En attente des equipes';
+  document.getElementById('m-score-section').style.display=hasTeams?'block':'none';
+  document.getElementById('m-msg').style.display='none';
   document.getElementById('match-modal').classList.add('open');
 }
+function closeModal(){document.getElementById('match-modal').classList.remove('open');}
 
-function resetSets() {
-  for (var s = 1; s <= 3; s++) {
-    document.getElementById('set'+s+'-t1').value = '';
-    document.getElementById('set'+s+'-t2').value = '';
-    document.getElementById('set'+s+'-t1').disabled = s > 1;
-    document.getElementById('set'+s+'-t2').disabled = s > 1;
-    var block = document.getElementById('set'+s+'-block');
-    block.className = 'set-block';
-    block.style.opacity = s === 1 ? '1' : '0.4';
+function resetSets(){
+  for(var s=1;s<=3;s++){
+    document.getElementById('set'+s+'-t1').value='';document.getElementById('set'+s+'-t2').value='';
+    document.getElementById('set'+s+'-t1').disabled=s>1;document.getElementById('set'+s+'-t2').disabled=s>1;
+    var block=document.getElementById('set'+s+'-block');
+    block.className='set-block';block.style.opacity=s===1?'1':'0.4';
   }
-  document.getElementById('set3-block').style.display = 'none';
-  document.getElementById('sets-summary').style.display = 'none';
-  document.getElementById('btn-score').disabled = true;
-  document.getElementById('btn-score').style.opacity = '0.5';
+  document.getElementById('set3-block').style.display='none';
+  document.getElementById('sets-summary').style.display='none';
+  document.getElementById('btn-score').disabled=true;document.getElementById('btn-score').style.opacity='0.5';
+}
+function fillSet(n,set){
+  document.getElementById('set'+n+'-t1').value=set.t1!==undefined?set.t1:'';
+  document.getElementById('set'+n+'-t2').value=set.t2!==undefined?set.t2:'';
+  document.getElementById('set'+n+'-t1').disabled=false;document.getElementById('set'+n+'-t2').disabled=false;
+  document.getElementById('set'+n+'-block').style.opacity='1';
+}
+function onSetInput(){
+  var s1t1=parseInt(document.getElementById('set1-t1').value);
+  var s1t2=parseInt(document.getElementById('set1-t2').value);
+  var s2t1=parseInt(document.getElementById('set2-t1').value);
+  var s2t2=parseInt(document.getElementById('set2-t2').value);
+  var s3t1=parseInt(document.getElementById('set3-t1').value);
+  var s3t2=parseInt(document.getElementById('set3-t2').value);
+  var set1done=!isNaN(s1t1)&&!isNaN(s1t2)&&s1t1!==s1t2;
+  var set1win=set1done?(s1t1>s1t2?1:2):0;
+  if(set1done){
+    document.getElementById('set1-block').className='set-block active '+(set1win===1?'won-t1':'won-t2');
+    document.getElementById('set2-t1').disabled=false;document.getElementById('set2-t2').disabled=false;
+    document.getElementById('set2-block').style.opacity='1';document.getElementById('set2-block').className='set-block active';
+  } else { document.getElementById('set1-block').className='set-block active'; document.getElementById('set2-t1').disabled=true;document.getElementById('set2-t2').disabled=true;document.getElementById('set2-block').style.opacity='0.4'; }
+  var set2done=set1done&&!isNaN(s2t1)&&!isNaN(s2t2)&&s2t1!==s2t2;
+  var set2win=set2done?(s2t1>s2t2?1:2):0;
+  if(set2done)document.getElementById('set2-block').className='set-block active '+(set2win===1?'won-t1':'won-t2');
+  var winsT1=(set1win===1?1:0)+(set2win===1?1:0);
+  var winsT2=(set1win===2?1:0)+(set2win===2?1:0);
+  var need3=set2done&&winsT1===1&&winsT2===1;
+  document.getElementById('set3-block').style.display=need3?'block':'none';
+  if(need3){document.getElementById('set3-t1').disabled=false;document.getElementById('set3-t2').disabled=false;document.getElementById('set3-block').style.opacity='1';document.getElementById('set3-block').className='set-block active';}
+  var set3done=need3&&!isNaN(s3t1)&&!isNaN(s3t2)&&s3t1!==s3t2;
+  var set3win=set3done?(s3t1>s3t2?1:2):0;
+  if(set3done){winsT1+=(set3win===1?1:0);winsT2+=(set3win===2?1:0);document.getElementById('set3-block').className='set-block active '+(set3win===1?'won-t1':'won-t2');}
+  var matchDone=winsT1===2||winsT2===2;
+  if(set2done){
+    document.getElementById('sets-summary').style.display='block';
+    document.getElementById('sets-score-display').textContent=winsT1+' - '+winsT2;
+    var hint='';
+    if(matchDone){var wn=winsT1>winsT2?document.getElementById('m-t1').textContent:document.getElementById('m-t2').textContent;hint=wn+' remporte le match !';}
+    else if(need3&&!set3done)hint='Egalite ! Set decisif en cours...';
+    document.getElementById('sets-winner-hint').textContent=hint;
+  } else { document.getElementById('sets-summary').style.display='none'; }
+  document.getElementById('btn-score').disabled=!matchDone;
+  document.getElementById('btn-score').style.opacity=matchDone?'1':'0.5';
 }
 
-function fillSet(n, set) {
-  document.getElementById('set'+n+'-t1').value = set.t1 !== undefined ? set.t1 : '';
-  document.getElementById('set'+n+'-t2').value = set.t2 !== undefined ? set.t2 : '';
-  document.getElementById('set'+n+'-t1').disabled = false;
-  document.getElementById('set'+n+'-t2').disabled = false;
-  document.getElementById('set'+n+'-block').style.opacity = '1';
+function submitScore(){
+  var msg=document.getElementById('m-msg');
+  var sets=[];
+  var s1t1=parseInt(document.getElementById('set1-t1').value),s1t2=parseInt(document.getElementById('set1-t2').value);
+  var s2t1=parseInt(document.getElementById('set2-t1').value),s2t2=parseInt(document.getElementById('set2-t2').value);
+  var s3t1=parseInt(document.getElementById('set3-t1').value),s3t2=parseInt(document.getElementById('set3-t2').value);
+  if(!isNaN(s1t1)&&!isNaN(s1t2))sets.push({t1:s1t1,t2:s1t2});
+  if(!isNaN(s2t1)&&!isNaN(s2t2))sets.push({t1:s2t1,t2:s2t2});
+  if(!isNaN(s3t1)&&!isNaN(s3t2)&&document.getElementById('set3-block').style.display!=='none')sets.push({t1:s3t1,t2:s3t2});
+  var wT1=0,wT2=0;
+  sets.forEach(function(s){if(s.t1>s.t2)wT1++;else if(s.t2>s.t1)wT2++;});
+  if(wT1===wT2){showMsg(msg,'Il doit y avoir un gagnant.','error');return;}
+  var btn=document.getElementById('btn-score');
+  btn.textContent='Envoi...';btn.disabled=true;
+  appsRead({action:'saveScore',roundIdx:curMatch.ri,matchIdx:curMatch.mi,score1:wT1,score2:wT2,setsJson:JSON.stringify(sets)})
+  .then(function(d){
+    if(d.success){
+      var photoInput=document.getElementById('photo-input');
+      if(photoInput.files&&photoInput.files[0])uploadPhoto(photoInput.files[0],curMatch.ri,curMatch.mi);
+      showMsg(msg,'Score enregistre !','success');
+      setTimeout(function(){closeModal();loadBracket();},1500);
+    } else {showMsg(msg,d.error||'Erreur.','error');}
+    btn.textContent='Valider le score \u2192';btn.disabled=false;
+  }).catch(function(e){showMsg(msg,'Erreur : '+e.message,'error');btn.textContent='Valider le score \u2192';btn.disabled=false;});
 }
 
-function onSetInput() {
-  var s1t1 = parseInt(document.getElementById('set1-t1').value);
-  var s1t2 = parseInt(document.getElementById('set1-t2').value);
-  var s2t1 = parseInt(document.getElementById('set2-t1').value);
-  var s2t2 = parseInt(document.getElementById('set2-t2').value);
-  var s3t1 = parseInt(document.getElementById('set3-t1').value);
-  var s3t2 = parseInt(document.getElementById('set3-t2').value);
-
-  var set1done = !isNaN(s1t1) && !isNaN(s1t2) && s1t1 !== s1t2;
-  var set1win  = set1done ? (s1t1 > s1t2 ? 1 : 2) : 0; // 1=t1 gagne, 2=t2 gagne
-
-  // Style set 1
-  if (set1done) {
-    document.getElementById('set1-block').className = 'set-block active ' + (set1win===1?'won-t1':'won-t2');
-    // Activer set 2
-    document.getElementById('set2-t1').disabled = false;
-    document.getElementById('set2-t2').disabled = false;
-    document.getElementById('set2-block').style.opacity = '1';
-    document.getElementById('set2-block').className = 'set-block active';
-  } else {
-    document.getElementById('set1-block').className = 'set-block active';
-    document.getElementById('set2-t1').disabled = true;
-    document.getElementById('set2-t2').disabled = true;
-    document.getElementById('set2-block').style.opacity = '0.4';
-  }
-
-  var set2done = set1done && !isNaN(s2t1) && !isNaN(s2t2) && s2t1 !== s2t2;
-  var set2win  = set2done ? (s2t1 > s2t2 ? 1 : 2) : 0;
-
-  if (set2done) {
-    document.getElementById('set2-block').className = 'set-block active ' + (set2win===1?'won-t1':'won-t2');
-  }
-
-  // Scores de sets
-  var winsT1 = (set1win===1?1:0) + (set2win===1?1:0);
-  var winsT2 = (set1win===2?1:0) + (set2win===2?1:0);
-
-  // Afficher set 3 si égalité 1-1
-  var need3 = set2done && winsT1 === 1 && winsT2 === 1;
-  document.getElementById('set3-block').style.display = need3 ? 'block' : 'none';
-  if (need3) {
-    document.getElementById('set3-t1').disabled = false;
-    document.getElementById('set3-t2').disabled = false;
-    document.getElementById('set3-block').style.opacity = '1';
-    document.getElementById('set3-block').className = 'set-block active';
-  }
-
-  var set3done = need3 && !isNaN(s3t1) && !isNaN(s3t2) && s3t1 !== s3t2;
-  var set3win  = set3done ? (s3t1 > s3t2 ? 1 : 2) : 0;
-  if (set3done) {
-    winsT1 += (set3win===1?1:0);
-    winsT2 += (set3win===2?1:0);
-    document.getElementById('set3-block').className = 'set-block active ' + (set3win===1?'won-t1':'won-t2');
-  }
-
-  // Match terminé ?
-  var matchDone = (winsT1 === 2 || winsT2 === 2);
-
-  // Résumé
-  if (set2done) {
-    var summary = document.getElementById('sets-summary');
-    summary.style.display = 'block';
-    document.getElementById('sets-score-display').textContent = winsT1 + ' – ' + winsT2;
-    var hint = '';
-    if (matchDone) {
-      var winnerName = winsT1 > winsT2
-        ? document.getElementById('m-t1').textContent
-        : document.getElementById('m-t2').textContent;
-      hint = '🏆 ' + winnerName + ' remporte le match !';
-    } else if (need3 && !set3done) {
-      hint = 'Égalité ! Set décisif en cours…';
-    }
-    document.getElementById('sets-winner-hint').textContent = hint;
-  } else {
-    document.getElementById('sets-summary').style.display = 'none';
-  }
-
-  // Activer le bouton valider
-  var canSubmit = matchDone;
-  document.getElementById('btn-score').disabled = !canSubmit;
-  document.getElementById('btn-score').style.opacity = canSubmit ? '1' : '0.5';
-}
-
-function closeModal() { document.getElementById('match-modal').classList.remove('open'); }
-
-function submitScore() {
-  var msg = document.getElementById('m-msg');
-
-  // Collecter les sets
-  var sets = [];
-  var s1t1 = parseInt(document.getElementById('set1-t1').value);
-  var s1t2 = parseInt(document.getElementById('set1-t2').value);
-  var s2t1 = parseInt(document.getElementById('set2-t1').value);
-  var s2t2 = parseInt(document.getElementById('set2-t2').value);
-  var s3t1 = parseInt(document.getElementById('set3-t1').value);
-  var s3t2 = parseInt(document.getElementById('set3-t2').value);
-
-  if (!isNaN(s1t1) && !isNaN(s1t2)) sets.push({t1:s1t1, t2:s1t2});
-  if (!isNaN(s2t1) && !isNaN(s2t2)) sets.push({t1:s2t1, t2:s2t2});
-  if (!isNaN(s3t1) && !isNaN(s3t2) && document.getElementById('set3-block').style.display !== 'none') sets.push({t1:s3t1, t2:s3t2});
-
-  // Calculer le score global (sets gagnés)
-  var winsT1 = 0, winsT2 = 0;
-  sets.forEach(function(s){ if(s.t1>s.t2) winsT1++; else if(s.t2>s.t1) winsT2++; });
-
-  if (winsT1 === winsT2) { showMsg(msg, 'Il doit y avoir un gagnant.', 'error'); return; }
-
-  var btn = document.getElementById('btn-score');
-  btn.textContent = 'Envoi…'; btn.disabled = true;
-
-  appsRead({
-    action: 'saveScore',
-    roundIdx: curMatch.ri,
-    matchIdx: curMatch.mi,
-    score1: winsT1,
-    score2: winsT2,
-    setsJson: JSON.stringify(sets)
-  }).then(function(d) {
-    if (d.success) {
-      var photoInput = document.getElementById('photo-input');
-      if (photoInput.files && photoInput.files[0]) {
-        uploadPhoto(photoInput.files[0], curMatch.ri, curMatch.mi);
-      }
-      showMsg(msg, '✓ Score enregistré !', 'success');
-      setTimeout(function(){ closeModal(); loadBracket(); }, 1500);
-    } else {
-      showMsg(msg, d.error || 'Erreur.', 'error');
-      btn.textContent = 'Valider le score →'; btn.disabled = false;
-    }
-  }).catch(function(e){
-    showMsg(msg, 'Erreur : ' + e.message, 'error');
-    btn.textContent = 'Valider le score →'; btn.disabled = false;
-  });
-}
-
-function uploadPhoto(file, ri, mi) {
-  var img = new Image();
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    img.onload = function() {
-      // Redimensionner à max 800px, compresser à 70%
-      var maxSize = 800;
-      var w = img.width, h = img.height;
-      if (w > maxSize || h > maxSize) {
-        if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
-        else        { w = Math.round(w * maxSize / h); h = maxSize; }
-      }
-      var canvas = document.createElement('canvas');
-      canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      var b64 = canvas.toDataURL('image/jpeg', 0.7).split(',')[1];
-
-      // 1. Upload sur Imgur (hébergement gratuit, URL publique directe)
-      fetch('https://api.imgur.com/3/image', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Client-ID 546c25a59c58ad7',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ image: b64, type: 'base64' })
-      })
-      .then(function(r){ return r.json(); })
-      .then(function(imgurData) {
-        if (imgurData.success) {
-          var photoUrl = imgurData.data.link;
-          console.log('Photo uploadee sur Imgur:', photoUrl);
-
-          // 2. Envoyer l'URL + base64 au bot (le bot garde le b64 en cache)
-          fetch(BOT_URL + '/photo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              roundIdx: ri,
-              matchIdx: mi,
-              photoUrl: photoUrl,
-              b64: b64,
-              photoMime: 'image/jpeg'
-            })
-          }).catch(function(e){ console.error('Bot error:', e.message); });
-
-          // 3. Sauver l'URL dans Apps Script
-          appsRead({
-            action: 'savePhotoUrl',
-            roundIdx: ri,
-            matchIdx: mi,
-            photoUrl: photoUrl
-          }).catch(function(){});
-
-        } else {
-          console.error('Imgur error:', imgurData.data && imgurData.data.error);
+function uploadPhoto(file,ri,mi){
+  var img=new Image(),reader=new FileReader();
+  reader.onload=function(e){
+    img.onload=function(){
+      var maxSize=800,w=img.width,h=img.height;
+      if(w>maxSize||h>maxSize){if(w>h){h=Math.round(h*maxSize/w);w=maxSize;}else{w=Math.round(w*maxSize/h);h=maxSize;}}
+      var canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      var b64=canvas.toDataURL('image/jpeg',0.7).split(',')[1];
+      fetch('https://api.imgur.com/3/image',{method:'POST',headers:{'Authorization':'Client-ID 546c25a59c58ad7','Content-Type':'application/json'},body:JSON.stringify({image:b64,type:'base64'})})
+      .then(function(r){return r.json();})
+      .then(function(imgurData){
+        if(imgurData.success){
+          var photoUrl=imgurData.data.link;
+          fetch(BOT_URL+'/photo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({roundIdx:ri,matchIdx:mi,photoUrl:photoUrl,b64:b64,photoMime:'image/jpeg'})}).catch(function(){});
+          appsRead({action:'savePhotoUrl',roundIdx:ri,matchIdx:mi,photoUrl:photoUrl}).catch(function(){});
         }
-      })
-      .catch(function(e){ console.error('Imgur upload error:', e.message); });
+      }).catch(function(){});
     };
-    img.src = e.target.result;
+    img.src=e.target.result;
   };
   reader.readAsDataURL(file);
 }
 
-function previewPhoto(input) {
-  if (input.files && input.files[0]) {
-    var r = new FileReader();
-    r.onload = function(e) {
-      var img = document.getElementById('photo-preview');
-      img.src = e.target.result; img.style.display = 'block';
-    };
-    r.readAsDataURL(input.files[0]);
+function previewPhoto(input){
+  if(input.files&&input.files[0]){
+    var r=new FileReader();r.onload=function(e){var img=document.getElementById('photo-preview');img.src=e.target.result;img.style.display='block';};r.readAsDataURL(input.files[0]);
   }
 }
 
-// ── MON ÉQUIPE ───────────────────────────────────────────────
-function filterTeams() {
-  var q   = document.getElementById('team-search').value.toLowerCase().trim();
-  var sug = document.getElementById('team-suggestions');
-  if (!q) { sug.innerHTML = ''; return; }
-  var matches = allTeams.filter(function(t){ return t.name.toLowerCase().indexOf(q) !== -1; });
-  if (!matches.length) { sug.innerHTML = '<p style="color:var(--muted);font-size:13px">Aucune équipe trouvée.</p>'; return; }
-  sug.innerHTML = matches.map(function(t,i) {
-    return '<div onclick="pickTeam(' + i + ')" style="padding:11px 14px;background:#fff;border:1.5px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;font-size:14px;font-weight:600">' +
-      t.name + '<span style="font-size:11px;color:var(--muted);font-weight:400"> &middot; ' + t.player1 + (t.player2 ? ' &amp; ' + t.player2 : '') + '</span></div>';
+// MON EQUIPE
+function filterTeams(){
+  var q=document.getElementById('team-search').value.toLowerCase().trim();
+  var sug=document.getElementById('team-suggestions');
+  if(!q){sug.innerHTML='';return;}
+  var matches=allTeams.filter(function(t){return t.name.toLowerCase().indexOf(q)!==-1;});
+  if(!matches.length){sug.innerHTML='<p style="color:var(--muted);font-size:13px">Aucune equipe trouvee.</p>';return;}
+  sug.innerHTML=matches.map(function(t,i){
+    return '<div onclick="pickTeam('+i+')" style="padding:11px 14px;background:#fff;border:1.5px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;font-size:14px;font-weight:600">'+t.name+'<span style="font-size:11px;color:var(--muted);font-weight:400"> - '+t.player1+(t.player2?' &amp; '+t.player2:'')+'</span></div>';
   }).join('');
-  window._sugMatches = matches;
+  window._sugMatches=matches;
 }
+function pickTeam(i){var t=window._sugMatches&&window._sugMatches[i];if(!t)return;document.getElementById('team-suggestions').innerHTML='';selectTeam(t.name);}
 
-function selectTeam(name) {
-  var team = allTeams.find(function(t){ return t.name === name; });
-  if (!team) return;
-  document.getElementById('prog-name').textContent    = team.name;
-  document.getElementById('prog-players').textContent = [team.player1,team.player2,team.player3].filter(Boolean).join(' · ');
-  document.getElementById('prog-badge').textContent   = team.player3 ? '3 joueurs' : '2 joueurs';
-  var matches = [], elim = false;
-  bracket.forEach(function(rnd, ri) {
-    rnd.matches.forEach(function(m, mi) {
-      if (m.team1 === name || m.team2 === name) {
-        var opp  = m.team1 === name ? m.team2 : m.team1;
-        var ms   = m.team1 === name ? m.score1 : m.score2;
-        var os   = m.team1 === name ? m.score2 : m.score1;
-        var done = m.winner !== '' && m.winner !== undefined && m.winner !== null;
-        var won  = m.winner === name;
-        if (done && !won) elim = true;
-        matches.push({ round:rnd.name, opp:opp, ms:ms, os:os, done:done, won:won, ri:ri, mi:mi });
+function selectTeam(name){
+  var team=allTeams.find(function(t){return t.name===name;});
+  if(!team)return;
+  document.getElementById('prog-name').textContent=team.name;
+  document.getElementById('prog-players').textContent=[team.player1,team.player2,team.player3].filter(Boolean).join(' - ');
+  document.getElementById('prog-badge').textContent=team.player3?'3 joueurs':'2 joueurs';
+  var matches=[],elim=false;
+  bracket.forEach(function(rnd,ri){
+    rnd.matches.forEach(function(m,mi){
+      if(m.team1===name||m.team2===name){
+        var opp=m.team1===name?m.team2:m.team1;
+        var ms=m.team1===name?m.score1:m.score2,os=m.team1===name?m.score2:m.score1;
+        var done=m.winner!==''&&m.winner!==undefined&&m.winner!==null;
+        var won=m.winner===name;
+        if(done&&!won)elim=true;
+        matches.push({round:rnd.name,opp:opp,ms:ms,os:os,done:done,won:won,ri:ri,mi:mi,team1:m.team1,team2:m.team2});
       }
     });
   });
-  document.getElementById('prog-status').textContent = elim ? '❌ Éliminé' : matches.length ? '✅ En lice' : '⏳ En attente';
-  var pm = document.getElementById('prog-matches');
-  if (!matches.length) { pm.innerHTML = '<p style="color:var(--muted);font-size:13px">Tableau pas encore généré.</p>'; }
-  else {
-    var next = matches.find(function(m){ return !m.done; });
-    pm.innerHTML = matches.map(function(m) {
-      var isNext = !m.done && m === next;
-      var cls    = m.done ? (m.won ? 'done-win' : 'done-loss') : isNext ? 'next' : 'future';
-      var badge  = m.done ? (m.won ? '🏆 Victoire' : '❌ Défaite') : isNext ? '⏳ Prochain match' : '🔜 À venir';
-      var bc     = m.done ? (m.won ? 'color:var(--green)' : 'color:var(--red)') : isNext ? 'color:#b58a00' : 'color:var(--muted)';
-      var s1s    = (m.ms !== null && m.ms !== undefined && m.ms !== '') ? m.ms : '—';
-      var s2s    = (m.os !== null && m.os !== undefined && m.os !== '') ? m.os : '—';
-      var matchData = bracket[m.ri] && bracket[m.ri].matches[m.mi];
-      var hasTeams  = matchData && matchData.team1 && matchData.team2 && matchData.team1 !== 'Bye' && matchData.team2 !== 'Bye';
-      var photoHtml = (matchData && matchData.photoUrl)
-        ? '<div class="match-photo-wrap"><img src="' + matchData.photoUrl + '" alt="photo du match"></div>'
-        : '';
-      var clickAttr = hasTeams ? ' onclick="goToMatch(' + m.ri + ',' + m.mi + ')" style="cursor:pointer"' : '';
-      var tapHint   = hasTeams && !m.done ? '<div style="font-size:10px;color:var(--muted);margin-top:6px;text-align:center">Appuyez pour saisir le score</div>' : '';
-      return '<div class="prog-match ' + cls + '"' + clickAttr + '>' +
-        '<div class="prog-badge" style="' + bc + '">' + m.round + ' · ' + badge + '</div>' +
-        '<div class="prog-teams"><span class="prog-tname">' + name + '</span>' +
-        '<span class="prog-score">' + s1s + '</span><span class="prog-vs">vs</span>' +
-        '<span class="prog-score">' + s2s + '</span>' +
-        '<span class="prog-tname" style="text-align:right">' + (m.opp||'?') + '</span></div>' +
-        tapHint + photoHtml + '</div>';
+  document.getElementById('prog-status').textContent=elim?'Elimine':matches.length?'En lice':'En attente';
+  var pm=document.getElementById('prog-matches');
+  if(!matches.length){pm.innerHTML='<p style="color:var(--muted);font-size:13px">Tableau pas encore genere.</p>';}
+  else{
+    var next=matches.find(function(m){return !m.done;});
+    pm.innerHTML=matches.map(function(m){
+      var isNext=!m.done&&m===next;
+      var cls=m.done?(m.won?'done-win':'done-loss'):isNext?'next':'future';
+      var badge=m.done?(m.won?'Victoire':'Defaite'):isNext?'Prochain match':'A venir';
+      var bc=m.done?(m.won?'color:var(--green)':'color:var(--red)'):isNext?'color:#b58a00':'color:var(--muted)';
+      var s1s=(m.ms!==null&&m.ms!==undefined&&m.ms!=='')?m.ms:'-';
+      var s2s=(m.os!==null&&m.os!==undefined&&m.os!=='')?m.os:'-';
+      var matchData=bracket[m.ri]&&bracket[m.ri].matches[m.mi];
+      var photoHtml=(matchData&&matchData.photoUrl)?'<div class="match-photo-wrap"><img src="'+matchData.photoUrl+'" alt="photo"></div>':'';
+      var hasTeams=matchData&&matchData.team1&&matchData.team2&&matchData.team1!=='Bye'&&matchData.team2!=='Bye';
+      var clickAttr=hasTeams?' onclick="goToMatch('+m.ri+','+m.mi+')" style="cursor:pointer"':'';
+      // Terrain
+      var terrainHtml='';
+      for(var ti=1;ti<=5;ti++){
+        if(window._terrains[ti]&&window._terrains[ti].team1===m.team1&&window._terrains[ti].team2===m.team2){
+          terrainHtml='<div class="prog-terrain">'+BALLS[ti-1]+' Terrain '+ti+'</div>';break;
+        }
+      }
+      var tapHint=hasTeams&&!m.done?'<div style="font-size:10px;color:var(--muted);margin-top:4px">Appuyez pour saisir le score</div>':'';
+      return '<div class="prog-match '+cls+'"'+clickAttr+'><div class="prog-badge" style="'+bc+'">'+m.round+' - '+badge+'</div><div class="prog-teams"><span class="prog-tname">'+name+'</span><span class="prog-score">'+s1s+'</span><span class="prog-vs">vs</span><span class="prog-score">'+s2s+'</span><span class="prog-tname" style="text-align:right">'+(m.opp||'?')+'</span></div>'+terrainHtml+tapHint+photoHtml+'</div>';
     }).join('');
   }
-  document.getElementById('team-search').value         = name;
-  document.getElementById('team-program').style.display = 'block';
+  document.getElementById('team-search').value=name;
+  document.getElementById('team-program').style.display='block';
 }
 
-// ── ADMIN ────────────────────────────────────────────────────
-function adminLogin() {
-  var pwd = document.getElementById('admin-pwd').value;
-  var msg = document.getElementById('login-msg');
-  if (pwd === ADMIN_PWD) {
-    document.getElementById('admin-login').style.display   = 'none';
-    document.getElementById('admin-content').style.display = 'block';
-    document.getElementById('logout-btn').style.display    = 'block';
-    loadAdminTeams();
-  } else { showMsg(msg, 'Mot de passe incorrect.', 'error'); }
-}
-
-function adminLogout() {
-  document.getElementById('admin-login').style.display   = 'block';
-  document.getElementById('admin-content').style.display = 'none';
-  document.getElementById('logout-btn').style.display    = 'none';
-  document.getElementById('admin-pwd').value = '';
-}
-
-function loadAdminTeams() {
-  appsRead({ action:'getTeams' }).then(function(d) {
-    var teams = d.teams || [];
-    document.getElementById('adm-count').textContent = teams.length;
-    document.getElementById('adm-teams').innerHTML   = teams.length
-      ? teams.map(function(t) {
-          return '<div class="adm-team"><div class="dot"></div><div>' +
-            '<div style="font-weight:700;font-size:13px">' + t.name + '</div>' +
-            '<div style="font-size:11px;color:var(--muted)">' + t.player1 + ' · ' + t.player2 + (t.player3?' · '+t.player3:'') + '</div>' +
-            '</div></div>';
-        }).join('')
-      : '<p style="font-size:13px;color:var(--muted)">Aucune équipe.</p>';
-  }).catch(function(e){ console.log(e); });
-}
-
-function adminGenerateBracket() {
-  var msg = document.getElementById('bracket-msg');
-  showMsg(msg, 'Tirage en cours…', 'success');
-  appsRead({ action:'generateBracket' }).then(function(d) {
-    showMsg(msg, d.success ? '✓ Tableau généré ! Allez sur l&apos;onglet Tableau.' : (d.error||'Erreur.'), d.success?'success':'error');
-    if (d.success) setTimeout(loadBracket, 1000);
-  }).catch(function(e){ showMsg(msg, 'Erreur : '+e.message, 'error'); });
-}
-
-function adminResetBracket() {
-  if (!confirm('Réinitialiser le tableau ?')) return;
-  appsRead({ action:'resetBracket' }).then(function() {
-    bracket = []; renderBracket();
-    showMsg(document.getElementById('bracket-msg'), 'Tableau réinitialisé.', 'success');
-  });
-}
-
-// ── UTILS ────────────────────────────────────────────────────
-
-function pickTeam(i) {
-  var t = window._sugMatches && window._sugMatches[i];
-  if (!t) return;
-  document.getElementById('team-suggestions').innerHTML = '';
-  selectTeam(t.name);
-}
-
-function goToMatch(ri, mi) {
-  // Aller sur l'onglet Tableau et ouvrir la modal du match
-  showPage('bracket', document.querySelectorAll('.bn-item')[1]);
-  // Attendre que le bracket soit chargé puis ouvrir le match
-  var attempts = 0;
-  var tryOpen = setInterval(function() {
+function goToMatch(ri,mi){
+  showPage('bracket',document.querySelectorAll('.bn-item')[1]);
+  var attempts=0,tryOpen=setInterval(function(){
     attempts++;
-    if (bracket.length && bracket[ri] && bracket[ri].matches[mi]) {
-      clearInterval(tryOpen);
-      openMatch(ri, mi);
-    }
-    if (attempts > 20) clearInterval(tryOpen);
-  }, 150);
+    if(bracket.length&&bracket[ri]&&bracket[ri].matches[mi]){clearInterval(tryOpen);openMatch(ri,mi);}
+    if(attempts>20)clearInterval(tryOpen);
+  },150);
 }
 
-function showMsg(el, txt, type) {
-  el.textContent = txt; el.className = 'form-msg ' + type; el.style.display = 'block';
+// ADMIN
+function adminLogin(){
+  var pwd=document.getElementById('admin-pwd').value,msg=document.getElementById('login-msg');
+  if(pwd===ADMIN_PWD){document.getElementById('admin-login').style.display='none';document.getElementById('admin-content').style.display='block';document.getElementById('logout-btn').style.display='block';loadAdminTeams();}
+  else{showMsg(msg,'Mot de passe incorrect.','error');}
+}
+function adminLogout(){document.getElementById('admin-login').style.display='block';document.getElementById('admin-content').style.display='none';document.getElementById('logout-btn').style.display='none';document.getElementById('admin-pwd').value='';}
+function loadAdminTeams(){
+  appsRead({action:'getTeams'}).then(function(d){
+    var teams=d.teams||[];
+    document.getElementById('adm-count').textContent=teams.length;
+    document.getElementById('adm-teams').innerHTML=teams.length?teams.map(function(t){return '<div class="adm-team"><div class="dot"></div><div><div style="font-weight:700;font-size:13px">'+t.name+'</div><div style="font-size:11px;color:var(--muted)">'+t.player1+' - '+t.player2+(t.player3?' - '+t.player3:'')+'</div></div></div>';}).join(''):'<p style="font-size:13px;color:var(--muted)">Aucune equipe.</p>';
+  }).catch(function(){});
+}
+function adminGenerateBracket(){
+  var msg=document.getElementById('bracket-msg');showMsg(msg,'Tirage en cours...','success');
+  appsRead({action:'generateBracket'}).then(function(d){showMsg(msg,d.success?'Tableau genere ! Allez sur l&apos;onglet Tableau.':(d.error||'Erreur.'),d.success?'success':'error');if(d.success)setTimeout(loadBracket,1000);}).catch(function(e){showMsg(msg,'Erreur : '+e.message,'error');});
+}
+function adminResetBracket(){
+  if(!confirm('Reinitialiser le tableau ?'))return;
+  appsRead({action:'resetBracket'}).then(function(){bracket=[];renderBracket();showMsg(document.getElementById('bracket-msg'),'Tableau reinitialise.','success');});
 }
 
-// ── INIT ─────────────────────────────────────────────────────
+function showMsg(el,txt,type){el.innerHTML=txt;el.className='form-msg '+type;el.style.display='block';}
+
+// INIT
 loadTeams();
+loadBracket();
+loadTerrains();
 </script>
 </body>
 </html>
