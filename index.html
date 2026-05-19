@@ -140,6 +140,7 @@ input::placeholder{color:#b0a89a}
 .admin-section-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem;padding-bottom:6px;border-bottom:2px solid var(--border);margin-top:1.25rem}
 .adm-team{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
 .adm-team:last-child{border-bottom:none}
+.b-terrain-badge{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;padding:3px 5px;background:var(--navy);color:var(--yellow)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 .terrain-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
 .terrain-row:last-child{border-bottom:none}
@@ -250,13 +251,13 @@ input::placeholder{color:#b0a89a}
     <div class="highlights">
       <div class="hi"><div class="hi-num">2-3</div><div class="hi-lbl">Joueurs</div></div>
       <div class="hi"><div class="hi-num">6</div><div class="hi-lbl">Boules</div></div>
-      <div class="hi"><div class="hi-num" id="r-pts">7</div><div class="hi-lbl">Pts/manche</div></div>
-      <div class="hi"><div class="hi-num" id="r-sets">2</div><div class="hi-lbl">Manches gagnantes</div></div>
-      <div class="hi"><div class="hi-num" id="r-time">20'</div><div class="hi-lbl">Max/match</div></div>
+      <div class="hi"><div class="hi-num">7</div><div class="hi-lbl">Pts/set</div></div>
+      <div class="hi"><div class="hi-num">2</div><div class="hi-lbl">Sets gagnants</div></div>
+      <div class="hi"><div class="hi-num">20'</div><div class="hi-lbl">Max/match</div></div>
       <div class="hi"><div class="hi-num">X</div><div class="hi-lbl">Elimination</div></div>
     </div>
     <div class="card">
-      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">&#127919; Format du match</div><div class="rule-body"><span id="r-format">2 manches gagnantes a 7 points.</span> En cas d'egalite, manche decisive. Temps limite : <span id="r-time2">20</span> min.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">&#127919; Format du match</div><div class="rule-body">2 sets gagnants a 7 points. En cas d'egalite 1-1, set decisif a 7 points. Temps limite : 20 min.</div></div></div>
       <div class="rule-item"><div class="rule-badge">02</div><div><div class="rule-title">&#128101; Equipes</div><div class="rule-body"><strong>2 ou 3 joueurs.</strong> 6 boules au total : 3/joueur si 2, 2/joueur si 3. Meme equipe tout le tournoi.</div></div></div>
       <div class="rule-item"><div class="rule-badge">03</div><div><div class="rule-title">&#9881;&#65039; Deroulement</div><div class="rule-body">Cochonnet a 6-9m. L'equipe qui n'est pas au point joue en premier. Seule l'equipe la plus proche marque.</div></div></div>
       <div class="rule-item"><div class="rule-badge">04</div><div><div class="rule-title">&#127942; Elimination directe</div><div class="rule-body">Tirage au sort. Perdant = elimine. Pas de repechage.</div></div></div>
@@ -285,6 +286,12 @@ input::placeholder{color:#b0a89a}
   </div>
   <div id="admin-content" style="display:none">
     <div class="section">
+      <div class="admin-section-title">&#9881; Parametres</div>
+      <div class="card" style="padding:1rem;margin-bottom:1rem"><div class="form-row" style="margin-bottom:8px"><div class="form-group" style="margin:0"><label>Pts/manche</label><input type="number" id="pts-per-set" value="7" min="1" max="25"></div><div class="form-group" style="margin:0"><label>Manches gagnantes</label><input type="number" id="sets-to-win" value="2" min="1" max="5"></div></div><div class="form-row"><div class="form-group" style="margin:0"><label>Duree/match (min)</label><input type="number" id="match-duration" value="20" min="5" max="60"></div><div class="form-group" style="margin:0"><label>Nb terrains</label><input type="number" id="nb-terrains" value="6" min="1" max="10"></div></div></div>
+      <div class="admin-section-title">&#9196; Lancer le tournoi</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Le bot detectera le signal en moins de 10 secondes.</p>
+      <button class="btn btn-red" style="margin-bottom:.5rem" onclick="adminStartTournament()">&#127937; Lancer le tournoi !</button>
+      <div class="form-msg" id="start-msg" style="text-align:left"></div>
       <div class="admin-section-title">&#127919; Tableau</div>
       <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Generez le tableau une fois les inscriptions fermees.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.5rem">
@@ -293,20 +300,15 @@ input::placeholder{color:#b0a89a}
       </div>
       <div class="form-msg" id="bracket-msg" style="text-align:left"></div>
 
-      <div class="admin-section-title">&#9881;&#65039; Parametres du tournoi</div>
-      <div class="card" style="margin-bottom:1rem;padding:1rem">
-        <div class="form-row" style="margin-bottom:10px">
-          <div class="form-group" style="margin:0"><label>Pts par manche</label><input type="number" id="pts-per-set" value="7" min="1" max="25"></div>
-          <div class="form-group" style="margin:0"><label>Manches gagnantes</label><input type="number" id="sets-to-win" value="2" min="1" max="5"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group" style="margin:0"><label>Duree par match (min)</label><input type="number" id="match-duration" value="20" min="5" max="60"></div>
-          <div class="form-group" style="margin:0"><label>Nb terrains</label><input type="number" id="nb-terrains" value="6" min="1" max="10"></div>
-        </div>
-      </div>
       <div class="admin-section-title">&#9196;&#65039; Lancer le tournoi</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Lance les premiers matchs et demarre les chronometres.</p>
-      <button class="btn btn-red" style="margin-bottom:.5rem" onclick="adminStartTournament()">&#127937; Lancer le tournoi !</button>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Lance les premiers matchs et demarre les chronometres. Le bot alertera les equipes quand le temps est ecoule.</p>
+      <div style="display:flex;gap:12px;align-items:flex-end;margin-bottom:.75rem;flex-wrap:wrap">
+        <div class="form-group" style="margin:0">
+          <label>Duree par match (min)</label>
+          <input type="number" id="match-duration" value="20" min="5" max="60" style="width:80px">
+        </div>
+        <button class="btn btn-red" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminStartTournament()">&#127937; Lancer le tournoi !</button>
+      </div>
       <div class="form-msg" id="start-msg" style="text-align:left"></div>
 
       <div id="terrain-status-wrap" style="margin-top:1rem;display:none">
@@ -389,7 +391,10 @@ input::placeholder{color:#b0a89a}
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxO-Om_ZvtgwPnN5a8MN0BMlZEFqaim9v53zNbKVUVIPGkZDuAfxq7FOWrRUOtMSCjIlA/exec';
-const BOT_URL    = 'https://real-hairs-smile.loca.lt';
+const BOT_URL = 'https://scaling-robot-jr59wj69574phjp7x-3000.app.github.dev';
+const BALLS = ['🔴','🔵','🟢','🟡','🟣','🟠'];
+window._terrains = {};
+const BOT_URL    = 'https://scaling-robot-jr59wj69574phjp7x-3000.app.github.dev';
 const ADMIN_PWD  = 'marsara2026';
 const BALLS      = ['\uD83D\uDD34','\uD83D\uDD35','\uD83D\uDFE2','\uD83D\uDFE1','\uD83D\uDFE3','\uD83D\uDFE0'];
 
@@ -465,11 +470,14 @@ function loadTeams() {
 
 // TERRAINS
 function loadTerrains() {
-  // Essayer de contacter le bot pour les terrains (optionnel)
   fetch(BOT_URL + '/?action=terrainStatus')
   .then(function(r){ return r.json(); })
   .then(function(d){ if(d.terrains){ window._terrains=d.terrains; renderBracket(); } })
-  .catch(function(){}); // Silencieux si le bot n'est pas joignable
+  .catch(function(){
+    fetch(BOT_URL + '/').then(function(r){ return r.json(); })
+    .then(function(d){ if(d.terrains){ window._terrains=d.terrains; renderBracket(); } })
+    .catch(function(){});
+  });
   setTimeout(loadTerrains, 15000);
 }
 
@@ -503,16 +511,7 @@ function renderBracket() {
         var c1=w&&w===t1?'winner':(w&&w!==t1?'loser':'');
         var c2=w&&w===t2?'winner':(w&&w!==t2?'loser':'');
         var sets=m.sets||[];
-        // Afficher les scores de chaque manche avec le gagnant en gras
-        var setDetail='';
-        if(sets.length){
-          setDetail=sets.map(function(s){
-            var t1w=s.t1>s.t2,t2w=s.t2>s.t1;
-            var st1=t1w?'<b>'+s.t1+'</b>':s.t1;
-            var st2=t2w?'<b>'+s.t2+'</b>':s.t2;
-            return st1+'-'+st2;
-          }).join(' | ');
-        }
+        var setDetail=sets.length?sets.map(function(s){return s.t1+'-'+s.t2;}).join(' - '):'';
         var photoThumb=m.photoUrl?'<img class="b-match-photo" src="'+m.photoUrl+'" alt="photo">':'';
         var terrainBadge='';
         var matchKeySearch=rnd.name+'_'+t1+'_'+t2;
@@ -526,7 +525,8 @@ function renderBracket() {
             break;
           }
         }
-        var tileHtml='<div class="b-match'+(bye?' b-bye':'')+'" onclick="openMatch('+ri+','+mi+')">' +
+        var var tb='';var mks=rnd.name+'_'+t1+'_'+t2;for(var ti=1;ti<=6;ti++){if(window._terrains[ti]&&window._terrains[ti].matchKey===mks){tb='<div class="b-terrain-badge">'+BALLS[ti-1]+' T'+ti+'</div>';break;}}
+        tileHtml='<div class="b-match'+(bye?' b-bye':'')+'" onclick="openMatch('+ri+','+mi+')">' + tb +
           terrainBadge +
           '<div class="b-team '+c1+'"><span class="b-name">'+t1+'</span><span class="b-score">'+s1+'</span></div>' +
           '<div class="b-vs">'+(bye?'BYE':(setDetail?setDetail:'vs'))+'</div>' +
@@ -793,17 +793,15 @@ function adminResetBracket(){
 function adminStartTournament(){
   var msg=document.getElementById('start-msg');
   var duration=parseInt(document.getElementById('match-duration').value)||20;
-  var pts=parseInt(document.getElementById('pts-per-set').value)||7;
-  var sets=parseInt(document.getElementById('sets-to-win').value)||2;
-  syncRules(pts,sets,duration);
   showMsg(msg,'Lancement en cours...','success');
-  // Ecrire le flag dans le Google Sheet — le bot le lira dans les 10 secondes
-  appsRead({ action:'setConfig', started:'true', duration:duration, pts:pts, sets:sets })
+  fetch(BOT_URL+'/?action=startTournament&duration='+duration)
+  .then(function(r){return r.json();})
   .then(function(d){
     if(d.success){
-      showMsg(msg,'Tournoi lance ! Le bot va demarrer dans quelques secondes...','success');
+      showMsg(msg,'Tournoi lance ! Duree : '+d.duration+' min par match.','success');
+      startTerrainPolling();
     } else {showMsg(msg,'Erreur : '+(d.error||'inconnue'),'error');}
-  }).catch(function(e){showMsg(msg,'Erreur : '+e.message,'error');});
+  }).catch(function(e){showMsg(msg,'Bot non joignable : '+e.message,'error');});
 }
 
 var terrainPollInterval=null;
@@ -838,18 +836,14 @@ function updateTerrainStatus(){
   }).catch(function(){});
 }
 
-function syncRules(pts,sets,duration){
-  var pEl=document.getElementById('r-pts');if(pEl)pEl.textContent=pts;
-  var sEl=document.getElementById('r-sets');if(sEl)sEl.textContent=sets;
-  var tEl=document.getElementById('r-time');if(tEl)tEl.textContent=duration+"'";
-  var t2El=document.getElementById('r-time2');if(t2El)t2El.textContent=duration;
-  var fEl=document.getElementById('r-format');if(fEl)fEl.textContent=sets+' manche'+(sets>1?'s':'')+' gagnante'+(sets>1?'s':'')+' a '+pts+' points.';
-}
+function adminStartTournament(){var msg=document.getElementById('start-msg');var duration=parseInt(document.getElementById('match-duration').value)||20;var pts=parseInt(document.getElementById('pts-per-set').value)||7;var sets=parseInt(document.getElementById('sets-to-win').value)||2;showMsg(msg,'Lancement en cours...','success');appsRead({action:'setConfig',started:'true',duration:duration,pts:pts,sets:sets}).then(function(d){if(d.success)showMsg(msg,'Tournoi lance ! Le bot demarre dans quelques secondes...','success');else showMsg(msg,'Erreur : '+(d.error||'inconnue'),'error');}).catch(function(e){showMsg(msg,'Erreur : '+e.message,'error');});}
+function loadTerrains(){fetch(BOT_URL+'/?action=terrainStatus').then(function(r){return r.json();}).then(function(d){if(d&&d.terrains){window._terrains=d.terrains;renderBracket();}}).catch(function(){});setTimeout(loadTerrains,15000);}
 function showMsg(el,txt,type){el.innerHTML=txt;el.className='form-msg '+type;el.style.display='block';}
 
 // INIT
 loadTeams();
 loadBracket();
+loadTerrains();
 loadTerrains();
 </script>
 </body>
