@@ -391,8 +391,6 @@ input::placeholder{color:#b0a89a}
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxO-Om_ZvtgwPnN5a8MN0BMlZEFqaim9v53zNbKVUVIPGkZDuAfxq7FOWrRUOtMSCjIlA/exec';
-const BOT_URL = 'https://scaling-robot-jr59wj69574phjp7x-3000.app.github.dev';
-const BALLS = ['🔴','🔵','🟢','🟡','🟣','🟠'];
 window._terrains = {};
 const BOT_URL    = 'https://scaling-robot-jr59wj69574phjp7x-3000.app.github.dev';
 const ADMIN_PWD  = 'marsara2026';
@@ -525,7 +523,7 @@ function renderBracket() {
             break;
           }
         }
-        var var tb='';var mks=rnd.name+'_'+t1+'_'+t2;for(var ti=1;ti<=6;ti++){if(window._terrains[ti]&&window._terrains[ti].matchKey===mks){tb='<div class="b-terrain-badge">'+BALLS[ti-1]+' T'+ti+'</div>';break;}}
+        var tb='';var mks=rnd.name+'_'+t1+'_'+t2;for(var ti=1;ti<=6;ti++){if(window._terrains[ti]&&window._terrains[ti].matchKey===mks){tb='<div class="b-terrain-badge">'+BALLS[ti-1]+' T'+ti+'</div>';break;}}
         tileHtml='<div class="b-match'+(bye?' b-bye':'')+'" onclick="openMatch('+ri+','+mi+')">' + tb +
           terrainBadge +
           '<div class="b-team '+c1+'"><span class="b-name">'+t1+'</span><span class="b-score">'+s1+'</span></div>' +
