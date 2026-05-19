@@ -285,27 +285,20 @@ input::placeholder{color:#b0a89a}
   </div>
   <div id="admin-content" style="display:none">
     <div class="section">
-      <div class="admin-section-title">&#9196; Lancer le tournoi</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Configure et lance le tournoi. Le bot demarre automatiquement.</p>
-      <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:.5rem"><div style="display:flex;flex-direction:column;gap:4px"><label>Duree/match (min)</label><input type="number" id="match-duration" value="20" min="5" max="60" style="width:80px"></div><button class="btn btn-red" style="width:auto;padding:12px 18px;font-size:13px;margin-top:18px" onclick="adminStartTournament()">&#127937; Lancer !</button></div>
-      <div class="form-msg" id="start-msg" style="text-align:left"></div>
-      <div class="admin-section-title">&#127919; Tableau</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Generez le tableau une fois les inscriptions fermees.</p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.5rem">
-        <button class="btn btn-navy" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminGenerateBracket()">&#127922; Generer le tirage</button>
-        <button class="btn btn-outline" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminResetBracket()">&#8634; Reinitialiser</button>
+      <div class="admin-section-title">&#9881; Parametres du tournoi</div>
+      <div class="card" style="padding:1rem;margin-bottom:1rem">
+        <div class="form-row" style="margin-bottom:8px">
+          <div class="form-group" style="margin:0"><label>Pts/manche</label><input type="number" id="pts-per-set" value="7" min="1" max="25"></div>
+          <div class="form-group" style="margin:0"><label>Manches gagnantes</label><input type="number" id="sets-to-win" value="2" min="1" max="5"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group" style="margin:0"><label>Duree/match (min)</label><input type="number" id="match-duration" value="20" min="5" max="60"></div>
+          <div class="form-group" style="margin:0"><label>Nb terrains</label><input type="number" id="nb-terrains" value="6" min="1" max="10"></div>
+        </div>
       </div>
-      <div class="form-msg" id="bracket-msg" style="text-align:left"></div>
-
       <div class="admin-section-title">&#9196;&#65039; Lancer le tournoi</div>
       <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Lance les premiers matchs et demarre les chronometres. Le bot alertera les equipes quand le temps est ecoule.</p>
-      <div style="display:flex;gap:12px;align-items:flex-end;margin-bottom:.75rem;flex-wrap:wrap">
-        <div class="form-group" style="margin:0">
-          <label>Duree par match (min)</label>
-          <input type="number" id="match-duration" value="20" min="5" max="60" style="width:80px">
-        </div>
-        <button class="btn btn-red" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminStartTournament()">&#127937; Lancer le tournoi !</button>
-      </div>
+      <button class="btn btn-red" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminStartTournament()">&#127937; Lancer le tournoi !</button>
       <div class="form-msg" id="start-msg" style="text-align:left"></div>
 
       <div id="terrain-status-wrap" style="margin-top:1rem;display:none">
@@ -783,61 +776,16 @@ function adminResetBracket(){
   appsRead({action:'resetBracket'}).then(function(){bracket=[];renderBracket();showMsg(document.getElementById('bracket-msg'),'Tableau reinitialise.','success');});
 }
 
-function adminStartTournament(){
-  var msg=document.getElementById('start-msg');
-  var duration=parseInt(document.getElementById('match-duration').value)||20;
-  showMsg(msg,'Lancement en cours...','success');
-  fetch(BOT_URL+'/?action=startTournament&duration='+duration)
-  .then(function(r){return r.json();})
-  .then(function(d){
-    if(d.success){
-      showMsg(msg,'Tournoi lance ! Duree : '+d.duration+' min par match.','success');
-      startTerrainPolling();
-    } else {showMsg(msg,'Erreur : '+(d.error||'inconnue'),'error');}
-  }).catch(function(e){showMsg(msg,'Bot non joignable : '+e.message,'error');});
-}
 
-var terrainPollInterval=null;
-function startTerrainPolling(){
-  document.getElementById('terrain-status-wrap').style.display='block';
-  updateTerrainStatus();
-  if(terrainPollInterval)clearInterval(terrainPollInterval);
-  terrainPollInterval=setInterval(updateTerrainStatus,15000);
-}
-
-function updateTerrainStatus(){
-  fetch(BOT_URL+'/?action=terrainStatus')
-  .then(function(r){return r.json();})
-  .then(function(d){
-    if(!d.success)return;
-    window._terrains=d.terrains||{};
-    renderBracket();
-    var list=document.getElementById('terrain-status-list');
-    var html='';
-    for(var ti=1;ti<=6;ti++){
-      var t=d.terrains[ti];
-      var ball=BALLS[(ti-1)%BALLS.length];
-      if(t){
-        var timeColor=t.overtime?'color:#ff4444;font-weight:700':'color:var(--green)';
-        var timeText=t.overtime?'TEMPS ECOULE !':Math.ceil(t.remaining)+' min restantes';
-        html+='<div class="terrain-row">'+ball+' <strong>Terrain '+ti+'</strong> : '+t.team1+' vs '+t.team2+'<span style="margin-left:auto;font-size:11px;'+timeColor+'">'+timeText+'</span></div>';
-      } else {
-        html+='<div class="terrain-row" style="opacity:.4">'+ball+' <strong>Terrain '+ti+'</strong> : Libre</div>';
-      }
-    }
-    list.innerHTML=html;
-  }).catch(function(){});
-}
-
-function showMsg(el,txt,type){el.innerHTML=txt;el.className='form-msg '+type;el.style.display='block';}
 
 // INIT
 function adminStartTournament(){
   var msg=document.getElementById('start-msg');
   var duration=parseInt(document.getElementById('match-duration').value)||20;
-  if(typeof appsRead==='undefined'){showMsg(msg,'Erreur: appsRead non defini','error');return;}
+  var pts=parseInt((document.getElementById('pts-per-set')||{}).value)||7;
+  var sets=parseInt((document.getElementById('sets-to-win')||{}).value)||2;
   showMsg(msg,'Lancement en cours...','success');
-  appsRead({action:'setConfig',started:'true',duration:duration,pts:7,sets:2})
+  appsRead({action:'setConfig',started:'true',duration:duration,pts:pts,sets:sets})
   .then(function(d){
     if(d.success)showMsg(msg,'Tournoi lance ! Le bot demarre dans quelques secondes...','success');
     else showMsg(msg,'Erreur : '+(d.error||'inconnue'),'error');
