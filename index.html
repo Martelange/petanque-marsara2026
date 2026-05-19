@@ -300,9 +300,10 @@ input::placeholder{color:#b0a89a}
       <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Lance les premiers matchs et demarre les chronometres. Le bot alertera les equipes quand le temps est ecoule.</p>
       <button class="btn btn-red" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminStartTournament()">&#127937; Lancer le tournoi !</button>
       <div class="form-msg" id="start-msg" style="text-align:left"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:.75rem"><button class="btn btn-outline" style="width:auto;padding:10px 16px;font-size:12px" onclick="adminStopTournament()">Stop tournoi</button><button class="btn btn-outline" style="width:auto;padding:10px 16px;font-size:12px" onclick="adminExportResults()">Exporter CSV</button></div>
 
-      <div id="terrain-status-wrap" style="margin-top:1rem;display:none">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Terrains en cours</div>
+      <div id="terrain-status-wrap" style="margin-top:1rem;display:block">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Terrains en cours <span style="font-weight:400;font-size:10px">(actualise toutes les 15s)</span></div>
         <div id="terrain-status-list"></div>
       </div>
 
@@ -394,6 +395,7 @@ const ADMIN_PWD  = 'marsara2026';
 const BALLS = ['🔴','🔵','🟢','🟡','🟣','🟠'];
 
 window._terrains = {};
+var SETS_TO_WIN = 2; // mis a jour depuis l'admin
 
 function appsRead(params) {
   return fetch(SCRIPT_URL + '?' + new URLSearchParams(params)).then(function(r){ return r.json(); });
@@ -566,6 +568,9 @@ function openMatch(ri,mi){
 function closeModal(){document.getElementById('match-modal').classList.remove('open');}
 
 function resetSets(){
+  // Cacher set2 si 1 seul set suffisant
+  document.getElementById('set2-block').style.display = SETS_TO_WIN <= 1 ? 'none' : 'block';
+  document.getElementById('set3-block').style.display = 'none';
   for(var s=1;s<=3;s++){
     document.getElementById('set'+s+'-t1').value='';document.getElementById('set'+s+'-t2').value='';
     document.getElementById('set'+s+'-t1').disabled=s>1;document.getElementById('set'+s+'-t2').disabled=s>1;
@@ -591,10 +596,14 @@ function onSetInput(){
   var s3t2=parseInt(document.getElementById('set3-t2').value);
   var set1done=!isNaN(s1t1)&&!isNaN(s1t2)&&s1t1!==s1t2;
   var set1win=set1done?(s1t1>s1t2?1:2):0;
+  // Si 1 set gagnant suffit, on n'active pas le set 2
+  var onlyOneSet = SETS_TO_WIN <= 1;
   if(set1done){
     document.getElementById('set1-block').className='set-block active '+(set1win===1?'won-t1':'won-t2');
-    document.getElementById('set2-t1').disabled=false;document.getElementById('set2-t2').disabled=false;
-    document.getElementById('set2-block').style.opacity='1';document.getElementById('set2-block').className='set-block active';
+    if(!onlyOneSet){
+      document.getElementById('set2-t1').disabled=false;document.getElementById('set2-t2').disabled=false;
+      document.getElementById('set2-block').style.opacity='1';document.getElementById('set2-block').className='set-block active';
+    }
   } else { document.getElementById('set1-block').className='set-block active'; document.getElementById('set2-t1').disabled=true;document.getElementById('set2-t2').disabled=true;document.getElementById('set2-block').style.opacity='0.4'; }
   var set2done=set1done&&!isNaN(s2t1)&&!isNaN(s2t2)&&s2t1!==s2t2;
   var set2win=set2done?(s2t1>s2t2?1:2):0;
@@ -608,7 +617,7 @@ function onSetInput(){
   var set3win=set3done?(s3t1>s3t2?1:2):0;
   if(set3done){winsT1+=(set3win===1?1:0);winsT2+=(set3win===2?1:0);document.getElementById('set3-block').className='set-block active '+(set3win===1?'won-t1':'won-t2');}
   // Match valide si au moins 1 set avec un gagnant
-  var matchDone=(set1done&&winsT1!==winsT2)||(winsT1===2||winsT2===2);
+  var matchDone=onlyOneSet?(set1done&&winsT1!==winsT2):((set1done&&winsT1!==winsT2)||(winsT1===2||winsT2===2));
   if(set2done||set1done){
     document.getElementById('sets-summary').style.display='block';
     document.getElementById('sets-score-display').textContent=winsT1+' - '+winsT2;
@@ -790,6 +799,7 @@ function adminStartTournament(){
   var duration=parseInt(document.getElementById('match-duration').value)||20;
   var pts=parseInt((document.getElementById('pts-per-set')||{}).value)||7;
   var sets=parseInt((document.getElementById('sets-to-win')||{}).value)||2;
+  SETS_TO_WIN = sets; // stocker globalement
   showMsg(msg,'Lancement en cours...','success');
   appsRead({action:'setConfig',started:'true',duration:duration,pts:pts,sets:sets})
   .then(function(d){
@@ -797,9 +807,40 @@ function adminStartTournament(){
     else showMsg(msg,'Erreur : '+(d.error||'inconnue'),'error');
   }).catch(function(e){showMsg(msg,'Erreur : '+e.message,'error');});
 }
+// Lire la config au demarrage pour restaurer les parametres
+appsRead({action:'getConfig'}).then(function(d){
+  if(d&&d.sets) SETS_TO_WIN=d.sets;
+}).catch(function(){});
 loadTeams();
 loadBracket();
 loadTerrains();
 </script>
 </body>
 </html>
+<script>
+// PATCH - fonctions manquantes
+function adminStopTournament(){
+  if(!confirm('Arreter le tournoi et effacer les terrains ?'))return;
+  appsRead({action:'setConfig',started:'false',duration:20,pts:7,sets:2})
+  .then(function(){ showMsg(document.getElementById('start-msg'),'Tournoi arrete.','success'); window._terrains={}; renderBracket(); })
+  .catch(function(e){ alert('Erreur: '+e.message); });
+}
+function adminExportResults(){
+  appsRead({action:'getBracket'}).then(function(d){
+    var bracket=d.bracket||[];
+    var rows=['Tour,Equipe 1,Equipe 2,Score,Gagnant,Sets'];
+    bracket.forEach(function(round){
+      round.matches.forEach(function(m){
+        if(m.winner){
+          var setsStr=(m.sets||[]).map(function(s){return s.t1+'-'+s.t2;}).join(' | ');
+          rows.push([round.name,m.team1,m.team2,m.score1+'-'+m.score2,m.winner,setsStr].join(','));
+        }
+      });
+    });
+    var blob=new Blob([rows.join('\n')],{type:'text/csv;charset=utf-8;'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');a.href=url;a.download='resultats_marsara2026.csv';a.click();
+    URL.revokeObjectURL(url);
+  }).catch(function(e){alert('Erreur: '+e.message);});
+}
+</script>
