@@ -306,6 +306,14 @@ input::placeholder{color:#b0a89a}
         <div id="terrain-status-list"></div>
       </div>
 
+      <div class="admin-section-title">&#127919; Tableau</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Generez le tableau une fois les inscriptions fermees.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.5rem">
+        <button class="btn btn-navy" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminGenerateBracket()">&#127922; Generer le tirage</button>
+        <button class="btn btn-outline" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminResetBracket()">&#8634; Reinitialiser</button>
+      </div>
+      <div class="form-msg" id="bracket-msg" style="text-align:left"></div>
+
       <div class="admin-section-title">&#128101; Equipes (<span id="adm-count">0</span>)</div>
       <div id="adm-teams"><p style="font-size:13px;color:var(--muted)">Chargement...</p></div>
     </div>
@@ -383,7 +391,7 @@ input::placeholder{color:#b0a89a}
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxO-Om_ZvtgwPnN5a8MN0BMlZEFqaim9v53zNbKVUVIPGkZDuAfxq7FOWrRUOtMSCjIlA/exec';
 const BOT_URL    = 'https://scaling-robot-jr59wj69574phjp7x-3000.app.github.dev';
 const ADMIN_PWD  = 'marsara2026';
-const BALLS      = ['\uD83D\uDD34','\uD83D\uDD35','\uD83D\uDFE2','\uD83D\uDFE1','\uD83D\uDFE3','\uD83D\uDFE0'];
+const BALLS = ['🔴','🔵','🟢','🟡','🟣','🟠'];
 
 window._terrains = {};
 
