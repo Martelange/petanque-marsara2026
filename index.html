@@ -80,12 +80,7 @@ input::placeholder{color:#b0a89a}
 .bracket{display:flex;gap:0;min-width:max-content;padding:4px 0}
 .b-round{display:flex;flex-direction:column;width:160px;padding:0 6px}
 .b-round-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;margin-bottom:8px;flex-shrink:0}
-/* Chaque round a une hauteur fixe basée sur le nombre de matchs du round 1
-   Les matchs sont répartis uniformément avec justify-content:space-around
-   Round N a 2x moins de matchs → chaque slot fait 2x la hauteur du round précédent */
 .b-matches{display:flex;flex-direction:column;flex:1;justify-content:space-around}
-/* Chaque "slot" contient le match centré dans son espace */
-.b-slot{display:flex;flex-direction:column;justify-content:center;flex:1}
 .b-match{background:#fff;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;border-top:2px solid var(--navy);-webkit-tap-highlight-color:transparent}
 .b-team{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;gap:6px;min-height:34px}
 .b-team.winner{background:rgba(13,27,62,.08)}
@@ -95,6 +90,7 @@ input::placeholder{color:#b0a89a}
 .b-score{font-family:'Black Han Sans',sans-serif;font-size:13px;color:var(--navy);min-width:16px;text-align:center}
 .b-vs{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;color:var(--red);background:var(--cream);padding:2px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .b-terrain-badge{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;padding:3px;background:var(--navy);color:var(--yellow)}
+.b-terrain-overtime{background:#ff4444;color:#fff}
 .b-match-photo{width:100%;height:55px;object-fit:cover;display:block;border-top:1px solid var(--border)}
 .match-photo-wrap{margin-top:10px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border)}
 .match-photo-wrap img{width:100%;max-height:200px;object-fit:cover;display:block}
@@ -111,7 +107,7 @@ input::placeholder{color:#b0a89a}
 .m-team-players{font-size:11px;color:var(--muted)}
 .m-vs{font-family:'Black Han Sans',sans-serif;font-size:18px;color:var(--red);text-align:center}
 .set-block{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px;transition:all .2s}
-.set-block.active{border-color:var(--navy);box-shadow:0 0 0 2px rgba(13,27,62,.1)}
+.set-block.active{border-color:var(--navy)}
 .set-block.won-t1{border-color:var(--green);background:#f0faf0}
 .set-block.won-t2{border-color:var(--red);background:#fff5f5}
 .set-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
@@ -135,7 +131,7 @@ input::placeholder{color:#b0a89a}
 .prog-match.done-loss{border-top:3px solid var(--red)}
 .prog-match.future{border-top:3px solid var(--navy);opacity:.7}
 .prog-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
-.prog-terrain{font-size:11px;font-weight:700;margin-top:5px}
+.prog-terrain{font-size:11px;font-weight:700;margin-top:5px;color:var(--navy)}
 .prog-teams{display:flex;align-items:center;gap:6px;font-size:13px}
 .prog-tname{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .prog-score{font-family:'Black Han Sans',sans-serif;font-size:15px}
@@ -145,6 +141,8 @@ input::placeholder{color:#b0a89a}
 .adm-team{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
 .adm-team:last-child{border-bottom:none}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+.terrain-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
+.terrain-row:last-child{border-bottom:none}
 @media(min-width:640px){.page,.bottom-nav{max-width:480px;margin:0 auto}.bottom-nav{left:50%;transform:translateX(-50%)}}
 </style>
 </head>
@@ -258,13 +256,13 @@ input::placeholder{color:#b0a89a}
       <div class="hi"><div class="hi-num">X</div><div class="hi-lbl">Elimination</div></div>
     </div>
     <div class="card">
-      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">&#127919; Format du match</div><div class="rule-body">2 sets gagnants a 7 points. En cas d'egalite 1-1, set decisif a 7 points.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">&#127919; Format du match</div><div class="rule-body">2 sets gagnants a 7 points. En cas d'egalite 1-1, set decisif a 7 points. Temps limite : 20 min.</div></div></div>
       <div class="rule-item"><div class="rule-badge">02</div><div><div class="rule-title">&#128101; Equipes</div><div class="rule-body"><strong>2 ou 3 joueurs.</strong> 6 boules au total : 3/joueur si 2, 2/joueur si 3. Meme equipe tout le tournoi.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">03</div><div><div class="rule-title">&#9881;&#65039; Deroulement d'une mene</div><div class="rule-body">Cochonnet a 6-9m. L'equipe qui n'est pas au point joue en premier. Seule l'equipe la plus proche marque.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">03</div><div><div class="rule-title">&#9881;&#65039; Deroulement</div><div class="rule-body">Cochonnet a 6-9m. L'equipe qui n'est pas au point joue en premier. Seule l'equipe la plus proche marque.</div></div></div>
       <div class="rule-item"><div class="rule-badge">04</div><div><div class="rule-title">&#127942; Elimination directe</div><div class="rule-body">Tirage au sort. Perdant = elimine. Pas de repechage.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">05</div><div><div class="rule-title">&#128336; Gestion du temps</div><div class="rule-body">Max <strong>20 min.</strong> Temps ecoule : gagnant immediat. Egalite parfaite : une derniere mene decisive.</div></div></div>
-      <div class="rule-item"><div class="rule-badge">06</div><div><div class="rule-title">&#128221; Scores</div><div class="rule-body">Les deux equipes saisissent le score sur le site apres chaque match. Photo bienvenue &#128247;</div></div></div>
-      <div class="rule-item"><div class="rule-badge">07</div><div><div class="rule-title">&#127946; Esprit du tournoi</div><div class="rule-body">C'est une fete ! Fair-play obligatoire. Decision de Martin ou Sara = definitive. Verre a la main encourage.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">05</div><div><div class="rule-title">&#128336; Temps ecoule</div><div class="rule-body">Quand le bot annonce la fin du temps, terminez la mene en cours et inscrivez le score exact, meme si un set n'est pas termine.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">06</div><div><div class="rule-title">&#128221; Scores</div><div class="rule-body">Les deux equipes inscrivent le score sur le site. Une selfie gagnants-perdants est bienvenue !</div></div></div>
+      <div class="rule-item"><div class="rule-badge">07</div><div><div class="rule-title">&#127946; Esprit</div><div class="rule-body">Fair-play obligatoire. Decision de Martin ou Sara = definitive. Verre a la main encourage.</div></div></div>
     </div>
   </div>
 </div>
@@ -294,6 +292,23 @@ input::placeholder{color:#b0a89a}
         <button class="btn btn-outline" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminResetBracket()">&#8634; Reinitialiser</button>
       </div>
       <div class="form-msg" id="bracket-msg" style="text-align:left"></div>
+
+      <div class="admin-section-title">&#9196;&#65039; Lancer le tournoi</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Lance les premiers matchs et demarre les chronometres. Le bot alertera les equipes quand le temps est ecoule.</p>
+      <div style="display:flex;gap:12px;align-items:flex-end;margin-bottom:.75rem;flex-wrap:wrap">
+        <div class="form-group" style="margin:0">
+          <label>Duree par match (min)</label>
+          <input type="number" id="match-duration" value="20" min="5" max="60" style="width:80px">
+        </div>
+        <button class="btn btn-red" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminStartTournament()">&#127937; Lancer le tournoi !</button>
+      </div>
+      <div class="form-msg" id="start-msg" style="text-align:left"></div>
+
+      <div id="terrain-status-wrap" style="margin-top:1rem;display:none">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Terrains en cours</div>
+        <div id="terrain-status-list"></div>
+      </div>
+
       <div class="admin-section-title">&#128101; Equipes (<span id="adm-count">0</span>)</div>
       <div id="adm-teams"><p style="font-size:13px;color:var(--muted)">Chargement...</p></div>
     </div>
@@ -322,12 +337,12 @@ input::placeholder{color:#b0a89a}
     </div>
     <div id="m-winner" style="display:none"><div class="winner-box"><div class="winner-lbl">Vainqueur</div><div class="winner-name" id="m-winner-name">-</div></div></div>
     <div id="m-score-section">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Score (sets gagnes - max 2)</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Score (sets gagnes)</div>
       <div class="set-block" id="set1-block">
         <div class="set-label">Set 1</div>
         <div class="set-row">
           <div class="set-team-name" id="set-t1-1">Eq. 1</div>
-          <div class="set-inputs"><input type="number" class="set-input" id="set1-t1" min="0" max="13" placeholder="0" oninput="onSetInput()"><span class="set-dash">-</span><input type="number" class="set-input" id="set1-t2" min="0" max="13" placeholder="0" oninput="onSetInput()"></div>
+          <div class="set-inputs"><input type="number" class="set-input" id="set1-t1" min="0" placeholder="0" oninput="onSetInput()"><span class="set-dash">-</span><input type="number" class="set-input" id="set1-t2" min="0" placeholder="0" oninput="onSetInput()"></div>
           <div class="set-team-name right" id="set-t2-1">Eq. 2</div>
         </div>
       </div>
@@ -335,7 +350,7 @@ input::placeholder{color:#b0a89a}
         <div class="set-label">Set 2</div>
         <div class="set-row">
           <div class="set-team-name" id="set-t1-2">Eq. 1</div>
-          <div class="set-inputs"><input type="number" class="set-input" id="set2-t1" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled><span class="set-dash">-</span><input type="number" class="set-input" id="set2-t2" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled></div>
+          <div class="set-inputs"><input type="number" class="set-input" id="set2-t1" min="0" placeholder="0" oninput="onSetInput()" disabled><span class="set-dash">-</span><input type="number" class="set-input" id="set2-t2" min="0" placeholder="0" oninput="onSetInput()" disabled></div>
           <div class="set-team-name right" id="set-t2-2">Eq. 2</div>
         </div>
       </div>
@@ -343,7 +358,7 @@ input::placeholder{color:#b0a89a}
         <div class="set-label">Set decisif</div>
         <div class="set-row">
           <div class="set-team-name" id="set-t1-3">Eq. 1</div>
-          <div class="set-inputs"><input type="number" class="set-input" id="set3-t1" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled><span class="set-dash">-</span><input type="number" class="set-input" id="set3-t2" min="0" max="13" placeholder="0" oninput="onSetInput()" disabled></div>
+          <div class="set-inputs"><input type="number" class="set-input" id="set3-t1" min="0" placeholder="0" oninput="onSetInput()" disabled><span class="set-dash">-</span><input type="number" class="set-input" id="set3-t2" min="0" placeholder="0" oninput="onSetInput()" disabled></div>
           <div class="set-team-name right" id="set-t2-3">Eq. 2</div>
         </div>
       </div>
@@ -377,9 +392,6 @@ window._terrains = {};
 
 function appsRead(params) {
   return fetch(SCRIPT_URL + '?' + new URLSearchParams(params)).then(function(r){ return r.json(); });
-}
-function appsWrite(params) {
-  var img = new Image(); img.src = SCRIPT_URL + '?' + new URLSearchParams(params);
 }
 
 // NAV
@@ -446,13 +458,17 @@ function loadTeams() {
   }).catch(function(){});
 }
 
-// TERRAINS (depuis le bot)
+// TERRAINS
 function loadTerrains() {
-  fetch(BOT_URL + '/')
+  fetch(BOT_URL + '/?action=terrainStatus')
   .then(function(r){ return r.json(); })
   .then(function(d){ if(d.terrains){ window._terrains=d.terrains; renderBracket(); } })
-  .catch(function(){});
-  setTimeout(loadTerrains,15000);
+  .catch(function(){
+    fetch(BOT_URL + '/').then(function(r){ return r.json(); })
+    .then(function(d){ if(d.terrains){ window._terrains=d.terrains; renderBracket(); } })
+    .catch(function(){});
+  });
+  setTimeout(loadTerrains, 15000);
 }
 
 // BRACKET
@@ -491,17 +507,21 @@ function renderBracket() {
         var matchKeySearch=rnd.name+'_'+t1+'_'+t2;
         for (var ti=1;ti<=6;ti++){
           if(window._terrains[ti]&&window._terrains[ti].matchKey===matchKeySearch){
-            terrainBadge='<div class="b-terrain-badge">'+BALLS[ti-1]+' Terrain '+ti+'</div>';
+            var rem=window._terrains[ti].remaining;
+            var ovt=window._terrains[ti].overtime;
+            var timeStr=rem!==undefined?(ovt?' <span style="color:#ffaaaa">TEMPS</span>':' <span style="color:var(--yellow)">'+Math.ceil(rem)+'min</span>'):'';
+            var badgeCls=ovt?'b-terrain-badge b-terrain-overtime':'b-terrain-badge';
+            terrainBadge='<div class="'+badgeCls+'">'+BALLS[ti-1]+' Terrain '+ti+timeStr+'</div>';
             break;
           }
         }
-        var tileHtml = '<div class="b-match'+(bye?' b-bye':'')+'" onclick="openMatch('+ri+','+mi+')">' +
+        var tileHtml='<div class="b-match'+(bye?' b-bye':'')+'" onclick="openMatch('+ri+','+mi+')">' +
           terrainBadge +
           '<div class="b-team '+c1+'"><span class="b-name">'+t1+'</span><span class="b-score">'+s1+'</span></div>' +
           '<div class="b-vs">'+(bye?'BYE':(setDetail?setDetail:'vs'))+'</div>' +
           '<div class="b-team '+c2+'"><span class="b-name">'+t2+'</span><span class="b-score">'+s2+'</span></div>' +
           photoThumb+'</div>';
-        return '<div class="b-slot" style="height:'+slotH+'px;display:flex;flex-direction:column;justify-content:center;">'+tileHtml+'</div>';
+        return '<div style="height:'+slotH+'px;display:flex;flex-direction:column;justify-content:center;">'+tileHtml+'</div>';
       }).join('') + '</div></div>';
   }).join('');
 }
@@ -586,13 +606,13 @@ function onSetInput(){
   var set3done=need3&&!isNaN(s3t1)&&!isNaN(s3t2)&&s3t1!==s3t2;
   var set3win=set3done?(s3t1>s3t2?1:2):0;
   if(set3done){winsT1+=(set3win===1?1:0);winsT2+=(set3win===2?1:0);document.getElementById('set3-block').className='set-block active '+(set3win===1?'won-t1':'won-t2');}
-  // Match valide si au moins 1 set joue et un gagnant (pas forcement 2 sets)
-  var matchDone=(set1done && winsT1!==winsT2) || winsT1===2 || winsT2===2;
-  if(set2done){
+  // Match valide si au moins 1 set avec un gagnant
+  var matchDone=(set1done&&winsT1!==winsT2)||(winsT1===2||winsT2===2);
+  if(set2done||set1done){
     document.getElementById('sets-summary').style.display='block';
     document.getElementById('sets-score-display').textContent=winsT1+' - '+winsT2;
     var hint='';
-    if(matchDone){var wn=winsT1>winsT2?document.getElementById('m-t1').textContent:document.getElementById('m-t2').textContent;hint=wn+' remporte le match !';}
+    if(matchDone&&(winsT1===2||winsT2===2)){var wn=winsT1>winsT2?document.getElementById('m-t1').textContent:document.getElementById('m-t2').textContent;hint=wn+' remporte le match !';}
     else if(need3&&!set3done)hint='Egalite ! Set decisif en cours...';
     document.getElementById('sets-winner-hint').textContent=hint;
   } else { document.getElementById('sets-summary').style.display='none'; }
@@ -609,10 +629,10 @@ function submitScore(){
   if(!isNaN(s1t1)&&!isNaN(s1t2))sets.push({t1:s1t1,t2:s1t2});
   if(!isNaN(s2t1)&&!isNaN(s2t2))sets.push({t1:s2t1,t2:s2t2});
   if(!isNaN(s3t1)&&!isNaN(s3t2)&&document.getElementById('set3-block').style.display!=='none')sets.push({t1:s3t1,t2:s3t2});
+  if(sets.length===0){showMsg(msg,'Entrez au moins un set.','error');return;}
   var wT1=0,wT2=0;
   sets.forEach(function(s){if(s.t1>s.t2)wT1++;else if(s.t2>s.t1)wT2++;});
-  if(wT1===wT2&&sets.length>0){showMsg(msg,'Il doit y avoir un gagnant.','error');return;}
-  if(sets.length===0){showMsg(msg,'Entrez au moins un set.','error');return;}
+  if(wT1===wT2){showMsg(msg,'Il doit y avoir un gagnant.','error');return;}
   var btn=document.getElementById('btn-score');
   btn.textContent='Envoi...';btn.disabled=true;
   appsRead({action:'saveScore',roundIdx:curMatch.ri,matchIdx:curMatch.mi,score1:wT1,score2:wT2,setsJson:JSON.stringify(sets)})
@@ -706,12 +726,14 @@ function selectTeam(name){
       var photoHtml=(matchData&&matchData.photoUrl)?'<div class="match-photo-wrap"><img src="'+matchData.photoUrl+'" alt="photo"></div>':'';
       var hasTeams=matchData&&matchData.team1&&matchData.team2&&matchData.team1!=='Bye'&&matchData.team2!=='Bye';
       var clickAttr=hasTeams?' onclick="goToMatch('+m.ri+','+m.mi+')" style="cursor:pointer"':'';
-      // Terrain - match via matchKey
       var terrainHtml='';
       var mKeySearch=m.round+'_'+m.team1+'_'+m.team2;
       for(var ti=1;ti<=6;ti++){
         if(window._terrains[ti]&&window._terrains[ti].matchKey===mKeySearch){
-          terrainHtml='<div class="prog-terrain">'+BALLS[ti-1]+' Terrain '+ti+'</div>';break;
+          var rem=window._terrains[ti].remaining;
+          var ovt=window._terrains[ti].overtime;
+          var tStr=rem!==undefined?(ovt?' - TEMPS ECOULE !':' - '+Math.ceil(rem)+' min restantes'):'';
+          terrainHtml='<div class="prog-terrain">'+BALLS[ti-1]+' Terrain '+ti+tStr+'</div>';break;
         }
       }
       var tapHint=hasTeams&&!m.done?'<div style="font-size:10px;color:var(--muted);margin-top:4px">Appuyez pour saisir le score</div>':'';
@@ -738,6 +760,7 @@ function adminLogin(){
   else{showMsg(msg,'Mot de passe incorrect.','error');}
 }
 function adminLogout(){document.getElementById('admin-login').style.display='block';document.getElementById('admin-content').style.display='none';document.getElementById('logout-btn').style.display='none';document.getElementById('admin-pwd').value='';}
+
 function loadAdminTeams(){
   appsRead({action:'getTeams'}).then(function(d){
     var teams=d.teams||[];
@@ -745,13 +768,61 @@ function loadAdminTeams(){
     document.getElementById('adm-teams').innerHTML=teams.length?teams.map(function(t){return '<div class="adm-team"><div class="dot"></div><div><div style="font-weight:700;font-size:13px">'+t.name+'</div><div style="font-size:11px;color:var(--muted)">'+t.player1+' - '+t.player2+(t.player3?' - '+t.player3:'')+'</div></div></div>';}).join(''):'<p style="font-size:13px;color:var(--muted)">Aucune equipe.</p>';
   }).catch(function(){});
 }
+
 function adminGenerateBracket(){
   var msg=document.getElementById('bracket-msg');showMsg(msg,'Tirage en cours...','success');
   appsRead({action:'generateBracket'}).then(function(d){showMsg(msg,d.success?'Tableau genere ! Allez sur l&apos;onglet Tableau.':(d.error||'Erreur.'),d.success?'success':'error');if(d.success)setTimeout(loadBracket,1000);}).catch(function(e){showMsg(msg,'Erreur : '+e.message,'error');});
 }
+
 function adminResetBracket(){
   if(!confirm('Reinitialiser le tableau ?'))return;
   appsRead({action:'resetBracket'}).then(function(){bracket=[];renderBracket();showMsg(document.getElementById('bracket-msg'),'Tableau reinitialise.','success');});
+}
+
+function adminStartTournament(){
+  var msg=document.getElementById('start-msg');
+  var duration=parseInt(document.getElementById('match-duration').value)||20;
+  showMsg(msg,'Lancement en cours...','success');
+  fetch(BOT_URL+'/?action=startTournament&duration='+duration)
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.success){
+      showMsg(msg,'Tournoi lance ! Duree : '+d.duration+' min par match.','success');
+      startTerrainPolling();
+    } else {showMsg(msg,'Erreur : '+(d.error||'inconnue'),'error');}
+  }).catch(function(e){showMsg(msg,'Bot non joignable : '+e.message,'error');});
+}
+
+var terrainPollInterval=null;
+function startTerrainPolling(){
+  document.getElementById('terrain-status-wrap').style.display='block';
+  updateTerrainStatus();
+  if(terrainPollInterval)clearInterval(terrainPollInterval);
+  terrainPollInterval=setInterval(updateTerrainStatus,15000);
+}
+
+function updateTerrainStatus(){
+  fetch(BOT_URL+'/?action=terrainStatus')
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(!d.success)return;
+    window._terrains=d.terrains||{};
+    renderBracket();
+    var list=document.getElementById('terrain-status-list');
+    var html='';
+    for(var ti=1;ti<=6;ti++){
+      var t=d.terrains[ti];
+      var ball=BALLS[(ti-1)%BALLS.length];
+      if(t){
+        var timeColor=t.overtime?'color:#ff4444;font-weight:700':'color:var(--green)';
+        var timeText=t.overtime?'TEMPS ECOULE !':Math.ceil(t.remaining)+' min restantes';
+        html+='<div class="terrain-row">'+ball+' <strong>Terrain '+ti+'</strong> : '+t.team1+' vs '+t.team2+'<span style="margin-left:auto;font-size:11px;'+timeColor+'">'+timeText+'</span></div>';
+      } else {
+        html+='<div class="terrain-row" style="opacity:.4">'+ball+' <strong>Terrain '+ti+'</strong> : Libre</div>';
+      }
+    }
+    list.innerHTML=html;
+  }).catch(function(){});
 }
 
 function showMsg(el,txt,type){el.innerHTML=txt;el.className='form-msg '+type;el.style.display='block';}
