@@ -357,7 +357,7 @@ input::placeholder{color:#b0a89a}
       </div>
       <div class="photo-area" onclick="document.getElementById('photo-input').click()">
         <div style="font-size:26px;margin-bottom:4px">&#128247;</div>
-        <div id="photo-area-label" style="font-size:13px;color:var(--muted)">Photo des equipes (optionnel)</div>
+        <div id="photo-area-label" style="font-size:13px;color:var(--muted)">Une petite selfie gagnants-perdants ? :)</div>
         <img id="photo-preview" class="photo-preview">
       </div>
       <input type="file" id="photo-input" accept="image/*" capture="environment" style="display:none" onchange="previewPhoto(this)">
@@ -534,7 +534,7 @@ function openMatch(ri,mi){
   document.getElementById('photo-input').value='';
   var ep=document.getElementById('modal-existing-photo'),ei=document.getElementById('modal-photo-img');
   if(m.photoUrl){ei.src=m.photoUrl;ep.style.display='block';document.getElementById('photo-area-label').textContent='Remplacer la photo';}
-  else{ep.style.display='none';document.getElementById('photo-area-label').textContent='Photo des equipes (optionnel)';}
+  else{ep.style.display='none';document.getElementById('photo-area-label').textContent='Une petite selfie gagnants-perdants ? :)';}
   document.getElementById('m-winner').style.display=m.winner?'block':'none';
   if(m.winner)document.getElementById('m-winner-name').textContent=m.winner;
   document.getElementById('m-status').textContent=m.winner?'Match termine':hasTeams?'Match a jouer':'En attente des equipes';
