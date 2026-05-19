@@ -465,14 +465,10 @@ function loadTeams() {
 
 // TERRAINS
 function loadTerrains() {
-  fetch(BOT_URL + '/?action=terrainStatus')
-  .then(function(r){ return r.json(); })
-  .then(function(d){ if(d.terrains){ window._terrains=d.terrains; renderBracket(); } })
-  .catch(function(){
-    fetch(BOT_URL + '/').then(function(r){ return r.json(); })
-    .then(function(d){ if(d.terrains){ window._terrains=d.terrains; renderBracket(); } })
-    .catch(function(){});
-  });
+  // Lire les terrains depuis le Sheet (pas besoin du bot joignable)
+  appsRead({action:'getTerrains'})
+  .then(function(d){ if(d&&d.terrains){ window._terrains=d.terrains; renderBracket(); } })
+  .catch(function(){});
   setTimeout(loadTerrains, 15000);
 }
 
