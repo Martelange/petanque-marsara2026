@@ -250,13 +250,13 @@ input::placeholder{color:#b0a89a}
     <div class="highlights">
       <div class="hi"><div class="hi-num">2-3</div><div class="hi-lbl">Joueurs</div></div>
       <div class="hi"><div class="hi-num">6</div><div class="hi-lbl">Boules</div></div>
-      <div class="hi"><div class="hi-num">7</div><div class="hi-lbl">Pts/set</div></div>
-      <div class="hi"><div class="hi-num">2</div><div class="hi-lbl">Sets gagnants</div></div>
-      <div class="hi"><div class="hi-num">20'</div><div class="hi-lbl">Max/match</div></div>
+      <div class="hi"><div class="hi-num" id="r-pts">7</div><div class="hi-lbl">Pts/manche</div></div>
+      <div class="hi"><div class="hi-num" id="r-sets">2</div><div class="hi-lbl">Manches gagnantes</div></div>
+      <div class="hi"><div class="hi-num" id="r-time">20'</div><div class="hi-lbl">Max/match</div></div>
       <div class="hi"><div class="hi-num">X</div><div class="hi-lbl">Elimination</div></div>
     </div>
     <div class="card">
-      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">&#127919; Format du match</div><div class="rule-body">2 sets gagnants a 7 points. En cas d'egalite 1-1, set decisif a 7 points. Temps limite : 20 min.</div></div></div>
+      <div class="rule-item"><div class="rule-badge">01</div><div><div class="rule-title">&#127919; Format du match</div><div class="rule-body"><span id="r-format">2 manches gagnantes a 7 points.</span> En cas d'egalite, manche decisive. Temps limite : <span id="r-time2">20</span> min.</div></div></div>
       <div class="rule-item"><div class="rule-badge">02</div><div><div class="rule-title">&#128101; Equipes</div><div class="rule-body"><strong>2 ou 3 joueurs.</strong> 6 boules au total : 3/joueur si 2, 2/joueur si 3. Meme equipe tout le tournoi.</div></div></div>
       <div class="rule-item"><div class="rule-badge">03</div><div><div class="rule-title">&#9881;&#65039; Deroulement</div><div class="rule-body">Cochonnet a 6-9m. L'equipe qui n'est pas au point joue en premier. Seule l'equipe la plus proche marque.</div></div></div>
       <div class="rule-item"><div class="rule-badge">04</div><div><div class="rule-title">&#127942; Elimination directe</div><div class="rule-body">Tirage au sort. Perdant = elimine. Pas de repechage.</div></div></div>
@@ -293,15 +293,20 @@ input::placeholder{color:#b0a89a}
       </div>
       <div class="form-msg" id="bracket-msg" style="text-align:left"></div>
 
-      <div class="admin-section-title">&#9196;&#65039; Lancer le tournoi</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Lance les premiers matchs et demarre les chronometres. Le bot alertera les equipes quand le temps est ecoule.</p>
-      <div style="display:flex;gap:12px;align-items:flex-end;margin-bottom:.75rem;flex-wrap:wrap">
-        <div class="form-group" style="margin:0">
-          <label>Duree par match (min)</label>
-          <input type="number" id="match-duration" value="20" min="5" max="60" style="width:80px">
+      <div class="admin-section-title">&#9881;&#65039; Parametres du tournoi</div>
+      <div class="card" style="margin-bottom:1rem;padding:1rem">
+        <div class="form-row" style="margin-bottom:10px">
+          <div class="form-group" style="margin:0"><label>Pts par manche</label><input type="number" id="pts-per-set" value="7" min="1" max="25"></div>
+          <div class="form-group" style="margin:0"><label>Manches gagnantes</label><input type="number" id="sets-to-win" value="2" min="1" max="5"></div>
         </div>
-        <button class="btn btn-red" style="width:auto;padding:12px 18px;font-size:13px" onclick="adminStartTournament()">&#127937; Lancer le tournoi !</button>
+        <div class="form-row">
+          <div class="form-group" style="margin:0"><label>Duree par match (min)</label><input type="number" id="match-duration" value="20" min="5" max="60"></div>
+          <div class="form-group" style="margin:0"><label>Nb terrains</label><input type="number" id="nb-terrains" value="6" min="1" max="10"></div>
+        </div>
       </div>
+      <div class="admin-section-title">&#9196;&#65039; Lancer le tournoi</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Lance les premiers matchs et demarre les chronometres.</p>
+      <button class="btn btn-red" style="margin-bottom:.5rem" onclick="adminStartTournament()">&#127937; Lancer le tournoi !</button>
       <div class="form-msg" id="start-msg" style="text-align:left"></div>
 
       <div id="terrain-status-wrap" style="margin-top:1rem;display:none">
@@ -501,7 +506,16 @@ function renderBracket() {
         var c1=w&&w===t1?'winner':(w&&w!==t1?'loser':'');
         var c2=w&&w===t2?'winner':(w&&w!==t2?'loser':'');
         var sets=m.sets||[];
-        var setDetail=sets.length?sets.map(function(s){return s.t1+'-'+s.t2;}).join(' - '):'';
+        // Afficher les scores de chaque manche avec le gagnant en gras
+        var setDetail='';
+        if(sets.length){
+          setDetail=sets.map(function(s){
+            var t1w=s.t1>s.t2,t2w=s.t2>s.t1;
+            var st1=t1w?'<b>'+s.t1+'</b>':s.t1;
+            var st2=t2w?'<b>'+s.t2+'</b>':s.t2;
+            return st1+'-'+st2;
+          }).join(' | ');
+        }
         var photoThumb=m.photoUrl?'<img class="b-match-photo" src="'+m.photoUrl+'" alt="photo">':'';
         var terrainBadge='';
         var matchKeySearch=rnd.name+'_'+t1+'_'+t2;
@@ -782,8 +796,12 @@ function adminResetBracket(){
 function adminStartTournament(){
   var msg=document.getElementById('start-msg');
   var duration=parseInt(document.getElementById('match-duration').value)||20;
+  var pts=parseInt(document.getElementById('pts-per-set').value)||7;
+  var sets=parseInt(document.getElementById('sets-to-win').value)||2;
+  // Mettre a jour les regles
+  syncRules(pts,sets,duration);
   showMsg(msg,'Lancement en cours...','success');
-  fetch(BOT_URL+'/?action=startTournament&duration='+duration)
+  fetch(BOT_URL+'/?action=startTournament&duration='+duration+'&pts='+pts+'&sets='+sets)
   .then(function(r){return r.json();})
   .then(function(d){
     if(d.success){
@@ -825,6 +843,13 @@ function updateTerrainStatus(){
   }).catch(function(){});
 }
 
+function syncRules(pts,sets,duration){
+  var pEl=document.getElementById('r-pts');if(pEl)pEl.textContent=pts;
+  var sEl=document.getElementById('r-sets');if(sEl)sEl.textContent=sets;
+  var tEl=document.getElementById('r-time');if(tEl)tEl.textContent=duration+"'";
+  var t2El=document.getElementById('r-time2');if(t2El)t2El.textContent=duration;
+  var fEl=document.getElementById('r-format');if(fEl)fEl.textContent=sets+' manche'+(sets>1?'s':'')+' gagnante'+(sets>1?'s':'')+' a '+pts+' points.';
+}
 function showMsg(el,txt,type){el.innerHTML=txt;el.className='form-msg '+type;el.style.display='block';}
 
 // INIT
