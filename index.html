@@ -140,7 +140,6 @@ input::placeholder{color:#b0a89a}
 .admin-section-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem;padding-bottom:6px;border-bottom:2px solid var(--border);margin-top:1.25rem}
 .adm-team{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
 .adm-team:last-child{border-bottom:none}
-.b-terrain-badge{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;padding:3px 5px;background:var(--navy);color:var(--yellow)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 .terrain-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
 .terrain-row:last-child{border-bottom:none}
@@ -286,11 +285,9 @@ input::placeholder{color:#b0a89a}
   </div>
   <div id="admin-content" style="display:none">
     <div class="section">
-      <div class="admin-section-title">&#9881; Parametres</div>
-      <div class="card" style="padding:1rem;margin-bottom:1rem"><div class="form-row" style="margin-bottom:8px"><div class="form-group" style="margin:0"><label>Pts/manche</label><input type="number" id="pts-per-set" value="7" min="1" max="25"></div><div class="form-group" style="margin:0"><label>Manches gagnantes</label><input type="number" id="sets-to-win" value="2" min="1" max="5"></div></div><div class="form-row"><div class="form-group" style="margin:0"><label>Duree/match (min)</label><input type="number" id="match-duration" value="20" min="5" max="60"></div><div class="form-group" style="margin:0"><label>Nb terrains</label><input type="number" id="nb-terrains" value="6" min="1" max="10"></div></div></div>
       <div class="admin-section-title">&#9196; Lancer le tournoi</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Le bot detectera le signal en moins de 10 secondes.</p>
-      <button class="btn btn-red" style="margin-bottom:.5rem" onclick="adminStartTournament()">&#127937; Lancer le tournoi !</button>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Configure et lance le tournoi. Le bot demarre automatiquement.</p>
+      <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:.5rem"><div style="display:flex;flex-direction:column;gap:4px"><label>Duree/match (min)</label><input type="number" id="match-duration" value="20" min="5" max="60" style="width:80px"></div><button class="btn btn-red" style="width:auto;padding:12px 18px;font-size:13px;margin-top:18px" onclick="adminStartTournament()">&#127937; Lancer !</button></div>
       <div class="form-msg" id="start-msg" style="text-align:left"></div>
       <div class="admin-section-title">&#127919; Tableau</div>
       <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem">Generez le tableau une fois les inscriptions fermees.</p>
@@ -391,7 +388,6 @@ input::placeholder{color:#b0a89a}
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxO-Om_ZvtgwPnN5a8MN0BMlZEFqaim9v53zNbKVUVIPGkZDuAfxq7FOWrRUOtMSCjIlA/exec';
-window._terrains = {};
 const BOT_URL    = 'https://scaling-robot-jr59wj69574phjp7x-3000.app.github.dev';
 const ADMIN_PWD  = 'marsara2026';
 const BALLS      = ['\uD83D\uDD34','\uD83D\uDD35','\uD83D\uDFE2','\uD83D\uDFE1','\uD83D\uDFE3','\uD83D\uDFE0'];
@@ -523,8 +519,7 @@ function renderBracket() {
             break;
           }
         }
-        var tb='';var mks=rnd.name+'_'+t1+'_'+t2;for(var ti=1;ti<=6;ti++){if(window._terrains[ti]&&window._terrains[ti].matchKey===mks){tb='<div class="b-terrain-badge">'+BALLS[ti-1]+' T'+ti+'</div>';break;}}
-        tileHtml='<div class="b-match'+(bye?' b-bye':'')+'" onclick="openMatch('+ri+','+mi+')">' + tb +
+        var tileHtml='<div class="b-match'+(bye?' b-bye':'')+'" onclick="openMatch('+ri+','+mi+')">' +
           terrainBadge +
           '<div class="b-team '+c1+'"><span class="b-name">'+t1+'</span><span class="b-score">'+s1+'</span></div>' +
           '<div class="b-vs">'+(bye?'BYE':(setDetail?setDetail:'vs'))+'</div>' +
@@ -834,14 +829,22 @@ function updateTerrainStatus(){
   }).catch(function(){});
 }
 
-function adminStartTournament(){var msg=document.getElementById('start-msg');var duration=parseInt(document.getElementById('match-duration').value)||20;var pts=parseInt(document.getElementById('pts-per-set').value)||7;var sets=parseInt(document.getElementById('sets-to-win').value)||2;showMsg(msg,'Lancement en cours...','success');appsRead({action:'setConfig',started:'true',duration:duration,pts:pts,sets:sets}).then(function(d){if(d.success)showMsg(msg,'Tournoi lance ! Le bot demarre dans quelques secondes...','success');else showMsg(msg,'Erreur : '+(d.error||'inconnue'),'error');}).catch(function(e){showMsg(msg,'Erreur : '+e.message,'error');});}
-function loadTerrains(){fetch(BOT_URL+'/?action=terrainStatus').then(function(r){return r.json();}).then(function(d){if(d&&d.terrains){window._terrains=d.terrains;renderBracket();}}).catch(function(){});setTimeout(loadTerrains,15000);}
 function showMsg(el,txt,type){el.innerHTML=txt;el.className='form-msg '+type;el.style.display='block';}
 
 // INIT
+function adminStartTournament(){
+  var msg=document.getElementById('start-msg');
+  var duration=parseInt(document.getElementById('match-duration').value)||20;
+  if(typeof appsRead==='undefined'){showMsg(msg,'Erreur: appsRead non defini','error');return;}
+  showMsg(msg,'Lancement en cours...','success');
+  appsRead({action:'setConfig',started:'true',duration:duration,pts:7,sets:2})
+  .then(function(d){
+    if(d.success)showMsg(msg,'Tournoi lance ! Le bot demarre dans quelques secondes...','success');
+    else showMsg(msg,'Erreur : '+(d.error||'inconnue'),'error');
+  }).catch(function(e){showMsg(msg,'Erreur : '+e.message,'error');});
+}
 loadTeams();
 loadBracket();
-loadTerrains();
 loadTerrains();
 </script>
 </body>
