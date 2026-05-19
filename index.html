@@ -389,7 +389,7 @@ input::placeholder{color:#b0a89a}
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzru2qV_SdSjkRBkCpMBEvIBEP4n-bBN2vuQNAivbn1H6NQxCuV01TuaC2WudL3HM7H7Q/exec';
-const BOT_URL    = 'https://scaling-robot-jr59wj69574phjp7x-3000.app.github.dev';
+const BOT_URL    = 'https://real-hairs-smile.loca.lt';
 const ADMIN_PWD  = 'marsara2026';
 const BALLS      = ['\uD83D\uDD34','\uD83D\uDD35','\uD83D\uDFE2','\uD83D\uDFE1','\uD83D\uDFE3','\uD83D\uDFE0'];
 
@@ -465,14 +465,11 @@ function loadTeams() {
 
 // TERRAINS
 function loadTerrains() {
+  // Essayer de contacter le bot pour les terrains (optionnel)
   fetch(BOT_URL + '/?action=terrainStatus')
   .then(function(r){ return r.json(); })
   .then(function(d){ if(d.terrains){ window._terrains=d.terrains; renderBracket(); } })
-  .catch(function(){
-    fetch(BOT_URL + '/').then(function(r){ return r.json(); })
-    .then(function(d){ if(d.terrains){ window._terrains=d.terrains; renderBracket(); } })
-    .catch(function(){});
-  });
+  .catch(function(){}); // Silencieux si le bot n'est pas joignable
   setTimeout(loadTerrains, 15000);
 }
 
@@ -798,17 +795,15 @@ function adminStartTournament(){
   var duration=parseInt(document.getElementById('match-duration').value)||20;
   var pts=parseInt(document.getElementById('pts-per-set').value)||7;
   var sets=parseInt(document.getElementById('sets-to-win').value)||2;
-  // Mettre a jour les regles
   syncRules(pts,sets,duration);
   showMsg(msg,'Lancement en cours...','success');
-  fetch(BOT_URL+'/?action=startTournament&duration='+duration+'&pts='+pts+'&sets='+sets)
-  .then(function(r){return r.json();})
+  // Ecrire le flag dans le Google Sheet — le bot le lira dans les 10 secondes
+  appsRead({ action:'setConfig', started:'true', duration:duration, pts:pts, sets:sets })
   .then(function(d){
     if(d.success){
-      showMsg(msg,'Tournoi lance ! Duree : '+d.duration+' min par match.','success');
-      startTerrainPolling();
+      showMsg(msg,'Tournoi lance ! Le bot va demarrer dans quelques secondes...','success');
     } else {showMsg(msg,'Erreur : '+(d.error||'inconnue'),'error');}
-  }).catch(function(e){showMsg(msg,'Bot non joignable : '+e.message,'error');});
+  }).catch(function(e){showMsg(msg,'Erreur : '+e.message,'error');});
 }
 
 var terrainPollInterval=null;
