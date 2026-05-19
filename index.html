@@ -821,9 +821,17 @@ loadTerrains();
 // PATCH - fonctions manquantes
 function adminStopTournament(){
   if(!confirm('Arreter le tournoi et effacer les terrains ?'))return;
+  var msg=document.getElementById('start-msg');
+  showMsg(msg,'Arret en cours...','success');
+  // D'abord stopper, puis resetter les terrains
   appsRead({action:'setConfig',started:'false',duration:20,pts:7,sets:2})
-  .then(function(){ showMsg(document.getElementById('start-msg'),'Tournoi arrete.','success'); window._terrains={}; renderBracket(); })
-  .catch(function(e){ alert('Erreur: '+e.message); });
+  .then(function(){ return appsRead({action:'resetTerrains'}); })
+  .then(function(d){
+    showMsg(msg,'Tournoi arrete et terrains reinitialises !','success');
+    window._terrains={};
+    renderBracket();
+  })
+  .catch(function(e){ showMsg(msg,'Erreur: '+e.message,'error'); });
 }
 function adminExportResults(){
   appsRead({action:'getBracket'}).then(function(d){
