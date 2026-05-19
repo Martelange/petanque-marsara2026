@@ -586,7 +586,8 @@ function onSetInput(){
   var set3done=need3&&!isNaN(s3t1)&&!isNaN(s3t2)&&s3t1!==s3t2;
   var set3win=set3done?(s3t1>s3t2?1:2):0;
   if(set3done){winsT1+=(set3win===1?1:0);winsT2+=(set3win===2?1:0);document.getElementById('set3-block').className='set-block active '+(set3win===1?'won-t1':'won-t2');}
-  var matchDone=winsT1===2||winsT2===2;
+  // Match valide si au moins 1 set joue et un gagnant (pas forcement 2 sets)
+  var matchDone=(set1done && winsT1!==winsT2) || winsT1===2 || winsT2===2;
   if(set2done){
     document.getElementById('sets-summary').style.display='block';
     document.getElementById('sets-score-display').textContent=winsT1+' - '+winsT2;
@@ -610,7 +611,8 @@ function submitScore(){
   if(!isNaN(s3t1)&&!isNaN(s3t2)&&document.getElementById('set3-block').style.display!=='none')sets.push({t1:s3t1,t2:s3t2});
   var wT1=0,wT2=0;
   sets.forEach(function(s){if(s.t1>s.t2)wT1++;else if(s.t2>s.t1)wT2++;});
-  if(wT1===wT2){showMsg(msg,'Il doit y avoir un gagnant.','error');return;}
+  if(wT1===wT2&&sets.length>0){showMsg(msg,'Il doit y avoir un gagnant.','error');return;}
+  if(sets.length===0){showMsg(msg,'Entrez au moins un set.','error');return;}
   var btn=document.getElementById('btn-score');
   btn.textContent='Envoi...';btn.disabled=true;
   appsRead({action:'saveScore',roundIdx:curMatch.ri,matchIdx:curMatch.mi,score1:wT1,score2:wT2,setsJson:JSON.stringify(sets)})
