@@ -786,6 +786,8 @@ function adminResetBracket(){
 
 
 
+function showMsg(el,txt,type){el.innerHTML=txt;el.className='form-msg '+type;el.style.display='block';}
+
 // INIT
 function adminStartTournament(){
   var msg=document.getElementById('start-msg');
