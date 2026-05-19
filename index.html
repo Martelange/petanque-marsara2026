@@ -371,7 +371,7 @@ input::placeholder{color:#b0a89a}
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzru2qV_SdSjkRBkCpMBEvIBEP4n-bBN2vuQNAivbn1H6NQxCuV01TuaC2WudL3HM7H7Q/exec';
 const BOT_URL    = 'https://scaling-robot-jr59wj69574phjp7x-3000.app.github.dev';
 const ADMIN_PWD  = 'marsara2026';
-const BALLS      = ['\uD83D\uDD34','\uD83D\uDD35','\uD83D\uDFE2','\uD83D\uDFE1','\uD83D\uDFE3'];
+const BALLS      = ['\uD83D\uDD34','\uD83D\uDD35','\uD83D\uDFE2','\uD83D\uDFE1','\uD83D\uDFE3','\uD83D\uDFE0'];
 
 window._terrains = {};
 
@@ -489,7 +489,7 @@ function renderBracket() {
         var photoThumb=m.photoUrl?'<img class="b-match-photo" src="'+m.photoUrl+'" alt="photo">':'';
         var terrainBadge='';
         var matchKeySearch=rnd.name+'_'+t1+'_'+t2;
-        for (var ti=1;ti<=5;ti++){
+        for (var ti=1;ti<=6;ti++){
           if(window._terrains[ti]&&window._terrains[ti].matchKey===matchKeySearch){
             terrainBadge='<div class="b-terrain-badge">'+BALLS[ti-1]+' Terrain '+ti+'</div>';
             break;
@@ -707,7 +707,7 @@ function selectTeam(name){
       // Terrain - match via matchKey
       var terrainHtml='';
       var mKeySearch=m.round+'_'+m.team1+'_'+m.team2;
-      for(var ti=1;ti<=5;ti++){
+      for(var ti=1;ti<=6;ti++){
         if(window._terrains[ti]&&window._terrains[ti].matchKey===mKeySearch){
           terrainHtml='<div class="prog-terrain">'+BALLS[ti-1]+' Terrain '+ti+'</div>';break;
         }
